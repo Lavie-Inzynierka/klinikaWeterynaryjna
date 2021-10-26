@@ -50,6 +50,10 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'klinikaWeterynaryjna.urls'
 
+STATIC_URL = 'templates/klinika/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATIC_ROOT = os.path.join(BASE_DIR, 'assets')
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -81,7 +85,6 @@ DATABASES = {
         'PORT': pv.port,
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

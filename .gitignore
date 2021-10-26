@@ -58,6 +58,9 @@ out/
 # JIRA plugin
 atlassian-ide-plugin.xml
 
+# assets
+assets
+
 # Cursive Clojure plugin
 .idea/replstate.xml
 
@@ -134,7 +137,7 @@ coverage.xml
 local_settings.py
 db.sqlite3
 db.sqlite3-journal
-
+privdb.py
 # Flask stuff:
 instance/
 .webassets-cache
