@@ -3,7 +3,7 @@ from django.http import HttpResponse
 
 
 def stronaGlowna(request):
-    return render(request, 'klinika/stronaGlowna.html')
+    return render(request, 'klinika/dom.html')
 
 
 def informacje(request):
@@ -12,3 +12,7 @@ def informacje(request):
 
 def logowanie(request):
     return render(request, 'klinika/logowanie.html')
+
+
+def rejestracja(request):
+    return render(request, 'klinika/rejestracja.html')

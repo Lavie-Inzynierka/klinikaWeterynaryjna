@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>Logowanie</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>rejestracja</title>
     <link rel="stylesheet" href="{% static 'css/style.min.css' %}">
 
 
@@ -14,32 +14,28 @@
 <body>
 {% include 'klinika/navbar.html' %}
 
-<div id="logowanie">
+<div id="rejestracja">
     <form>
         <header class="nazwa">Vet Pet</header>
         <label>
             <input type="text" placeholder="Nazwa Użytkownika" onfocus="this.placeholder=' ' "
                    onblur="this.placeholder='login' ">
 
+            <input type="text" placeholder="Adres email" onfocus="this.placeholder=' ' "
+                   onblur="this.placeholder='email' ">
+
 
             <input type="password" placeholder="hasło" onfocus="this.placeholder=' ' "
                    onblur="this.placeholder='hasło' ">
 
+            <input type="password" placeholder="powtórz hasło" onfocus="this.placeholder=' ' "
+                   onblur="this.placeholder='powtórz hasło' ">
 
-            <input type="submit" value="Zaloguj się">
-
-            <output>Jeśli nie masz konta zarejestruj się</output>
-
-
-            <a href="/rejestracja">
-                <input type="button" id="submit2" value="zarejestruj się">
-            </a>
-
+            <input type="submit" id="submit2" value="Zarejestruj się">
         </label>
 
 
     </form>
 </div>
-
 </body>
 </html>

@@ -1,18 +1,46 @@
 body {
     /*zdjęcie ze strony https://wiadomosci.com/labrador-najpopularniejsza-rasa-psow-w-usa/*/
 
-    background-image: url("bla.jpg");
+    background-image: url("labradory.jpg");
     background-size: cover;
     opacity: 90%;
 }
 
+#rejestracja {
+    background-color: rgba(255, 255, 255, 1);
+    width: 300px;
+    padding: 25px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 80px;
+    -webkit-box-shadow: 3px 3px 30px 5px rgba(204, 204, 204, 0.9);
+    -moz-box-shadow: 3px 3px 30px 5px rgba(204, 204, 204, 0.9);
+    box-shadow: 3px 3px 30px 5px rgba(204, 204, 204, 0.9);
+}
+
+#logo {
+    /* logo ze strony https://howtostartanllc.com/logo-maker*/
+
+    background-image: url("logo.png");
+    background-size: cover;
+    width: 150px;
+    height: 150px;
+    padding: 30px;
+    margin-left: 30px;
+    margin-right: auto;
+    margin-top: 25px;
+    /*-webkit-box-shadow: 3px 3px 30px 5px rgba(204, 204, 204, 0.9);*/
+    /*-moz-box-shadow: 3px 3px 30px 5px rgba(204, 204, 204, 0.9);*/
+    /*box-shadow: 3px 3px 30px 5px rgba(204, 204, 204, 0.9);*/
+}
+
 ul {
     list-style-type: none;
-    margin-top: 25px;
-    margin-left: 25px;
+    margin-top: 20px;
+    margin-left: 30px;
     padding: 0;
-    width: 250px;
-    background-color: #f1f1f1;
+    width: 200px;
+    background-color: rgba(241, 241, 241, 0.9);
     border: 1px solid #555;
 }
 
@@ -37,18 +65,35 @@ li a:hover {
     color: white;
 }
 
-.active {
+.dom {
     background-color: #336fd0;
-    color: white;
+    color: #000000;
+    font-size: 24px;
+    font-style: oblique;
+    font-weight: 700;
+    font-family: Monospaced, cursive;
+    text-decoration: none;
+    text-align: center;
 }
 
-#container {
+.nazwa {
+    font-size: 36px;
+    font-style: oblique;
+    font-weight: 700;
+    font-family: Monospaced, cursive;
+    color: #094fd0;
+    padding: 0;
+    text-decoration: none;
+    text-align: center;
+}
+
+#logowanie {
     background-color: rgba(255, 255, 255, 1);
     width: 300px;
-    padding: 50px;
+    padding: 25px;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 350px;
+    margin-top: 80px;
     -webkit-box-shadow: 3px 3px 30px 5px rgba(204, 204, 204, 0.9);
     -moz-box-shadow: 3px 3px 30px 5px rgba(204, 204, 204, 0.9);
     box-shadow: 3px 3px 30px 5px rgba(204, 204, 204, 0.9);
@@ -84,7 +129,36 @@ input[type=submit] {
     font-size: 20px;
     color: #ffffff;
     padding: 15px 10px;
-    margin-top: 20px;
+    /*margin-top: 20px;*/
+    margin: 7px 0 7px 0;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    letter-spacing: 2px;
+    outline: none;
+}
+
+output {
+    font-size: 16px;
+    font-style: oblique;
+    font-weight: 700;
+    font-family: Monospaced, cursive;
+    color: #d00909;
+    text-align: center;
+    /*padding: 0;*/
+    /*margin: 15px 5px;*/
+    padding: 10px 5px;
+    margin: 7px 0 7px 0;
+
+}
+
+#submit2 {
+    width: 300px;
+    background-color: #0d6713;
+    font-size: 20px;
+    color: #ffffff;
+    padding: 15px 10px;
+    margin: 7px 0 7px 0;
     border: none;
     border-radius: 5px;
     cursor: pointer;
