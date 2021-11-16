@@ -1,0 +1,48 @@
+{% extends 'klinika/main.html' %}
+{% load static %}
+<!doctype html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <title>signin</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+<body>
+
+{% block content %}
+
+
+    <div id="signin">
+        <form method="post">
+            {% csrf_token %}
+            <header class="name">Vet Pet</header>
+            <label>
+                <input type="text" name="username" placeholder="Nazwa Użytkownika" onfocus="this.placeholder=' ' "
+                       onblur="this.placeholder='Nazwa Użytkownika' " required>
+
+
+                <input type="password" name="password" placeholder="hasło" onfocus="this.placeholder=' ' "
+                       onblur="this.placeholder='hasło' " required>
+
+
+                <input type="submit" value="Zaloguj się">
+
+                <output>Jeśli nie masz konta zarejestruj się</output>
+
+
+                <a href="{% url 'signup' %}">
+                    <input type="button" id="submit2" value="zarejestruj się">
+                </a>
+
+            </label>
+
+
+        </form>
+    </div>
+{% endblock content %}
+</body>
+</html>

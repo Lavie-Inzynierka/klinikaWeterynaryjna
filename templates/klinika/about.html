@@ -1,3 +1,4 @@
+{% extends 'klinika/main.html' %}
 {% load static %}
 <!doctype html>
 <html lang="pl">
@@ -6,11 +7,15 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Vet Pet</title>
-    <link rel="stylesheet" href="{% static 'css/style.min.css' %}">
+    <title>about</title>
+   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+
 </head>
 <body>
-{% include 'klinika/navbar.html' %}
 
+{% block content %}
+    <h2 class="home">VetPet - czyli aplikacja webowa stworzona z myślą o zdrowniu naszych pupili!</h2>
+{% endblock content %}
 </body>
 </html>

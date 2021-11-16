@@ -6,7 +6,7 @@ body {
     opacity: 90%;
 }
 
-#rejestracja {
+#signup {
     background-color: rgba(255, 255, 255, 1);
     width: 300px;
     padding: 25px;
@@ -65,7 +65,7 @@ li a:hover {
     color: white;
 }
 
-.dom {
+.home {
     background-color: #336fd0;
     color: #000000;
     font-size: 24px;
@@ -76,7 +76,7 @@ li a:hover {
     text-align: center;
 }
 
-.nazwa {
+.name {
     font-size: 36px;
     font-style: oblique;
     font-weight: 700;
@@ -87,7 +87,7 @@ li a:hover {
     text-align: center;
 }
 
-#logowanie {
+#signin {
     background-color: rgba(255, 255, 255, 1);
     width: 300px;
     padding: 25px;
