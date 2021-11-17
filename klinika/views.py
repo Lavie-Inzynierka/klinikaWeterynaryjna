@@ -1,9 +1,11 @@
+import os
 
-from django.contrib.auth import authenticate, login, logout
-from django.shortcuts import render, redirect
-from django.http import HttpResponse
-from django.contrib.auth.models import User
 from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.models import User
+from django.shortcuts import render, redirect
+from sendgrid import SendGridAPIClient
+from sendgrid.helpers.mail import Mail
 
 
 def main(request):
@@ -59,10 +61,26 @@ def signup(request):
             return redirect('VetPet')
 
         myuser = User.objects.create_user(username, email, pass1)
+        myuser.is_active = False
         myuser.save()
 
         messages.success(request, "Konto utworzone pomyślnie")
 
+        # todo: Email confirmation with sendgrid and flag setting as active (user)
+
+        message = Mail(
+            from_email='vetpet1502@gmail.com',
+            to_emails=myuser.email,
+            subject='Witaj w VetPet!',
+            html_content='<strong>and easy to do anywhere, even with Python</strong>')
+        try:
+            sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+            response = sg.send(message)
+            print(response.status_code)
+            # print(response.body)
+            # print(response.headers)
+        except Exception as e:
+            print(str(e))
         return redirect('signin')
 
     return render(request, 'klinika/signup.html')

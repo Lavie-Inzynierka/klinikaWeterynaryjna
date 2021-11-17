@@ -11,10 +11,11 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import os
 from pathlib import Path
-import bazaDanych.privdb as pv
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -81,11 +82,11 @@ WSGI_APPLICATION = 'klinikaWeterynaryjna.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': pv.nazwa,
-        'USER': pv.uzytkownik,
-        'PASSWORD': pv.haslo,
-        'HOST': pv.host,
-        'PORT': pv.port,
+        'NAME': os.environ['dbname'],
+        'USER': os.environ['dbuser'],
+        'PASSWORD': os.environ['dbpass'],
+        'HOST': os.environ['dbhost'],
+        'PORT': os.environ['dbport'],
     }
 }
 

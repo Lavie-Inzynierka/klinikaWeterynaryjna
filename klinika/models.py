@@ -4,14 +4,18 @@ import uuid
 
 # Create your models here.
 
-# todo: uuid na int
+# todo: uuid na int?
 class Species(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
     species_name = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
         return self.species_name
-# todo: class pet, owner, pet_owner
+
+# todo: class permission -> id, permission name (admin, pet_owner, vet, receptionist)
+#       user_permission -> user_id, permission_id
+#       class pet, owner, pet_owner
+
 # class Zwierze(models.Model):
 #     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
 #     nazwa = models.CharField(max_length=200)
