@@ -1,14 +1,10 @@
-from datetime import datetime, timedelta, date
-import uuid
+from datetime import datetime, timedelta
 from django.contrib.auth.models import User
 from django.db import models
 
 
-# Create your models here.
-
-# todo: uuid na int?
 class Species(models.Model):
-    id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
+    id = models.AutoField(unique=True, primary_key=True, editable=False)
     species_name = models.CharField(max_length=255, unique=True)
 
     def __str__(self):

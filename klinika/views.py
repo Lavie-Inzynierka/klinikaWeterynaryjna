@@ -1,3 +1,5 @@
+import hashlib
+import datetime
 import os
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
@@ -6,7 +8,6 @@ from django.shortcuts import render, redirect
 from sendgrid import SendGridAPIClient
 
 from klinika.models import Token
-from klinika.tokens import generate_token
 
 
 def main(request):
@@ -66,10 +67,9 @@ def signup(request):
 
         messages.success(request, "Konto utworzone pomyślnie")
 
-        token = generate_token.make_token(myuser)
-
-        ttoken = Token(token)
-        ttoken.save()
+        t = hashlib.md5((username + str(datetime.datetime.now())).encode('utf-8')).hexdigest()
+        token = Token.objects.create(token=t)
+        token.save()
 
         message = {
             'personalizations': [
@@ -89,7 +89,7 @@ def signup(request):
                 {
                     'type': 'text/html',
                     'value': '<html>Aktywuj swoje konto VetPet!</a> '
-                             '<br><p>Za pomocą tego tokena: </p></html>' + '<strong>' + token + '</strong>'
+                             '<br><p>Za pomocą tego tokena: </p></html>' + '<strong>' + token.token + '</strong>'
                 },
 
             ],
