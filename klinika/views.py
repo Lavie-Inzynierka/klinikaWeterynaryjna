@@ -1,11 +1,12 @@
 import os
-
 from django.contrib import messages
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.shortcuts import render, redirect
 from sendgrid import SendGridAPIClient
-from sendgrid.helpers.mail import Mail
+
+from klinika.models import Token
+from klinika.tokens import generate_token
 
 
 def main(request):
@@ -37,7 +38,6 @@ def signin(request):
 
 def signup(request):
     if request.method == "POST":
-        # username = request.POST.get('username')
         username = request.POST['username']
         email = request.POST['email']
         pass1 = request.POST['pass1']
@@ -66,21 +66,42 @@ def signup(request):
 
         messages.success(request, "Konto utworzone pomyślnie")
 
-        # todo: Email confirmation with sendgrid and flag setting as active (user)
+        token = generate_token.make_token(myuser)
 
-        message = Mail(
-            from_email='vetpet1502@gmail.com',
-            to_emails=myuser.email,
-            subject='Witaj w VetPet!',
-            html_content='<strong>and easy to do anywhere, even with Python</strong>')
+        ttoken = Token(token)
+        ttoken.save()
+
+        message = {
+            'personalizations': [
+                {
+                    'to': [
+                        {
+                            'email': myuser.email
+                        }
+                    ],
+                    'subject': 'Witaj w VetPet!'
+                }
+            ],
+            'from': {
+                'email': 'vetpet1502@gmail.com'
+            },
+            'content': [
+                {
+                    'type': 'text/html',
+                    'value': '<html>Aktywuj swoje konto VetPet!</a> '
+                             '<br><p>Za pomocą tego tokena: </p></html>' + '<strong>' + token + '</strong>'
+                },
+
+            ],
+
+        }
         try:
             sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
-            response = sg.send(message)
-            print(response.status_code)
-            # print(response.body)
-            # print(response.headers)
+            sg.send(message)
+
         except Exception as e:
             print(str(e))
+
         return redirect('signin')
 
     return render(request, 'klinika/signup.html')
