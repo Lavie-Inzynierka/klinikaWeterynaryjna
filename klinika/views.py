@@ -23,16 +23,17 @@ def signin(request):
         username = request.POST['username']
         password = request.POST['password']
 
-        user = authenticate(username=username, password=password)
+        if MyUser.objects.filter(username=username).exists():
+            user = MyUser.objects.get(username=username)
 
-        if user is not None:
-            login(request, user)
-            username = user.username
-            messages.success(request, "Zostałeś zalogowany!")
-            return render(request, 'klinika/main.html', {'username': username})
-        else:
-            messages.error(request, "Błędne dane")
-            return redirect('VetPet')
+            if bcrypt.checkpw(password.encode(encoding='UTF-8'),
+                              user.password.replace('b\'', '').replace('\'', '').encode(encoding='UTF-8')):
+                request.session['my_user'] = user.username
+                messages.success(request, "Zostałeś zalogowany!")
+                return render(request, 'klinika/main.html', {'username': username})
+
+        messages.error(request, "Błędne dane")
+        return redirect('VetPet')
 
     return render(request, 'klinika/signin.html')
 
