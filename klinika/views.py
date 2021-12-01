@@ -65,8 +65,8 @@ def signup(request):
             messages.error(request, "Nazwa użytkownika musi się składać z liter oraz cyfr!")
             return redirect('VetPet')
 
-        myuser = User.objects.create_user(username, email, pass1)
-        myuser.is_active = False
+        passwd = bcrypt.hashpw(pass1.encode(encoding='UTF-8'), bcrypt.gensalt())
+        myuser = MyUser.objects.create(username=username, email=email, password=passwd)
         myuser.save()
 
         messages.success(request, "Konto utworzone pomyślnie")
