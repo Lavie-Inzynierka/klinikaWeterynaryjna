@@ -115,8 +115,6 @@ def signup(request):
         except Exception as e:
             print(str(e))
 
-        return redirect('signin')
-
     return render(request, 'klinika/signup.html')
 
 
