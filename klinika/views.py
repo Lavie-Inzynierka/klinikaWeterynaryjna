@@ -44,10 +44,10 @@ def signup(request):
         pass1 = request.POST['pass1']
         pass2 = request.POST['pass2']
 
-        if User.objects.filter(username=username):
+        if MyUser.objects.filter(username=username):
             messages.error(request, "Nazwa użytkownika jest już zajęta!")
             return redirect('VetPet')
-        if User.objects.filter(email=email):
+        if MyUser.objects.filter(email=email):
             messages.error(request, "Podany adres email jest już zajęty!")
             return redirect('VetPet')
 
