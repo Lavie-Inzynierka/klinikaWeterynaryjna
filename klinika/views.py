@@ -35,6 +35,9 @@ def signin(request):
         messages.error(request, "Błędne dane")
         return redirect('VetPet')
 
+    else:
+        if request.session.get('my_user', False):
+            return render(request, 'klinika/main.html', {'username': request.session.get('my_user')})
     return render(request, 'klinika/signin.html')
 
 
@@ -109,6 +112,6 @@ def signup(request):
 
 
 def signout(request):
-    logout(request)
+    request.session.delete()
     messages.success(request, "Zostałeś wylogowany!")
     return redirect('VetPet')
