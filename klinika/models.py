@@ -1,6 +1,31 @@
 from datetime import datetime, timedelta
-from django.contrib.auth.models import User
 from django.db import models
+
+TYPE_CHOICES = [
+    ['AD', 'Admin'],
+    ['VE', 'Vet'],
+    ['RC', 'Receptionist'],
+    ['OW', 'Pet owner'],
+]
+
+
+class UserTypeEnum(object):
+    ADMIN = 'AD'
+    VET = 'VE'
+    RECEPTIONIST = 'RC'
+    PET_OWNER = 'OW'
+
+
+class MyUser(models.Model):
+    id = models.AutoField( unique=True, primary_key=True, editable=False)
+    username = models.CharField(max_length=30, unique=True)
+    email = models.EmailField(max_length=60, unique=True)
+    password = models.TextField(null=False)
+    is_active = models.BooleanField(default=False)
+    type_name = models.CharField(max_length=30, choices=TYPE_CHOICES, default=UserTypeEnum.PET_OWNER)
+
+    def __str__(self):
+        return self.username
 
 
 class Species(models.Model):
