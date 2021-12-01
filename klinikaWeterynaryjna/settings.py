@@ -51,6 +51,9 @@ TEMPLATES = [
         },
     },
 ]
+# todo: cookie expiration test for one minute
+SESSION_COOKIE_AGE = 24*60
+
 
 WSGI_APPLICATION = 'klinikaWeterynaryjna.wsgi.application'
 
