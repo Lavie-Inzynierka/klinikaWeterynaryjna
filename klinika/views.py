@@ -101,8 +101,8 @@ def signup(request):
             'content': [
                 {
                     'type': 'text/html',
-                    'value': '<html>Aktywuj swoje konto VetPet!</a> '
-                             '<br><p>Za pomocą tego tokena: </p></html>' + '<strong>' + token.token + '</strong>'
+                    'value': email_body
+
                 },
 
             ],
