@@ -55,7 +55,7 @@ def signup(request):
             messages.error(request, "Podany adres email jest już zajęty!")
             return redirect('VetPet')
 
-        if len(username) > 10:
+        if len(username) > 30:
             messages.error(request, "Podana nazwa uzytkownika jest za dluga!")
 
         if pass1 != pass2:
