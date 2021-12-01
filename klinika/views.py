@@ -122,3 +122,14 @@ def signout(request):
     request.session.delete()
     messages.success(request, "Zostałeś wylogowany!")
     return redirect('VetPet')
+
+
+def VerificationView(request, token):
+    if Token.objects.filter(token=token).exists():
+        t = Token.objects.get(token=token)
+        t.user.is_active = True
+        t.user.save()
+    else:
+        return redirect('signin')
+
+    return redirect('signin')
