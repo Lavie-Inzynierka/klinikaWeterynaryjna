@@ -72,7 +72,7 @@ def signup(request):
         messages.success(request, "Konto utworzone pomyślnie")
 
         t = hashlib.md5((username + str(datetime.datetime.now())).encode('utf-8')).hexdigest()
-        token = Token.objects.create(token=t)
+        token = Token.objects.create(token=t, user=myuser)
         token.save()
 
         message = {
