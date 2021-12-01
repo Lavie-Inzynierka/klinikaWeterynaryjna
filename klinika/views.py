@@ -2,12 +2,12 @@ import hashlib
 import datetime
 import os
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.models import User
+from .models import MyUser
 from django.shortcuts import render, redirect
 from sendgrid import SendGridAPIClient
-
+import bcrypt
 from klinika.models import Token
+from django.contrib.sites.shortcuts import get_current_site
 
 
 def main(request):
