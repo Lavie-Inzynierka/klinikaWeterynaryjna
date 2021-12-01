@@ -37,10 +37,11 @@ class Species(models.Model):
 
 
 class Token(models.Model):
-    id = models.AutoField(default=0, unique=True, primary_key=True, editable=False)
+    id = models.AutoField(unique=True, primary_key=True, editable=False)
     token = models.CharField(max_length=250, unique=True)
     created_at = models.DateTimeField(default=datetime.now)
     expires_at = models.DateTimeField(default=datetime.now() + timedelta(days=14))
+    user = models.ForeignKey(MyUser, on_delete=models.CASCADE)
 
     is_active = models.BooleanField(default=True)
 
