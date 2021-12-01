@@ -75,6 +75,15 @@ def signup(request):
         token = Token.objects.create(token=t, user=myuser)
         token.save()
 
+        domain = get_current_site(request).domain
+
+        activate_url = 'http://' + domain + '/activate/' + token.token
+
+        email_body = 'Witaj ' + myuser.username + \
+                     '!<br/>Aktywuj swoje konto za pomocą ' \
+                     'poniższego linku<br/> <a href="' + activate_url + '">' \
+                                                                        '<button>Kliknij by aktywować</button></a>'
+
         message = {
             'personalizations': [
                 {
