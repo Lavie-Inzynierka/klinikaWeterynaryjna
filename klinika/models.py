@@ -31,6 +31,24 @@ class MyUser(models.Model):
         return self.username
 
 
+class UserType(models.Model):
+    user = models.ForeignKey(MyUser, on_delete=models.PROTECT)
+    user_type = models.CharField(max_length=12)
+
+    def type_check(self):
+        if not UserTypeEnum.__members__.keys().__contains__(self.user_type):
+            raise ValueError("Wartość nie istnieje!")
+
+
+class UserAddresses(models.Model):
+    id = models.AutoField(unique=True, primary_key=True, editable=False)
+    address = models.CharField(max_length=250, null=True)
+    user = models.ForeignKey(MyUser, on_delete=models.PROTECT)
+
+    def __str__(self):
+        return self.address
+
+
 class Species(models.Model):
     id = models.AutoField(unique=True, primary_key=True, editable=False)
     species_name = models.CharField(max_length=255, unique=True)
