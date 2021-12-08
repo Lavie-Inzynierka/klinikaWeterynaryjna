@@ -47,6 +47,8 @@ def signin(request):
 def signup(request):
     if request.method == "POST":
         username = request.POST['username']
+        first_name = request.POST['first_name']
+        last_name = request.POST['last_name']
         email = request.POST['email']
         pass1 = request.POST['pass1']
         pass2 = request.POST['pass2']
