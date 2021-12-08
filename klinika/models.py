@@ -71,11 +71,12 @@ class Token(models.Model):
         if datetime.now() > self.expires_at:
             self.is_active = False
 
-#
-# todo:   class pet with foreign key user with OW
-# class Zwierze(models.Model):
-#     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True, editable=False)
-#     nazwa = models.CharField(max_length=200)
-#     gatunek = models.ForeignKey(Gatunek, on_delete=models.CASCADE)
-#     data_urodzenia = models.DateTimeField(auto_now_add=True)
-#     dodatkowe_informacje = models.TextField(null=True, blank=True)
+
+class Pet(models.Model):
+    id = models.AutoField(unique=True, primary_key=True, editable=False)
+    name = models.CharField(max_length=32)
+    date_of_birth = models.DateTimeField()
+    sex = models.CharField(max_length=6, choices=Gender_choices)
+    species = models.ForeignKey(Species, on_delete=models.PROTECT)
+    owner = models.ForeignKey(MyUser, on_delete=models.PROTECT)
+    additional_information = models.TextField(null=True)
