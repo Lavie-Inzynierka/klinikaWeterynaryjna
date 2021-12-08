@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 from django.db import models
+import enum
 
 TYPE_CHOICES = [
     ['AD', 'Admin'],
