@@ -2,15 +2,8 @@ from datetime import datetime, timedelta
 from django.db import models
 import enum
 
-TYPE_CHOICES = [
-    ['AD', 'Admin'],
-    ['VE', 'Vet'],
-    ['RC', 'Receptionist'],
-    ['OW', 'Pet owner'],
-]
 
-
-class UserTypeEnum(object):
+class UserTypeEnum(enum.Enum):
     ADMIN = 'AD'
     VET = 'VE'
     RECEPTIONIST = 'RC'
