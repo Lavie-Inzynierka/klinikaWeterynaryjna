@@ -15,6 +15,9 @@ def main(request):
 
 
 def about(request):
+    if request.session.get('my_user', False):
+        return render(request, 'klinika/about.html', {'username': request.session.get('my_user')})
+
     return render(request, 'klinika/about.html')
 
 
