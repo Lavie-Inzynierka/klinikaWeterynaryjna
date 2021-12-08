@@ -10,6 +10,12 @@ class UserTypeEnum(enum.Enum):
     PET_OWNER = 'OW'
 
 
+Gender_choices = (
+    ('Female', 'f'),
+    ('Male', 'm'),
+)
+
+
 class MyUser(models.Model):
     id = models.AutoField( unique=True, primary_key=True, editable=False)
     username = models.CharField(max_length=30, unique=True)
