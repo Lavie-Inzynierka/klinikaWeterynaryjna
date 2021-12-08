@@ -19,10 +19,13 @@ Gender_choices = (
 class MyUser(models.Model):
     id = models.AutoField( unique=True, primary_key=True, editable=False)
     username = models.CharField(max_length=30, unique=True)
+    first_name = models.CharField(max_length=32)
+    last_name = models.CharField(max_length=100)
+    phone_number = models.CharField(max_length=20, null=True)
     email = models.EmailField(max_length=60, unique=True)
     password = models.TextField(null=False)
     is_active = models.BooleanField(default=False)
-    type_name = models.CharField(max_length=30, choices=TYPE_CHOICES, default=UserTypeEnum.PET_OWNER)
+    note = models.TextField(null=True)
 
     def __str__(self):
         return self.username
