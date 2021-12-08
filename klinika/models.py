@@ -52,6 +52,7 @@ class UserAddresses(models.Model):
 class Species(models.Model):
     id = models.AutoField(unique=True, primary_key=True, editable=False)
     species_name = models.CharField(max_length=255, unique=True)
+    additional_information = models.TextField(null=True)
 
     def __str__(self):
         return self.species_name
