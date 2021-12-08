@@ -17,7 +17,7 @@ Gender_choices = (
 
 
 class MyUser(models.Model):
-    id = models.AutoField( unique=True, primary_key=True, editable=False)
+    id = models.AutoField(unique=True, primary_key=True, editable=False)
     username = models.CharField(max_length=30, unique=True)
     first_name = models.CharField(max_length=32)
     last_name = models.CharField(max_length=100)
