@@ -71,7 +71,11 @@ def signup(request):
             return redirect('VetPet')
 
         passwd = bcrypt.hashpw(pass1.encode(encoding='UTF-8'), bcrypt.gensalt())
-        myuser = MyUser.objects.create(username=username, email=email, password=passwd)
+        myuser = MyUser.objects.create(username=username,
+                                       first_name=first_name,
+                                       last_name=last_name,
+                                       email=email,
+                                       password=passwd)
         myuser.save()
 
         messages.success(request, "Konto utworzone pomyślnie")
