@@ -58,7 +58,10 @@ WSGI_APPLICATION = 'klinikaWeterynaryjna.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'OPTIONS': {
+            'options': '-c search_path={dbpath}'.format(dbpath=os.environ['dbpath'])
+        },
         'NAME': os.environ['dbname'],
         'USER': os.environ['dbuser'],
         'PASSWORD': os.environ['dbpass'],
