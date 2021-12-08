@@ -127,6 +127,13 @@ def signup(request):
     return render(request, 'klinika/signup.html')
 
 
+def mypets(request):
+    if request.session.get('my_user', False):
+        return render(request, 'klinika/mypets.html', {'username': request.session.get('my_user')})
+
+    return render(request, 'klinika/main.html')
+
+
 def signout(request):
     request.session.delete()
     messages.success(request, "Zostałeś wylogowany!")
