@@ -1,8 +1,9 @@
 import hashlib
 import datetime
 import os
+import bleach
 from django.contrib import messages
-from .models import MyUser
+from .models import MyUser, Pet, Gender_choices, UserType, UserTypeEnum, Species
 from django.shortcuts import render, redirect
 from sendgrid import SendGridAPIClient
 import bcrypt
