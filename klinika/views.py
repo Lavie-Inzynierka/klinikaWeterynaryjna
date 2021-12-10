@@ -133,7 +133,12 @@ def signup(request):
 
 def mypets(request):
     if request.session.get('my_user', False):
-        return render(request, 'klinika/mypets.html', {'username': request.session.get('my_user')})
+        owner = MyUser.objects.get(username=request.session.get('my_user', False))
+        pets = Pet.objects.filter(owner=owner).all()
+
+        return render(request, 'klinika/mypets.html', {'username': request.session.get('my_user'), 'pet_list': pets})
+    else:
+        return render(request, 'klinika/signin.html')
 
     return render(request, 'klinika/main.html')
 
