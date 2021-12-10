@@ -8,5 +8,6 @@ urlpatterns = [
     path('signup/', views.signup, name="signup"),
     path('signout/', views.signout, name="signout"),
     path('mypets/', views.mypets, name="mypets"),
+    path('addpet/', views.addpet, name="addpet"),
     path('activate/<token>/', views.VerificationView, name="activate"),
 ]
