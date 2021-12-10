@@ -14,6 +14,28 @@
 <body>
 
 {% block content %}
+    <table>
+        <tr>
+            <th>Nazwa</th>
+            <th>data urodzenia</th>
+            <th>płeć</th>
+            <th>Gatunek</th>
+            <th>Dodatkowe informacje</th>
+        </tr>
+        {% for pet in pet_list %}
+            <tr>
+                <td>{{ pet.name }}</td>
+                <td>{{ pet.date_of_birth|date:'d-m-Y'}}</td>
+                <td>{{ pet.sex }}</td>
+                <td>{{ pet.species.species_name}}</td>
+                <td>{{ pet.additional_information }}</td>
+            </tr>
+        {% endfor %}
+    </table>
+
+     <a href="{% url 'addpet' %}"><button type="button" class="button">
+       Dodaj zwierze
+    </button></a>
 
 {% endblock content %}
 </body>
