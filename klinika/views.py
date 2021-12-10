@@ -140,7 +140,50 @@ def mypets(request):
     else:
         return render(request, 'klinika/signin.html')
 
-    return render(request, 'klinika/main.html')
+
+def addpet(request):
+    if request.session.get('my_user', False):
+        if request.method == 'GET':
+            return render(request, 'klinika/addpet.html', {'username': request.session.get('my_user')})
+        if request.method == 'POST':
+            name = bleach.clean(request.POST['name'])
+            date_of_birth = bleach.clean(request.POST['date_of_birth'])
+            sex = bleach.clean(request.POST['sex'])
+            species = bleach.clean(request.POST['species'])
+            additional_information = bleach.clean(request.POST['additional_information'])
+
+            if len(name) > 32:
+                messages.error(request, "Imie zwierzecia jest zbyt dlugie!")
+
+            if sex.capitalize() not in str(Gender_choices):
+                messages.error(request, "Nieprawidłowa płeć!")
+
+            if not Species.objects.filter(species_name=species):
+                species = Species.objects.create(species_name=species, additional_information='')
+                species.save()
+
+            newspecies = Species.objects.get(species_name=species)
+
+            owner = MyUser.objects.get(username=request.session.get('my_user', False))
+            # todo: Profil użytkownika i możliwość edycji profilu
+            # if owner.phone_number is None:
+            #     messages.error(request,"Uzupełnij dane kontaktowe w swoim profilu przed dodatniem zwierzęcia!")
+
+            user_type = UserType.objects.create(user=owner,
+                                                user_type='PET_OWNER')
+            user_type.save()
+            pet = Pet.objects.create(name=name,
+                                     date_of_birth=date_of_birth,
+                                     sex=sex,
+                                     species=newspecies,
+                                     additional_information=additional_information,
+                                     owner=owner)
+            pet.save()
+
+            return redirect('mypets')
+            # return render(request, 'klinika/mypets.html', {'username': request.session.get('my_user')})
+    else:
+        return render(request, 'klinika/signin.html')
 
 
 def signout(request):
