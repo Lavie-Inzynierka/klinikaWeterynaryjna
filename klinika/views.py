@@ -12,6 +12,9 @@ from django.contrib.sites.shortcuts import get_current_site
 
 
 def main(request):
+    if request.session.get('my_user', False):
+        return render(request, 'klinika/main.html', {'username': request.session.get('my_user')})
+
     return render(request, 'klinika/main.html')
 
 
