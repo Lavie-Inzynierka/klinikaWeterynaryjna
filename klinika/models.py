@@ -75,7 +75,7 @@ class Token(models.Model):
 class Pet(models.Model):
     id = models.AutoField(unique=True, primary_key=True, editable=False)
     name = models.CharField(max_length=32)
-    date_of_birth = models.DateTimeField()
+    date_of_birth = models.DateField()
     sex = models.CharField(max_length=6, choices=Gender_choices)
     species = models.ForeignKey(Species, on_delete=models.PROTECT)
     owner = models.ForeignKey(MyUser, on_delete=models.PROTECT)
