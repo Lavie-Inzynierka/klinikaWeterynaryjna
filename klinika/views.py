@@ -27,8 +27,8 @@ def about(request):
 
 def signin(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
+        username = bleach.clean(request.POST['username'])
+        password = bleach.clean(request.POST['password'])
 
         if MyUser.objects.filter(username=username).exists():
             user = MyUser.objects.get(username=username)
@@ -50,12 +50,12 @@ def signin(request):
 
 def signup(request):
     if request.method == "POST":
-        username = request.POST['username']
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        email = request.POST['email']
-        pass1 = request.POST['pass1']
-        pass2 = request.POST['pass2']
+        username = bleach.clean(request.POST['username'])
+        first_name = bleach.clean(request.POST['first_name'])
+        last_name = bleach.clean(request.POST['last_name'])
+        email = bleach.clean(request.POST['email'])
+        pass1 = bleach.clean(request.POST['pass1'])
+        pass2 = bleach.clean(request.POST['pass2'])
 
         if MyUser.objects.filter(username=username):
             messages.error(request, "Nazwa użytkownika jest już zajęta!")
