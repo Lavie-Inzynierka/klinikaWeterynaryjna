@@ -11,6 +11,7 @@ from klinika.models import Token
 from django.contrib.sites.shortcuts import get_current_site
 
 
+# region strona glowna
 def main(request):
     if request.session.get('my_user', False):
         return render(request, 'klinika/main.html', {'username': request.session.get('my_user')})
@@ -25,6 +26,10 @@ def about(request):
     return render(request, 'klinika/about.html')
 
 
+# endregion
+
+# region uzytkownicy
+# region logowanie uzytkownika
 def signin(request):
     if request.method == 'POST':
         username = bleach.clean(request.POST['username'])
@@ -38,7 +43,7 @@ def signin(request):
                 request.session['my_user'] = user.username
                 messages.success(request, "Zostałeś zalogowany!")
                 return render(request, 'klinika/main.html', {'username': username})
-
+        # todo: replace messeges with html comments
         messages.error(request, "Błędne dane")
         return redirect('VetPet')
 
@@ -48,6 +53,9 @@ def signin(request):
     return render(request, 'klinika/signin.html')
 
 
+# endregion
+
+# region rejestracja uzytkownika
 def signup(request):
     if request.method == "POST":
         username = bleach.clean(request.POST['username'])
@@ -131,6 +139,28 @@ def signup(request):
     return render(request, 'klinika/signup.html')
 
 
+# endregion
+
+
+def signout(request):
+    request.session.delete()
+    messages.success(request, "Zostałeś wylogowany!")
+    return redirect('VetPet')
+
+
+def VerificationView(request, token):
+    if Token.objects.filter(token=token).exists():
+        t = Token.objects.get(token=token)
+        t.user.is_active = True
+        t.user.save()
+    else:
+        return redirect('signin')
+
+    return redirect('signin')
+
+
+# endregion
+
 def mypets(request):
     if request.session.get('my_user', False):
         owner = MyUser.objects.get(username=request.session.get('my_user', False))
@@ -186,18 +216,16 @@ def addpet(request):
         return render(request, 'klinika/signin.html')
 
 
-def signout(request):
-    request.session.delete()
-    messages.success(request, "Zostałeś wylogowany!")
-    return redirect('VetPet')
+def mypet(request, petid):
+    if request.session.get('my_user', False):
+        owner = MyUser.objects.get(username=request.session.get('my_user', False))
 
+        try:
+            pet = Pet.objects.get(id=petid, owner=owner)
+        except:
+            return render(request, 'klinika/mypet.html',
+                          {'username': request.session.get('my_user'), 'error': 'Nie znaleziono zwierzęcia'})
 
-def VerificationView(request, token):
-    if Token.objects.filter(token=token).exists():
-        t = Token.objects.get(token=token)
-        t.user.is_active = True
-        t.user.save()
+        return render(request, 'klinika/mypet.html', {'username': request.session.get('my_user'), 'pet': pet})
     else:
-        return redirect('signin')
-
-    return redirect('signin')
+        return render(request, 'klinika/signin.html')
