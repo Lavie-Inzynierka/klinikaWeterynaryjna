@@ -1,0 +1,60 @@
+{% load static %}
+<!doctype html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>setup</title>
+    <link rel="stylesheet" href="{% static 'css/mystyle.min.css' %}">
+
+</head>
+<body>
+{% block content %}
+
+    <div id="signin">
+        {% if confirmation %}
+            <p class="confirmation"> {{ confirmation }}</p>
+            <a href="{% url 'VetPet' %}"><p>Wróć do strony głównej</p></a>
+        {% else %}
+            <form method="post">
+                {% csrf_token %}
+                <header class="name">Vet Pet</header>
+
+                <input type="text" name="username" placeholder="Nazwa Użytkownika" onfocus="this.placeholder=' ' "
+                       onblur="this.placeholder='Nazwa Użytkownika' " required>
+                {% if error1 %}
+                    <p class="error"> {{ error1 }}</p>
+                {% endif %}
+                {% if error2 %}
+                    <p class="error"> {{ error2 }}</p>
+                {% endif %}
+                <input type="text" name="first_name" placeholder="Imie" onfocus="this.placeholder=' ' "
+                       onblur="this.placeholder='Imie' " required>
+
+                <input type="text" name="last_name" placeholder="Nazwisko" onfocus="this.placeholder=' ' "
+                       onblur="this.placeholder='Nazwisko' " required>
+
+                <input type="text" name="email" placeholder="Adres email" onfocus="this.placeholder=' ' "
+                       onblur="this.placeholder='Adres email' " required>
+                {% if error3 %}
+                    <p class="error"> {{ error3 }}</p>
+                {% endif %}
+                <input type="password" name="pass1" placeholder="hasło" onfocus="this.placeholder=' ' "
+                       onblur="this.placeholder='hasło' " required>
+
+                <input type="password" name="pass2" placeholder="powtórz hasło" onfocus="this.placeholder=' ' "
+                       onblur="this.placeholder='powtórz hasło' " required>
+                {% if error4 %}
+                    <p class="error"> {{ error4 }}</p>
+                {% endif %}
+                <input type="submit" id="submit2" value="Skonfiguruj">
+
+            </form>
+        {% endif %}
+    </div>
+
+{% endblock content %}
+</body>
+</html>
