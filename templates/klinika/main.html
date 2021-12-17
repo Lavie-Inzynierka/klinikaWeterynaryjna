@@ -7,12 +7,29 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Vet Pet</title>
-    <link rel="stylesheet" href="{% static 'css/mystyle.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/mystyle.min.css'%}">
+{#    <meta http-equiv="refresh" content="5" >#}
 
 </head>
 <body>
-{% include "klinika/navbar.html" %}
-{% block content %}
-{% endblock content %}
+<div id="nav">
+    <aside>{% include "klinika/navbar.html" %}</aside>
+</div>
+<div id="container">
+    {% if username %}
+        <div><header><h2>Witaj {{ username }}!</h2></header></div>
+    {% endif %}
+    <main>
+        {% block content %}
+        {% endblock content %}
+    </main>
+</div>
+<div  style="clear: both">
+</div>
+<div id="footer">
+    <footer>
+        <p>Copyright &copy; 2021 Joanna Słyszewska (Lavie)</p>
+    </footer>
+</div>
 </body>
 </html>

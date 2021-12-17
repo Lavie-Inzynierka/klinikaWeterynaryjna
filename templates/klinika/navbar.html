@@ -1,31 +1,24 @@
-{% for message in messages %}
-<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-    <strong>Message:</strong>{{ message }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-{% endfor %}
-
+<nav>
 {% if username %}
 
-    <h1>Witaj {{ username }}</h1>
-    <div id="logo"></div>
+    <img src="../../static/css/logo.png" alt="logo" id="logo"/>
     <ul>
-        <li><a class="home" href="{% url 'VetPet' %}">Vet Pet</a></li>
+        <li><a id="home" href="{% url 'VetPet' %}">Vet Pet</a></li>
         <li><a href="{% url 'mypets' %}">Moje zwierzeta</a> </li>
         <li><a href="{% url 'about' %}">O nas</a></li>
         <li><a href="/signout"> Wyloguj się</a></li>
 
     </ul>
+
 {% else %}
 
-    <div id="logo"></div>
+      <img src="../../static/css/logo.png" alt="logo" id="logo"/>
     <ul>
-        <li><a class="home" href="{% url 'VetPet' %}">Vet Pet</a></li>
+        <li><a id="home" href="{% url 'VetPet' %}">Vet Pet</a></li>
         <li><a href="{% url 'signup' %}">Zarejestruj sie</a></li>
         <li><a href="{% url 'signin' %}">Zaloguj się</a></li>
         <li><a href="{% url 'about' %}">O nas</a></li>
     </ul>
 
 {% endif %}
+</nav>
