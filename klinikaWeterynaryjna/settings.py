@@ -8,7 +8,8 @@ SECRET_KEY = 'django-insecure-qx+!2owtmnu+!8x)9561hfbuift=0oe@d2a$=sqbclhkdq+4h@
 
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"
+]
 
 INSTALLED_APPS = [
     'klinika.apps.KlinikaConfig',
