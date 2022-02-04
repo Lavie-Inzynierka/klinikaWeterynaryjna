@@ -10,6 +10,9 @@ class UserTypeEnum(enum.Enum):
     PET_OWNER = 'OW'
 
 
+# todo:  female and male change to męski żeński
+
+
 Gender_choices = (
     ('Female', 'f'),
     ('Male', 'm'),
