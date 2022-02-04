@@ -2,34 +2,39 @@
 <!doctype html>
 <html lang="pl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Vet Pet</title>
-    <link rel="stylesheet" href="{% static 'css/mystyle.min.css'%}">
-{#    <meta http-equiv="refresh" content="5" >#}
-
+    <script type="text/javascript" src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
+    {% block headAdditional  %}
+    {% endblock headAdditional %}
+    <link rel="stylesheet" href="{% static 'css/mystyle.min.css' %}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no,
+        initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
 </head>
 <body>
+<div id="logo" class="sticky">
+    <a id="home" href="{% url 'VetPet' %}">
+        <img src="../../static/css/logo.png" alt="logo" id="logo"/>
+    </a>
+</div>
 <div id="nav">
     <aside>{% include "klinika/navbar.html" %}</aside>
 </div>
+<div style="clear: both;"></div>
 <div id="container">
-    {% if username %}
-        <div><header><h2>Witaj {{ username }}!</h2></header></div>
-    {% endif %}
     <main>
         {% block content %}
         {% endblock content %}
+    {% include "klinika/test.html" %}
     </main>
-</div>
-<div  style="clear: both">
-</div>
 <div id="footer">
     <footer>
-        <p>Copyright &copy; 2021 Joanna Słyszewska (Lavie)</p>
+        Copyright &copy; 2021
+        <a href='https://github.com/LaVie1502'> Joanna Słyszewska LaVie1502</a>
     </footer>
 </div>
+</div>
 </body>
+<script type="text/javascript" src="{% static 'js/nav.min.js' %}"></script>
 </html>
