@@ -15,14 +15,20 @@ import re
 # region strona glowna
 def main(request):
     if request.session.get('my_user', False):
-        return render(request, 'klinika/main.html', {'username': request.session.get('my_user')})
+        return render(request, 'klinika/main.html', {'username': request.session.get('my_user'),
+                                                     'adm': request.session.get('is_adm'),
+                                                     'vet': request.session.get('is_vet'),
+                                                     'rec': request.session.get('is_rec'),
+                                                     'own': request.session.get('is_own'),
+                                                     })
 
     return render(request, 'klinika/main.html')
 
 
 def about(request):
     if request.session.get('my_user', False):
-        return render(request, 'klinika/about.html', {'username': request.session.get('my_user')})
+        return render(request, 'klinika/about.html', {'username': request.session.get('my_user'),
+                                                      'type': request.session.get('user_type')})
 
     return render(request, 'klinika/about.html')
 
@@ -42,6 +48,12 @@ def signin(request):
             if bcrypt.checkpw(password.encode(encoding='UTF-8'),
                               user.password.replace('b\'', '').replace('\'', '').encode(encoding='UTF-8')):
                 request.session['my_user'] = user.username
+
+                request.session['is_adm'] = UserType.objects.filter(user__id=user.id, user_type='ADMIN').exists()
+                request.session['is_vet'] = UserType.objects.filter(user__id=user.id, user_type='VET').exists()
+                request.session['is_rec'] = UserType.objects.filter(user__id=user.id, user_type='RECEPTIONIST').exists()
+                request.session['is_own'] = UserType.objects.filter(user__id=user.id, user_type='PET_OWNER').exists()
+
                 return redirect('VetPet')
 
         return render(request, 'klinika/signin.html', {'error': 'Nieprawidłowy login lub hasło!'})
@@ -179,7 +191,12 @@ def mypets(request):
         return render(request, 'klinika/mypets.html',
                       {'username': request.session.get('my_user'),
                        'pet_list': pets,
-                       'utype': user_type.user_type})
+                       'utype': user_type.user_type,
+                       'adm': request.session.get('is_adm'),
+                       'vet': request.session.get('is_vet'),
+                       'rec': request.session.get('is_rec'),
+                       'own': request.session.get('is_own'),
+                       })
     else:
         return render(request, 'klinika/signin.html')
 
@@ -187,7 +204,12 @@ def mypets(request):
 def addpet(request):
     if request.session.get('my_user', False):
         if request.method == 'GET':
-            return render(request, 'klinika/addpet.html', {'username': request.session.get('my_user')})
+            return render(request, 'klinika/addpet.html', {'username': request.session.get('my_user'),
+                                                           'adm': request.session.get('is_adm'),
+                                                           'vet': request.session.get('is_vet'),
+                                                           'rec': request.session.get('is_rec'),
+                                                           'own': request.session.get('is_own'),
+                                                           })
         if request.method == 'POST':
             name = bleach.clean(request.POST['name'])
             date_of_birth = bleach.clean(request.POST['date_of_birth'])
@@ -214,7 +236,7 @@ def addpet(request):
             # if owner.phone_number is None:
             #     messages.error(request,"Uzupełnij dane kontaktowe w swoim profilu przed dodatniem zwierzęcia!")
 
-            if not UserType.objects.filter(user=owner).exists():
+            if not UserType.objects.filter(user=owner, user_type='PET_OWNER').exists():
                 user_type = UserType.objects.create(user=owner,
                                                     user_type='PET_OWNER')
                 user_type.save()
@@ -229,7 +251,7 @@ def addpet(request):
             return redirect('mypets')
             # return render(request, 'klinika/mypets.html', {'username': request.session.get('my_user')})
     else:
-        return render(request, 'klinika/signin.html')
+        return redirect('signin')
 
 
 def mypet(request, petid):
