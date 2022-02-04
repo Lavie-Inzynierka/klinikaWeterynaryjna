@@ -1,10 +1,6 @@
 {% extends 'klinika/main.html' %}
 {% load static %}
 {% block content %}
-    {% if error %}
-        <p class="error"> {{ error }}</p>
-        <a href="{% url 'mypets' %}"><p>Wróć do zwierząt użytkownika</p></a>
-    {% endif %}
     <div id="signin">
         <form method="post" class="addP">
             {% csrf_token %}
@@ -21,6 +17,11 @@
                        onfocus="this.placeholder=' ' "
                        onblur="this.placeholder='Dodatkowe informacje' ">
                 <input type="submit" class="green" value="zapisz dane">
+
+        <a href="{% url 'mypets' %}"  >
+            <input type="button"  value="Wróć">
+        </a>
+
         </form>
     </div>
 {% endblock content %}
