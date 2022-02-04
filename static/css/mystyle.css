@@ -13,9 +13,12 @@ a, a:visited
   text-decoration: none;
   color: #8bb6db;
 }
-.bold{
+
+.bold
+{
   font-weight: bold;
 }
+
 #logo
 {
   /*float: left;*/
@@ -167,10 +170,13 @@ main
   width: 300px;
   padding: 25px;
 }
-.about{
+
+.about
+{
   font-size: 24px;
   text-align: center;
 }
+
 .name
 {
   opacity: 80%;
@@ -226,7 +232,10 @@ main
 #signin input[type=submit]:hover,
 #signin input[type=button]:hover
 {
-  background-color: #1e408e;
+  color: #fae1d2;
+  border: solid 1px #0a2e4f;
+  background-color: #0f4780;
+  border-radius: 12px;
 }
 
 #signin label
@@ -245,12 +254,12 @@ main
 
 .green
 {
-  background-color: #0d6713!important;
+  background-color: #0d6713 !important;
 }
 
 .green:hover
 {
-  background-color: #0A4D0E!important;
+  background-color: #0A4D0E !important;
 }
 
 .error
@@ -296,6 +305,12 @@ p
   font-size: 18px;
 }
 
+.bstyle:hover{
+ color: #FAE1D2 !important;
+  border: solid 1px #0A2E4F!important;
+  background-color: #0F4780 !important;
+  border-radius: 12px;
+}
 .black > a, .black > a:visited
 {
   color: #000000;
@@ -335,7 +350,7 @@ p
 
 #table_wrapper #table
 {
-  border: #444444 solid 2px;
+  border: #1e408e solid 4px;
   clear: both;
   width: 1000px;
   text-align: center;
@@ -345,7 +360,7 @@ p
 #table_wrapper #table thead tr th
 {
   margin-right: 200px;
-  border: #444444 solid 2px;
+  border: #1e408e solid 4px;
 }
 
 #table_wrapper #table thead tr th:last-child
@@ -356,7 +371,7 @@ p
 #table_wrapper #table tbody tr td
 {
   margin-right: 200px;
-  border: #444444 solid 1px;
+  border: #1e408e solid 2px;
   padding: 10px;
 }
 
