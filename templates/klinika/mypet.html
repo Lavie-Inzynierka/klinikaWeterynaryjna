@@ -1,23 +1,8 @@
 {% extends 'klinika/main.html' %}
 {% load static %}
-<!doctype html>
-<html lang="pl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
-    <title>signin</title>
-    <link rel="stylesheet" href="{% static 'css/mystyle.min.css' %}">
-
-</head>
-<body>
-
 {% block content %}
 {% if error %}
     <p class="error"> {{error}}</p>
     <a href="{% url 'mypets' %}"><p>Wróć do zwierząt użytkownika</p></a>
 {% endif %}
 {% endblock content %}
-</body>
-</html>
