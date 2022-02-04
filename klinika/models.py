@@ -10,12 +10,9 @@ class UserTypeEnum(enum.Enum):
     PET_OWNER = 'OW'
 
 
-# todo:  female and male change to męski żeński
-
-
 Gender_choices = (
-    ('Female', 'f'),
-    ('Male', 'm'),
+    ('Samica', 'f'),
+    ('Samiec', 'm'),
 )
 
 
@@ -78,7 +75,7 @@ class Token(models.Model):
 class Pet(models.Model):
     id = models.AutoField(unique=True, primary_key=True, editable=False)
     name = models.CharField(max_length=32)
-    date_of_birth = models.DateField()
+    date_of_birth = models.DateTimeField()
     sex = models.CharField(max_length=6, choices=Gender_choices)
     species = models.ForeignKey(Species, on_delete=models.PROTECT)
     owner = models.ForeignKey(MyUser, on_delete=models.PROTECT)
