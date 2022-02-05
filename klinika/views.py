@@ -25,6 +25,9 @@ def main(request):
     return render(request, 'klinika/main.html')
 
 
+# endregion
+
+# region o nas
 def about(request):
     if request.session.get('my_user', False):
         return render(request, 'klinika/about.html', {'username': request.session.get('my_user'),
@@ -40,6 +43,7 @@ def about(request):
 # endregion
 
 # region uzytkownicy
+
 # region logowanie uzytkownika
 def signin(request):
     if request.method == 'POST':
@@ -160,12 +164,16 @@ def signup(request):
 
 # endregion
 
-
+# region wylogowywanie
 def signout(request):
     request.session.delete()
     messages.success(request, "Zostałeś wylogowany!")
     return redirect('VetPet')
 
+
+# endregion
+
+# region weryfikacja
 
 def VerificationView(request, token):
     if Token.objects.filter(token=token).exists():
