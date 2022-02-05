@@ -296,7 +296,6 @@ def profile(request):
                 )
                 uadress.save()
 
-
         try:
             user_adress = UserAddresses.objects.get(user=user, current=True) or None
 
@@ -452,10 +451,33 @@ def addpet(request):
 
 def mypet(request, petid):
     if request.session.get('my_user', False):
-        owner = MyUser.objects.get(username=request.session.get('my_user', False))
+        user = MyUser.objects.get(username=request.session.get('my_user', False))
+        owner = Owner.objects.get(user=user)
 
         try:
             pet = Pet.objects.get(id=petid, owner=owner)
+            if request.method == "POST":
+
+                if request.POST['type'] == 'name':
+                    name = bleach.clean(request.POST['name'])
+                    if len(name) > 32:
+                        return render(request, 'klinika/mypet.html',
+                                      {'username': request.session.get('my_user'),
+                                       'error': 'Imię zwierzęcia jest zbyt długie',
+                                       'pet': pet,
+                                       'adm': request.session.get('is_adm'),
+                                       'vet': request.session.get('is_vet'),
+                                       'rec': request.session.get('is_rec'),
+                                       'own': request.session.get('is_own'),
+                                       })
+                    pet.name = name
+                    pet.save()
+
+                if request.POST['type'] == 'additional_information':
+                    additional_information = bleach.clean(request.POST['additional_information'])
+                    pet.additional_information = additional_information
+                    pet.save()
+
         except:
             return render(request, 'klinika/mypet.html',
                           {'username': request.session.get('my_user'),
