@@ -75,6 +75,9 @@ def signin(request):
 # endregion
 
 # region rejestracja uzytkownika
+
+# todo: zabezpieczenie przed stworzeniem useless usera gdy nie ma admina
+#   error - aplikacja nie została skonfigurowana! Skonfiguruj aplikacje!
 def signup(request):
     if request.method == "POST":
         username = bleach.clean(request.POST['username'])
