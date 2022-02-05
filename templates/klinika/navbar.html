@@ -7,7 +7,7 @@
             <li><a href="#"> {{ username }} </a>
                 <ul>
                     <li>
-                        <a href="#"> Profil</a>
+                        <a href="{% url 'profile' %}"> Profil</a>
                     </li>
                     <li>
                         <a href="{% url 'mypets' %}"> Moje zwierzeta</a>
@@ -54,7 +54,7 @@
         </ul>
         </li>
         {% if vet %}
-            <li><a href="#"> Zwierzęta </a>
+            <li><a href="{% url 'pets' %}"> Zwierzęta </a>
             </li>
             <li><a href="#"> Recepty </a>
 
