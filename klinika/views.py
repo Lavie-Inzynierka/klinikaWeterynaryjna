@@ -28,7 +28,11 @@ def main(request):
 def about(request):
     if request.session.get('my_user', False):
         return render(request, 'klinika/about.html', {'username': request.session.get('my_user'),
-                                                      'type': request.session.get('user_type')})
+                                                      'adm': request.session.get('is_adm'),
+                                                      'vet': request.session.get('is_vet'),
+                                                      'rec': request.session.get('is_rec'),
+                                                      'own': request.session.get('is_own'),
+                                                      })
 
     return render(request, 'klinika/about.html')
 
@@ -186,7 +190,13 @@ def mypets(request):
             user_type = UserType.objects.get(user=owner, user_type='PET_OWNER')
         except:
             return render(request, 'klinika/mypets.html',
-                          {'username': request.session.get('my_user'), 'pet_list': 'Brak zwierząt do wyświetlenia'})
+                          {'username': request.session.get('my_user'),
+                           'pet_list': 'Brak zwierząt do wyświetlenia',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
 
         return render(request, 'klinika/mypets.html',
                       {'username': request.session.get('my_user'),
@@ -265,9 +275,21 @@ def mypet(request, petid):
             pet = Pet.objects.get(id=petid, owner=owner)
         except:
             return render(request, 'klinika/mypet.html',
-                          {'username': request.session.get('my_user'), 'error': 'Nie znaleziono zwierzęcia'})
+                          {'username': request.session.get('my_user'),
+                           'error': 'Nie znaleziono zwierzęcia',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
 
-        return render(request, 'klinika/mypet.html', {'username': request.session.get('my_user'), 'pet': pet})
+        return render(request, 'klinika/mypet.html', {'username': request.session.get('my_user'),
+                                                      'pet': pet,
+                                                      'adm': request.session.get('is_adm'),
+                                                      'vet': request.session.get('is_vet'),
+                                                      'rec': request.session.get('is_rec'),
+                                                      'own': request.session.get('is_own'),
+                                                      })
     else:
         return render(request, 'klinika/signin.html')
 
