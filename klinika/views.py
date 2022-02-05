@@ -327,11 +327,12 @@ def profile(request):
 # region zwierzęta
 def mypets(request):
     if request.session.get('my_user', False):
-        owner = MyUser.objects.get(username=request.session.get('my_user', False))
+        user = MyUser.objects.get(username=request.session.get('my_user', False))
 
         try:
+            owner = Owner.objects.get(user=user) or None
             pets = Pet.objects.filter(owner=owner).all() or None
-            user_type = UserType.objects.get(user=owner, user_type='PET_OWNER')
+            user_type = UserType.objects.get(user=user, user_type='PET_OWNER')
         except:
             return render(request, 'klinika/mypets.html',
                           {'username': request.session.get('my_user'),
