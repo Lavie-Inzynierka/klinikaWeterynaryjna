@@ -353,7 +353,33 @@ def mypets(request):
                        'own': request.session.get('is_own'),
                        })
     else:
-        return render(request, 'klinika/signin.html')
+        return redirect('signin')
+
+
+def pets(request):
+    if request.session.get('my_user', False):
+        allpets = Pet.objects.filter().all()
+        if allpets.count() == 0:
+            return render(request, 'klinika/pets.html',
+                          {'username': request.session.get('my_user'),
+                           'empty': True,
+                           'pet_list': 'Brak zwierząt do wyświetlenia',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+
+        return render(request, 'klinika/pets.html',
+                      {'username': request.session.get('my_user'),
+                       'pet_list': allpets,
+                       'adm': request.session.get('is_adm'),
+                       'vet': request.session.get('is_vet'),
+                       'rec': request.session.get('is_rec'),
+                       'own': request.session.get('is_own'),
+                       })
+    else:
+        return redirect('signin')
 
 
 def addpet(request):
