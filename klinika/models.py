@@ -73,6 +73,15 @@ class Token(models.Model):
             self.is_active = False
 
 
+class Owner(models.Model):
+    id = models.AutoField(unique=True, primary_key=True, editable=False)
+    first_name = models.CharField(max_length=32)
+    last_name = models.CharField(max_length=100)
+    phone_number = models.CharField(max_length=20, null=True)
+    email = models.EmailField(max_length=60)
+    user = models.ForeignKey(MyUser, null=True, on_delete=models.PROTECT)
+
+
 class Pet(models.Model):
     id = models.AutoField(unique=True, primary_key=True, editable=False)
     name = models.CharField(max_length=32)
