@@ -11,6 +11,7 @@ from klinika.models import Token
 from django.contrib.sites.shortcuts import get_current_site
 import re
 
+
 # todo: Dodać uprawnienia na każdym renderze!
 
 # region strona glowna
@@ -496,7 +497,7 @@ def mypet(request, petid):
                                                       'own': request.session.get('is_own'),
                                                       })
     else:
-        return render(request, 'klinika/signin.html')
+        return redirect('signin')
 
 
 # endregion
