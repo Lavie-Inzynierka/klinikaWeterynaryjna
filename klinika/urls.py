@@ -10,6 +10,7 @@ urlpatterns = [
     path('signup/', views.signup, name="signup"),
     path('signout/', views.signout, name="signout"),
     path('mypets/', views.mypets, name="mypets"),
+    path('pets/', views.pets, name="pets"),
     path('mypet/<petid>/', views.mypet, name="mypet"),
     path('addpet/', views.addpet, name="addpet"),
     path('activate/<token>/', views.VerificationView, name="activate"),
