@@ -5,6 +5,7 @@ urlpatterns = [
     path('', views.main, name="VetPet"),
     path('about/', views.about, name="about"),
     path('signin/', views.signin, name="signin"),
+    path('profile/', views.profile, name="profile"),
     path('setup/', views.setup, name="setup"),
     path('signup/', views.signup, name="signup"),
     path('signout/', views.signout, name="signout"),
