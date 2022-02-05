@@ -191,7 +191,140 @@ def VerificationView(request, token):
 
 # endregion
 
-# region zwierzęta użytkownika
+# region profil
+
+def profile(request):
+    if request.session.get('my_user', False):
+
+        user = MyUser.objects.get(username=request.session.get('my_user'))
+        if request.method == "POST":
+            if request.POST['type'] == 'first_name':
+                fname = bleach.clean(request.POST['first_name'])
+
+                user.first_name = fname
+                user.save()
+
+            if request.POST['type'] == 'last_name':
+                lname = bleach.clean(request.POST['last_name'])
+
+                user.last_name = lname
+                user.save()
+            if request.POST['type'] == 'password':
+                passwd = bleach.clean(request.POST['pass'])
+                pass1 = bleach.clean(request.POST['pass1'])
+                pass2 = bleach.clean(request.POST['pass2'])
+
+                if not bcrypt.checkpw(passwd.encode(encoding='UTF-8'),
+                                      user.password.replace('b\'', '').replace('\'', '').encode(
+                                          encoding='UTF-8')) or pass1 != pass2:
+                    try:
+                        user_adress = UserAddresses.objects.get(user=user, current=True) or None
+
+                    except:
+                        return render(request, 'klinika/profile.html', {'username': request.session.get('my_user'),
+                                                                        'usr': user,
+                                                                        'adr': 'Brak adresu zamieszkania',
+                                                                        'error': 'Nieprawidłowe hasło/a!',
+                                                                        'adm': request.session.get('is_adm'),
+                                                                        'vet': request.session.get('is_vet'),
+                                                                        'rec': request.session.get('is_rec'),
+                                                                        'own': request.session.get('is_own'),
+                                                                        })
+
+                    return render(request, 'klinika/profile.html', {'username': request.session.get('my_user'),
+                                                                    'usr': user,
+                                                                    'adr': user_adress.address,
+                                                                    'error': 'Nieprawidłowe hasło/a!',
+                                                                    'adm': request.session.get('is_adm'),
+                                                                    'vet': request.session.get('is_vet'),
+                                                                    'rec': request.session.get('is_rec'),
+                                                                    'own': request.session.get('is_own'),
+                                                                    })
+
+                password = bcrypt.hashpw(pass1.encode(encoding='UTF-8'), bcrypt.gensalt())
+                user.password = password
+                user.save()
+
+            if request.POST['type'] == 'phone_number':
+                phone = bleach.clean(request.POST['phone_number'])
+                user.phone_number = phone
+                user.save()
+
+            if request.POST['type'] == 'email':
+                email = bleach.clean(request.POST['email'])
+                regex = r"^[a-z_\.0-9]*@[a-z0-9\-]*\.[a-z]*$"
+
+                if not re.search(regex, email):
+                    try:
+                        user_adress = UserAddresses.objects.get(user=user, current=True) or None
+                    except:
+                        return render(request, 'klinika/profile.html', {'username': request.session.get('my_user'),
+                                                                        'usr': user,
+                                                                        'adr': 'Brak adresu zamieszkania',
+                                                                        'error': 'Nieprawidłowy adres email!',
+                                                                        'adm': request.session.get('is_adm'),
+                                                                        'vet': request.session.get('is_vet'),
+                                                                        'rec': request.session.get('is_rec'),
+                                                                        'own': request.session.get('is_own'),
+                                                                        })
+
+                    return render(request, 'klinika/profile.html', {'username': request.session.get('my_user'),
+                                                                    'usr': user,
+                                                                    'adr': user_adress.address,
+                                                                    'error': 'Nieprawidłowy adres email!',
+                                                                    'adm': request.session.get('is_adm'),
+                                                                    'vet': request.session.get('is_vet'),
+                                                                    'rec': request.session.get('is_rec'),
+                                                                    'own': request.session.get('is_own'),
+                                                                    })
+
+                user.email = email
+                user.save()
+
+            if request.POST['type'] == 'address':
+
+                if UserAddresses.objects.filter(user=user).exists():
+                    user_adress = UserAddresses.objects.get(user=user, current=True) or None
+                    user_adress.current = False
+                    user_adress.save()
+                address = bleach.clean(request.POST['address'])
+                uadress = UserAddresses.objects.create(
+                    address=address,
+                    user=user,
+                    current=True
+                )
+                uadress.save()
+
+
+        try:
+            user_adress = UserAddresses.objects.get(user=user, current=True) or None
+
+        except:
+            return render(request, 'klinika/profile.html', {'username': request.session.get('my_user'),
+                                                            'usr': user,
+                                                            'adr': 'Brak adresu zamieszkania',
+                                                            'adm': request.session.get('is_adm'),
+                                                            'vet': request.session.get('is_vet'),
+                                                            'rec': request.session.get('is_rec'),
+                                                            'own': request.session.get('is_own'),
+                                                            })
+
+        return render(request, 'klinika/profile.html', {'username': request.session.get('my_user'),
+                                                        'usr': user,
+                                                        'adr': user_adress.address,
+                                                        'adm': request.session.get('is_adm'),
+                                                        'vet': request.session.get('is_vet'),
+                                                        'rec': request.session.get('is_rec'),
+                                                        'own': request.session.get('is_own'),
+                                                        })
+    else:
+        return redirect('signin')
+
+
+# endregion
+# endregion
+
+# region zwierzęta
 def mypets(request):
     if request.session.get('my_user', False):
         owner = MyUser.objects.get(username=request.session.get('my_user', False))
