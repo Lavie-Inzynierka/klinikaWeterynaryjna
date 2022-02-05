@@ -44,6 +44,7 @@ class UserAddresses(models.Model):
     id = models.AutoField(unique=True, primary_key=True, editable=False)
     address = models.CharField(max_length=250, null=True)
     user = models.ForeignKey(MyUser, on_delete=models.PROTECT)
+    current = models.BooleanField(default=False)
 
     def __str__(self):
         return self.address
@@ -78,5 +79,5 @@ class Pet(models.Model):
     date_of_birth = models.DateTimeField()
     sex = models.CharField(max_length=6, choices=Gender_choices)
     species = models.ForeignKey(Species, on_delete=models.PROTECT)
-    owner = models.ForeignKey(MyUser, on_delete=models.PROTECT)
+    owner = models.ForeignKey(Owner, on_delete=models.PROTECT)
     additional_information = models.TextField(null=True)
