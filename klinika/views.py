@@ -11,6 +11,7 @@ from klinika.models import Token
 from django.contrib.sites.shortcuts import get_current_site
 import re
 
+# todo: Dodać uprawnienia na każdym renderze!
 
 # region strona glowna
 def main(request):
@@ -415,12 +416,23 @@ def addpet(request):
                               {'username': request.session.get('my_user'), 'error': 'Nieprawidłowa data urodzenia!'})
             newspecies = Species.objects.get(species_name=species)
 
-            owner = MyUser.objects.get(username=request.session.get('my_user', False))
-            # todo: Profil użytkownika i możliwość edycji profilu
-            # if owner.phone_number is None:
-            #     messages.error(request,"Uzupełnij dane kontaktowe w swoim profilu przed dodatniem zwierzęcia!")
+            user = MyUser.objects.get(username=request.session.get('my_user', False))
+            if not Owner.objects.filter(user=user):
+                owner = Owner.objects.create(
+                    first_name=user.first_name,
+                    last_name=user.last_name,
+                    phone_number=user.phone_number,
+                    email=user.email,
+                    user=user)
 
-            if not UserType.objects.filter(user=owner, user_type='PET_OWNER').exists():
+                owner.save()
+            owner = Owner.objects.get(user=user)
+            if not Owner.objects.filter(user=user, phone_number=owner.phone_number).exists():
+                return render(request, 'klinika/addpet.html',
+                              {'username': request.session.get('my_user'),
+                               'error': 'Uzupełnij dane kontaktowe w swoim profilu przed dodatniem zwierzęcia!'})
+
+            if not UserType.objects.filter(user=user, user_type='PET_OWNER').exists():
                 user_type = UserType.objects.create(user=owner,
                                                     user_type='PET_OWNER')
                 user_type.save()
