@@ -1,8 +1,67 @@
 {% extends 'klinika/main.html' %}
 {% load static %}
 {% block content %}
-{% if error %}
-    <p class="error"> {{error}}</p>
-    <a href="{% url 'mypets' %}"><p>Wróć do zwierząt użytkownika</p></a>
-{% endif %}
+    <div id="form2">
+            {% if error %}
+                <p class="error"> {{ error }}</p>
+            {% endif %}
+    {#    todo: marginy !!!#}
+            <header class="name">Vet Pet</header>
+            <label> Imię Zwierzęcia
+                <input type="text" value="{{ pet.name }}">
+                <button id="btn-pet-name" class="btn bstyle"> Zmień</button>
+                <div id="ch-pet-name" style="display: none;">
+                    <form method="post">
+                        <input type="hidden" name="type" value="name">
+                         {% csrf_token %}
+                         <input type="text" name="name" placeholder="Nazwa zwierzęcia" onfocus="this.placeholder=' ' "
+                       onblur="this.placeholder='Nazwa zwierzęcia'" required>
+                        <input type="submit" value="Zmień">
+                    </form>
+                </div>
+            </label>
+            <label> Data urodzenia
+                <input value="{{ pet.date_of_birth|date:'d-m-Y' }}">
+            </label>
+            <label> Płeć
+                <input type="text" name="sex" value="{{ pet.sex }}">
+            </label>
+            <label> Gatunek
+                <input type="text" name="species" value="{{ pet.species }}">
+            </label>
+            <label> Dodatkowe informacje
+                <input type="text"  value="{{ pet.additional_information }}">
+                 <button id="btn-pet-adi" class="btn bstyle"> Zmień</button>
+                 <div id="ch-pet-adi" style="display: none;">
+                    <form method="post">
+                        <input type="hidden" name="type" value="additional_information">
+                         {% csrf_token %}
+                         <input type="text" name="additional_information" placeholder="Dodatkowe informacje" onfocus="this.placeholder=' ' "
+                       onblur="this.placeholder='Dodatkowe informacje'" required>
+                        <input type="submit" value="Zmień">
+                    </form>
+                </div>
+            </label>
+            <label> Właściciel
+                <input type="text" name="owner" value="{{ pet.owner.first_name }}  {{ pet.owner.last_name }}">
+            </label>
+            <a href="{% url 'mypets' %}">
+                <input type="button" value="Wróć">
+            </a>
+    </div>
+    <script type="text/javascript">
+     let show = { name: false, DoB: false, ainfo: false, owner: false };
+    $("#btn-pet-name").click(function() {
+      if (show.name === false)
+        $("#ch-pet-name").show(500)
+      else
+        $("#ch-pet-name").hide(500)
+    });
+    $("#btn-pet-adi").click(function() {
+      if (show.ainfo === false)
+        $("#ch-pet-adi").show(500)
+      else
+        $("#ch-pet-adi").hide(500)
+    });
+    </script>
 {% endblock content %}
