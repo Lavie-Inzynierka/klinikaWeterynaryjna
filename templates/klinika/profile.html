@@ -5,102 +5,101 @@
         {% if error %}
             <p class="error"> {{ error }}</p>
         {% endif %}
-{#    todo: marginy !!!#}
         <header class="name">Vet Pet</header>
         <label> Nazwa użytkownika
-            <input style="margin-left: 94px;" type="text" value="{{ usr.username }}">
+            <input style="margin-left: 54px;" type="text" value="{{ usr.username }}" disabled>
         </label>
 
         <label> Imię
-            <input style="margin-left: 154px;" type="text" value="{{ usr.first_name }}">
-            <button id="btn-fname" class="btn bstyle"> Zmień</button>
+            <input style="margin-left: 182px;" type="text" value="{{ usr.first_name }}" disabled>
+            <button id="btn-fname" class="btn bstyle green"> Zmień</button>
             <div id="ch-fname" style="display: none;">
                 <form method="post">
                     <input type="hidden" name="type" value="first_name">
                     {% csrf_token %}
-                    <input style="margin-left: 190px;" type="text" name="first_name" placeholder="Imię " onfocus="this.placeholder=' ' "
+                    <input style="margin-left: 220px;" type="text" name="first_name" placeholder="Imię " onfocus="this.placeholder=' ' "
                            onblur="this.placeholder='Imię '" required>
-                    <input style="margin-left: 190px;" type="submit" value="Zmień">
+                    <input style="margin-left: 250px;" class="green" type="submit" value="Zmień">
                 </form>
             </div>
         </label>
 
         <label> Nazwisko
-            <input style="margin-left: 94px;" type="text" value="{{ usr.last_name }}">
-            <button id="btn-lname" class="btn bstyle"> Zmień</button>
+            <input style="margin-left: 138px;" type="text" value="{{ usr.last_name }}" disabled>
+            <button id="btn-lname" class="btn bstyle green"> Zmień</button>
             <div id="ch-lname" style="display: none;">
                 <form method="post">
                     <input type="hidden" name="type" value="last_name">
                     {% csrf_token %}
-                    <input style="margin-left: 190px;" type="text" name="last_name" placeholder="Nazwisko " onfocus="this.placeholder=' ' "
+                    <input style="margin-left: 220px;" type="text" name="last_name" placeholder="Nazwisko " onfocus="this.placeholder=' ' "
                            onblur="this.placeholder='Nazwisko '" required>
-                    <input style="margin-left: 190px;" type="submit" value="Zmień">
+                    <input style="margin-left: 250px;" class="green" type="submit" value="Zmień">
                 </form>
             </div>
         </label>
 
         <label> Hasło
-            <input style="margin-left: 114px;" type="password" value="haslo">
-            <button id="btn-pass" class="btn bstyle"> Zmień</button>
+            <input style="margin-left: 170px;" type="password" value="haslo" disabled>
+            <button id="btn-pass" class="btn bstyle green"> Zmień</button>
             <div id="ch-pass" style="display: none;">
                 <form method="post">
                     <input type="hidden" name="type" value="password">
                     {% csrf_token %}
-                    <input style="margin-left: 190px;" type="password" name="pass" placeholder="Stare Hasło " onfocus="this.placeholder=' ' "
+                    <input style="margin-left: 220px;" type="password" name="pass" placeholder="Stare Hasło " onfocus="this.placeholder=' ' "
                            onblur="this.placeholder='Stare Hasło  '" required>
-                    <input style="margin-left: 190px;" type="password" name="pass1" placeholder="Nowe Hasło " onfocus="this.placeholder=' ' "
+                    <input style="margin-left: 220px;" type="password" name="pass1" placeholder="Nowe Hasło " onfocus="this.placeholder=' ' "
                            onblur="this.placeholder='Nowe Hasło '" required>
-                    <input style="margin-left: 190px;" type="password" name="pass2" placeholder="Powtórz Hasło " onfocus="this.placeholder=' ' "
+                    <input style="margin-left: 220px;" type="password" name="pass2" placeholder="Powtórz Hasło " onfocus="this.placeholder=' ' "
                            onblur="this.placeholder='Powtórz Hasło '" required>
-                    <input style="margin-left: 190px;" type="submit" value="Zmień">
+                    <input style="margin-left: 250px;" class="green" type="submit" value="Zmień">
                 </form>
             </div>
         </label>
 
         <label> Numer telefonu
-            <input style="margin-left: 54px;" type="text" value="{{ usr.phone_number }}">
-            <button id="btn-phone" class="btn bstyle"> Zmień</button>
+            <input style="margin-left: 90px;" type="text" value="{{ usr.phone_number }}" disabled>
+            <button id="btn-phone" class="btn bstyle green"> Zmień</button>
             <div id="ch-phone" style="display: none;">
                 <form method="post">
                     <input type="hidden" name="type" value="phone_number">
                     {% csrf_token %}
-                    <input style="margin-left: 190px;" type="tel" name="phone_number" placeholder="Numer telefonu " onfocus="this.placeholder=' ' "
+                    <input style="margin-left: 220px;" type="tel" name="phone_number" placeholder="Numer telefonu " onfocus="this.placeholder=' ' "
                            onblur="this.placeholder='Numer telefonu '" required>
-                    <input style="margin-left: 190px;" type="submit" value="Zmień">
+                    <input style="margin-left: 250px;" class="green" type="submit" value="Zmień">
                 </form>
             </div>
         </label>
 
         <label> Adres email
-            <input style="margin-left: 94px;"  type="text" value="{{ usr.email }}">
-            <button id="btn-email" class="btn bstyle"> Zmień</button>
+            <textarea style="margin-left: 124px; resize: none;" disabled> {{ usr.email }}</textarea>
+            <button id="btn-email" class="btn bstyle green"> Zmień</button>
             <div id="ch-email" style="display: none;">
                 <form method="post">
                     <input type="hidden" name="type" value="email">
                     {% csrf_token %}
-                    <input style="margin-left: 190px;" type="text" name="email" placeholder="Email adres" onfocus="this.placeholder=' ' "
-                           onblur="this.placeholder='Email adres'" required>
-                    <input style="margin-left: 190px;" type="submit" value="Zmień">
+                    <textarea style="margin-left: 220px; resize: vertical" name="email" placeholder="Email adres" onfocus="this.placeholder=' ' "
+                              onblur="this.placeholder='Email adres'" required></textarea>
+                    <input style="margin-left: 250px;" class="green" type="submit" value="Zmień">
                 </form>
             </div>
         </label>
 
         <label> Adress zamieszkania
-            <input type="text" value="{{ adr }}">
-            <button id="btn-adress" class="btn bstyle"> Dodaj</button>
+            <textarea style="margin-left: 52px; resize: none;" disabled > {{ adr }}</textarea>
+            <button id="btn-adress" class="btn bstyle green" > Dodaj</button>
             <div id="ch-adress" style="display: none;">
                 <form method="post">
                     <input type="hidden" name="type" value="address">
                     {% csrf_token %}
-                    <input style="margin-left: 190px; " type="text" name="address" placeholder="Adress zamieszkania " onfocus="this.placeholder=' ' "
-                           onblur="this.placeholder='Adress zamieszkania '" required>
-                    <input style="margin-left: 190px;" type="submit" value="Zmień na aktualny">
+                    <textarea style="margin-left: 220px; resize: vertical" name="address" placeholder="Adress zamieszkania " onfocus="this.placeholder=' ' "
+                              onblur="this.placeholder='Adress zamieszkania '" required></textarea>
+                    <input style="margin-left: 250px;"  class="green" type="submit" value="Zmień na aktualny">
                 </form>
             </div>
         </label>
 
         <a href="{% url 'VetPet' %}">
-            <input style="margin-left: 194px;" type="button" value="Wróć">
+            <input style="margin-left: 254px;" type="button" value="Wróć">
         </a>
     </div>
     <script type="text/javascript">
