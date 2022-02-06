@@ -12,8 +12,6 @@ from django.contrib.sites.shortcuts import get_current_site
 import re
 
 
-# todo: Dodać uprawnienia na każdym renderze!
-
 # region strona glowna
 def main(request):
     if request.session.get('my_user', False):
@@ -401,11 +399,23 @@ def addpet(request):
 
             if len(name) > 32:
                 return render(request, 'klinika/addpet.html',
-                              {'username': request.session.get('my_user'), 'error': 'Imię zwierzęcia jest zbyt długie'})
+                              {'username': request.session.get('my_user'),
+                               'error': 'Imię zwierzęcia jest zbyt długie',
+                               'adm': request.session.get('is_adm'),
+                               'vet': request.session.get('is_vet'),
+                               'rec': request.session.get('is_rec'),
+                               'own': request.session.get('is_own'),
+                               })
 
             if sex.capitalize() not in str(Gender_choices):
                 return render(request, 'klinika/addpet.html',
-                              {'username': request.session.get('my_user'), 'error': 'Nieprawidłowa płeć!'})
+                              {'username': request.session.get('my_user'),
+                               'error': 'Nieprawidłowa płeć!',
+                               'adm': request.session.get('is_adm'),
+                               'vet': request.session.get('is_vet'),
+                               'rec': request.session.get('is_rec'),
+                               'own': request.session.get('is_own'),
+                               })
 
             if not Species.objects.filter(species_name=species):
                 species = Species.objects.create(species_name=species, additional_information='')
@@ -413,7 +423,13 @@ def addpet(request):
 
             if datetime.datetime.strptime(date_of_birth, '%Y-%m-%d') > datetime.datetime.now():
                 return render(request, 'klinika/addpet.html',
-                              {'username': request.session.get('my_user'), 'error': 'Nieprawidłowa data urodzenia!'})
+                              {'username': request.session.get('my_user'),
+                               'error': 'Nieprawidłowa data urodzenia!',
+                               'adm': request.session.get('is_adm'),
+                               'vet': request.session.get('is_vet'),
+                               'rec': request.session.get('is_rec'),
+                               'own': request.session.get('is_own'),
+                               })
             newspecies = Species.objects.get(species_name=species)
 
             user = MyUser.objects.get(username=request.session.get('my_user', False))
@@ -430,7 +446,12 @@ def addpet(request):
             if not Owner.objects.filter(user=user, phone_number=owner.phone_number).exists():
                 return render(request, 'klinika/addpet.html',
                               {'username': request.session.get('my_user'),
-                               'error': 'Uzupełnij dane kontaktowe w swoim profilu przed dodatniem zwierzęcia!'})
+                               'error': 'Uzupełnij dane kontaktowe w swoim profilu przed dodatniem zwierzęcia!',
+                               'adm': request.session.get('is_adm'),
+                               'vet': request.session.get('is_vet'),
+                               'rec': request.session.get('is_rec'),
+                               'own': request.session.get('is_own'),
+                               })
 
             if not UserType.objects.filter(user=user, user_type='PET_OWNER').exists():
                 user_type = UserType.objects.create(user=owner,
@@ -445,7 +466,6 @@ def addpet(request):
             pet.save()
 
             return redirect('mypets')
-            # return render(request, 'klinika/mypets.html', {'username': request.session.get('my_user')})
     else:
         return redirect('signin')
 
