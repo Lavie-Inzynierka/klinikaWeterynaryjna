@@ -213,7 +213,8 @@ main
   outline: none;
 }
 
-#form2  input
+#form2  input,
+#form2  textarea
 {
   font-size: 18px;
   border: #ddd solid 2px;
@@ -227,14 +228,22 @@ main
   margin-right: 10px;
   color: black;
 }
-
+#form2  input:disabled,
+  #form2 textarea:disabled
+{
+      background-color: rgb(255, 255, 255);
+    border: #ddd solid 2px;
+   color: black;
+}
 #signin input[type=text]:focus,
 #signin input[type=email]:focus,
 #signin input[type=password]:focus,
 #form2 input[type=text]:focus,
 #form2 input[type=email]:focus,
 #form2 input[type=password]:focus,
-#form2 input[type=tel]:focus
+#form2 input[type=tel]:focus,
+#form2 textarea:focus
+
 {
   border-color: #8bb6db;
   background-color: #e9eef3;
