@@ -41,16 +41,16 @@
         {% endif %}
     </div>
 
-<script type="text/javascript">
- $(document).ready(function() {
-      $('#table').DataTable({
-        language:{url:"{% static 'json/polish.json'%}"},
-        columnDefs:[
-            {searchable: false, targets: 4}
-        ]
-      });
-    });
-</script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#table').DataTable({
+                language: {url: "{% static 'json/polish.json'%}"},
+                columnDefs: [
+                    {searchable: false, targets: 4}
+                ]
+            });
+        });
+    </script>
 {% endblock content %}
 
 
