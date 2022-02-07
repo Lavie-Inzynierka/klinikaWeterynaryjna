@@ -75,7 +75,7 @@ class Token(models.Model):
     is_active = models.BooleanField(default=True)
 
     def expires(self):
-        if datetime.now() > self.expires_at:
+        if self.created_at + timedelta(days=14) > self.expires_at:
             self.is_active = False
 
 
