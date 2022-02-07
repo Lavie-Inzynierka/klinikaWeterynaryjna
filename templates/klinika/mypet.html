@@ -41,7 +41,7 @@
                 <form method="post">
                     <input type="hidden" name="type" value="additional_information">
                     {% csrf_token %}
-                    <textarea style="margin-left: 220px; resize: vertical" name="additional_information"
+                    <textarea style="margin-left: 220px; resize: none;" rows="5" name="additional_information"
                               placeholder="Dodatkowe informacje" onfocus="this.placeholder=' ' "
                               onblur="this.placeholder='Dodatkowe informacje'" required></textarea>
                     <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
