@@ -14,5 +14,6 @@ urlpatterns = [
     path('allvisits/', views.allvisits, name="allvisits"),
     path('mypet/<petid>/', views.mypet, name="mypet"),
     path('addpet/', views.addpet, name="addpet"),
+    path('addvisit/', views.addvisit, name="addvisit"),
     path('activate/<token>/', views.VerificationView, name="activate"),
 ]
