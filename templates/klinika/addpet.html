@@ -3,28 +3,27 @@
 {% block content %}
     <div id="signin">
         <form method="post">
-             {% if error %}
-        <p class="error"> {{ error }}</p>
-                {% endif %}
+            {% if error %}
+                <p class="error"> {{ error }}</p>
+            {% endif %}
             {% csrf_token %}
             <header class="name">Vet Pet</header>
-                <input type="text" name="name" placeholder="Nazwa zwierzęcia" onfocus="this.placeholder=' ' "
-                       onblur="this.placeholder='Nazwa zwierzęcia'" required>
-                <input type="date" name="date_of_birth" placeholder="Data urodzenia" onfocus="this.placeholder=' ' "
-                       onblur="this.placeholder='Data urodzenia'" required>
-                <input type="text" name="sex" placeholder="Płeć" onfocus="this.placeholder=' ' "
-                       onblur="this.placeholder='Płeć'" required>
-                <input type="text" name="species" placeholder="Gatunek" onfocus="this.placeholder=' ' "
-                       onblur="this.placeholder='Gatunek'" required>
-                <input type="text" name="additional_information" placeholder="Dodatkowe informacje"
-                       onfocus="this.placeholder=' ' "
-                       onblur="this.placeholder='Dodatkowe informacje' ">
-                <input type="submit" class="green" value="zapisz dane">
+            <input type="text" name="name" placeholder="Nazwa zwierzęcia" onfocus="this.placeholder=' ' "
+                   onblur="this.placeholder='Nazwa zwierzęcia'" required>
+            <input type="date" name="date_of_birth" placeholder="Data urodzenia" onfocus="this.placeholder=' ' "
+                   onblur="this.placeholder='Data urodzenia'" required>
+            <input type="text" name="sex" placeholder="Płeć" onfocus="this.placeholder=' ' "
+                   onblur="this.placeholder='Płeć'" required>
+            <input type="text" name="species" placeholder="Gatunek" onfocus="this.placeholder=' ' "
+                   onblur="this.placeholder='Gatunek'" required>
+            <input type="text" name="additional_information" placeholder="Dodatkowe informacje"
+                   onfocus="this.placeholder=' ' "
+                   onblur="this.placeholder='Dodatkowe informacje' ">
+            <input type="submit" class="green" value="zapisz dane">
 
-        <a href="{% url 'mypets' %}"  >
-            <input type="button"  value="Wróć">
-        </a>
-
+            <a href="{% url 'mypets' %}">
+                <input type="button" value="Wróć">
+            </a>
         </form>
     </div>
 {% endblock content %}
