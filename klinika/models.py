@@ -15,6 +15,12 @@ Gender_choices = (
     ('Samiec', 'm'),
 )
 
+Status_choices = (
+    ('Zaplanowana', 'z'),
+    ('Odbyta', 'o'),
+    ('Anulowana', 'a'),
+)
+
 
 class MyUser(models.Model):
     id = models.AutoField(unique=True, primary_key=True, editable=False)
