@@ -523,6 +523,132 @@ def mypet(request, petid):
 # endregion
 
 
+def allvisits(request):
+    if request.session.get('my_user', False):
+        allvisit = Visit.objects.filter().all()
+        if allvisit.count() == 0:
+            return render(request, 'klinika/visit.html',
+                          {'username': request.session.get('my_user'),
+                           'empty': True,
+                           'visit_list': 'Brak wizyt do wyświetlenia',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+
+        return render(request, 'klinika/visit.html',
+                      {'username': request.session.get('my_user'),
+                       'visit_list': allvisit,
+                       'adm': request.session.get('is_adm'),
+                       'vet': request.session.get('is_vet'),
+                       'rec': request.session.get('is_rec'),
+                       'own': request.session.get('is_own'),
+                       })
+    else:
+        return redirect('signin')
+
+
+def addvisit(request):
+    if request.session.get('my_user', False):
+        pets = Pet.objects.filter().all()
+        vets = UserType.objects.filter(user_type='VET').all()
+        owners = UserType.objects.filter(user_type='PET_OWNER').all()
+        if request.method == 'GET':
+            return render(request, 'klinika/addvisit.html',
+                          {'username': request.session.get('my_user'),
+                           'pets': pets,
+                           'vets': vets,
+                           'owners': owners,
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+
+        if request.method == 'POST':
+            visit_date = bleach.clean(request.POST['visit_date'])
+            visit_time = bleach.clean(request.POST['visit_time'])
+            note = bleach.clean(request.POST['note'])
+
+            now = datetime.datetime.now()
+            if datetime.datetime.strptime(visit_date + 'T' + visit_time, '%Y-%m-%dT%H:%M') < now:
+                return render(request, 'klinika/addvisit.html',
+                              {'username': request.session.get('my_user'),
+                               'error': 'Nieprawidłowy czas wizyty!',
+                               'pets': pets,
+                               'vets': vets,
+                               'owners': owners,
+                               'adm': request.session.get('is_adm'),
+                               'vet': request.session.get('is_vet'),
+                               'rec': request.session.get('is_rec'),
+                               'own': request.session.get('is_own'),
+                               })
+
+            if request.POST['pet'] == 'Dodaj':
+                if request.POST['own'] == 'Dodaj':
+                    first_name = bleach.clean(request.POST['first_name'])
+                    last_name = bleach.clean(request.POST['last_name'])
+                    phone_number = bleach.clean(request.POST['phone_number'])
+                    email = bleach.clean(request.POST['email'])
+
+                    owner = Owner.objects.create(
+                        first_name=first_name,
+                        last_name=last_name,
+                        phone_number=phone_number,
+                        email=email)
+
+                    owner.save()
+                else:
+
+                    user = MyUser.objects.get(email=request.POST['own'])
+                    owner = Owner.objects.create(
+                        first_name=user.first_name,
+                        last_name=user.last_name,
+                        phone_number=user.phone_number,
+                        email=user.email,
+                        user=user
+                    )
+                    owner.save()
+                name = bleach.clean(request.POST['name'])
+                date_of_birth = bleach.clean(request.POST['date_of_birth'])
+                sex = bleach.clean(request.POST['sex'])
+                species = bleach.clean(request.POST['species'])
+                additional_information = bleach.clean(request.POST['additional_information'])
+
+                if not Species.objects.filter(species_name=species):
+                    species = Species.objects.create(species_name=species, additional_information='')
+                    species.save()
+
+                newspecies = Species.objects.get(species_name=species)
+
+                pet = Pet.objects.create(name=name,
+                                         date_of_birth=date_of_birth,
+                                         sex=sex,
+                                         species=newspecies,
+                                         additional_information=additional_information,
+                                         owner=owner)
+
+                pet.save()
+
+            else:
+                pet = Pet.objects.get(id=request.POST['pet'])
+            vet = MyUser.objects.get(email=request.POST['vet'])
+            visit = Visit.objects.create(visit_date=visit_date,
+                                         visit_time=visit_time,
+                                         visit_planned=datetime.datetime.now(),
+                                         status='Zaplanowana',
+                                         pet=pet,
+                                         vet=vet,
+                                         note=note)
+
+            visit.save()
+            # todo: zmienić redirect na render z message succes
+            return redirect('allvisits')
+    else:
+        return redirect('signin')
+
+
 def setup(request):
     global mytype
     if MyUser.objects.count() == 0:
