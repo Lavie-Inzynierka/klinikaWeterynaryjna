@@ -71,14 +71,14 @@
         </label>
 
         <label> Adres email
-            <textarea style="margin-left: 124px; resize: none;" disabled> {{ usr.email }}</textarea>
+            <input style="margin-left: 124px; resize: none;" value="{{ usr.email }}" disabled>
             <button id="btn-email" class="btn bstyle green"> Zmień</button>
             <div id="ch-email" style="display: none;">
                 <form method="post">
                     <input type="hidden" name="type" value="email">
                     {% csrf_token %}
-                    <textarea style="margin-left: 220px; resize: vertical" name="email" placeholder="Email adres" onfocus="this.placeholder=' ' "
-                              onblur="this.placeholder='Email adres'" required></textarea>
+                    <input type="email" style="margin-left: 220px;" name="email" placeholder="Email adres" onfocus="this.placeholder=' ' "
+                              onblur="this.placeholder='Email adres'" required>
                     <input style="margin-left: 250px;" class="green" type="submit" value="Zmień">
                 </form>
             </div>
