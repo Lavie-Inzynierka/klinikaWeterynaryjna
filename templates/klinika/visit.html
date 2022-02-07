@@ -1,0 +1,59 @@
+{% extends 'klinika/main.html' %}
+{% load static %}
+{% block headAdditional %}
+    <link href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+{% endblock headAdditional %}
+{% block content %}
+    <div class="black">
+        <a href="  {% url 'addvisit' %} " class="btn bstyle "> Dodaj wizyte
+        </a>
+    </div>
+    <div>
+        {% if not empty %}
+            <table id="table">
+                <thead>
+                <tr>
+                    <th>Data wizyty</th>
+                    <th>Czas wizyty</th>
+                    <th>Nazwa zwierzęcia</th>
+                    <th>Właściciel</th>
+                    <th>Weterynarz </th>
+                    <th>Dodatkowe informacje </th>
+                    <th>Więcej</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for visit in visit_list %}
+                    <tr>
+                        <td>{{ visit.visit_date|date:'d-m-Y' }}</td>
+                        <td>{{ visit.visit_time|date:'H:i'}}</td>
+                        <td>{{ visit.pet.name}}</td>
+                        <td>{{ visit.pet.owner.first_name }} {{  visit.pet.owner.last_name }}</td>
+                        <td>{{ visit.vet.first_name }} {{ visit.vet.last_name}}</td>
+                        <td>{{ visit.note }} </td>
+                        <td>
+                            <a href="#" class="btn bstyle">Podgląd </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p> Brak wizyt do wyświetlenia! </p>
+        {% endif %}
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#table').DataTable({
+                language: {url: "{% static 'json/polish.json'%}"},
+                columnDefs: [
+                    {searchable: false, targets: 6}
+                ]
+            });
+        });
+    </script>
+{% endblock content %}
+
+
