@@ -96,3 +96,14 @@ class Pet(models.Model):
     species = models.ForeignKey(Species, on_delete=models.PROTECT)
     owner = models.ForeignKey(Owner, on_delete=models.PROTECT)
     additional_information = models.TextField(null=True)
+
+
+class Visit(models.Model):
+    id = models.AutoField(unique=True, primary_key=True, editable=False)
+    visit_date = models.DateField()
+    visit_planned = models.DateTimeField()
+    visit_time = models.TimeField()
+    status = models.CharField(max_length=11, choices=Status_choices)
+    pet = models.ForeignKey(Pet, null=True, on_delete=models.PROTECT)
+    vet = models.ForeignKey(MyUser, on_delete=models.PROTECT)
+    note = models.TextField(null=True)
