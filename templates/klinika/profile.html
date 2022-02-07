@@ -91,7 +91,7 @@
                 <form method="post">
                     <input type="hidden" name="type" value="address">
                     {% csrf_token %}
-                    <textarea style="margin-left: 220px; resize: vertical" name="address" placeholder="Adress zamieszkania " onfocus="this.placeholder=' ' "
+                    <textarea style="margin-left: 220px; resize: none;" rows="4" name="address" placeholder="Adress zamieszkania " onfocus="this.placeholder=' ' "
                               onblur="this.placeholder='Adress zamieszkania '" required></textarea>
                     <input style="margin-left: 250px;"  class="green" type="submit" value="Zmień na aktualny">
                 </form>
