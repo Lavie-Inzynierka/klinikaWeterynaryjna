@@ -12,7 +12,7 @@ from django.contrib.sites.shortcuts import get_current_site
 import re
 
 
-# region strona glowna
+# region main
 def main(request):
     if request.session.get('my_user', False):
         return render(request, 'klinika/main.html', {'username': request.session.get('my_user'),
@@ -27,7 +27,7 @@ def main(request):
 
 # endregion
 
-# region o nas
+# region about
 def about(request):
     if request.session.get('my_user', False):
         return render(request, 'klinika/about.html', {'username': request.session.get('my_user'),
@@ -42,9 +42,9 @@ def about(request):
 
 # endregion
 
-# region uzytkownicy
+# region users
 
-# region logowanie uzytkownika
+# region signin
 def signin(request):
     if request.method == 'POST':
         username = bleach.clean(request.POST['username'])
@@ -74,7 +74,7 @@ def signin(request):
 
 # endregion
 
-# region rejestracja uzytkownika
+# region signup
 
 # todo: zabezpieczenie przed stworzeniem useless usera gdy nie ma admina
 #   error - aplikacja nie została skonfigurowana! Skonfiguruj aplikacje!
@@ -167,7 +167,7 @@ def signup(request):
 
 # endregion
 
-# region wylogowywanie
+# region signout
 def signout(request):
     request.session.delete()
     messages.success(request, "Zostałeś wylogowany!")
@@ -176,7 +176,7 @@ def signout(request):
 
 # endregion
 
-# region weryfikacja
+# region verification
 
 def VerificationView(request, token):
     if Token.objects.filter(token=token).exists():
@@ -191,7 +191,7 @@ def VerificationView(request, token):
 
 # endregion
 
-# region profil
+# region profile
 
 def profile(request):
     if request.session.get('my_user', False):
@@ -649,6 +649,9 @@ def addvisit(request):
         return redirect('signin')
 
 
+# endregion
+
+# region setup
 def setup(request):
     global mytype
     if MyUser.objects.count() == 0:
@@ -692,3 +695,5 @@ def setup(request):
             mytype.save()
         return render(request, 'klinika/setup.html', {'confirmation': 'Administrator utworzony pomyślnie!'})
     return redirect('VetPet')
+
+# endregion
