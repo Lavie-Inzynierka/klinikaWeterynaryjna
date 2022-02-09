@@ -11,6 +11,7 @@ urlpatterns = [
     path('signout/', views.signout, name="signout"),
     path('mypets/', views.mypets, name="mypets"),
     path('pets/', views.pets, name="pets"),
+    path('addpets/', views.addpets, name="addpets"),
     path('allvisits/', views.allvisits, name="allvisits"),
     path('mypet/<petid>/', views.mypet, name="mypet"),
     path('addpet/', views.addpet, name="addpet"),
