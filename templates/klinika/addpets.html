@@ -1,0 +1,88 @@
+{% extends 'klinika/main.html' %}
+{% load static %}
+{% block headAdditional %}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+{% endblock %}
+{% block content %}
+    <div id="form2">
+        <form method="post">
+            {% if error %}
+                <p class="error"> {{ error }}</p>
+            {% endif %}
+            {% csrf_token %}
+            <header class="name">Vet Pet</header>
+            <input type="text" name="name" placeholder="Nazwa zwierzęcia" onfocus="this.placeholder=' ' "
+                   onblur="this.placeholder='Nazwa zwierzęcia'">
+            <input type="date" name="date_of_birth" placeholder="Data urodzenia" onfocus="this.placeholder=' ' "
+                   onblur="this.placeholder='Data urodzenia'">
+            <input type="text" name="sex" placeholder="Płeć" onfocus="this.placeholder=' ' "
+                   onblur="this.placeholder='Płeć'">
+            <input type="text" name="species" placeholder="Gatunek" onfocus="this.placeholder=' ' "
+                   onblur="this.placeholder='Gatunek'">
+            <input type="text" name="additional_information" placeholder="Dodatkowe informacje"
+                   onfocus="this.placeholder=' ' "
+                   onblur="this.placeholder='Dodatkowe informacje' ">
+
+                <a id="btn-own-choice" class="btn bstyle green" style="margin-top: 10px;"> Wybierz Właściciela </a>
+                <div id="ch-own-choice" style="display: none;">
+                    <select name="own" id="choice2">
+                        {% for own in owners %}
+                            <option value="{{ own.user.email }}">
+                                {{ own.user.first_name }} {{ own.user.last_name }} {{ own.user.email }}
+                            </option>
+                        {% endfor %}
+                        <option>Dodaj</option>
+                    </select>
+                    <div id="own-add" style="display: none;">
+                        <input type="text" name="first_name" placeholder="first_name"
+                               onfocus="this.placeholder=' ' "
+                               onblur="this.placeholder='first_name'">
+                        <input type="text" name="last_name" placeholder="first_name"
+                               onfocus="this.placeholder=' ' "
+                               onblur="this.placeholder='first_name'">
+                        <input type="email" name="email" placeholder="first_name"
+                               onfocus="this.placeholder=' ' "
+                               onblur="this.placeholder='first_name'">
+                        <input type="tel" name="phone_number" placeholder="first_name"
+                               onfocus="this.placeholder=' ' "
+                               onblur="this.placeholder='first_name'">
+                    </div>
+                    <script>
+                        $(document).ready(() => {
+                            $('#choice2').change(
+                                () => {
+                                    if ($('#choice2').val() === 'Dodaj')
+                                        $('#own-add').show(500)
+                                    else
+                                        $('#own-add').hide(500)
+                                }
+                            )
+                        })
+                    </script>
+                </div>
+            <input type="submit" class="green" value="zapisz dane">
+
+            <a href="{% url 'pets' %}">
+                <input type="button" value="Wróć">
+            </a>
+        </form>
+    </div>
+
+    <script>
+        let show = {pet: false, own: false, vet: false};
+
+        $("#btn-own-choice").click(() => {
+            if (show.own === false)
+                $("#ch-own-choice").show(500)
+            else
+                $("#ch-own-choice").hide(500)
+            show.own ^= true
+        });
+
+        $(document).ready(() => {
+            $('#choice2').select2();
+        });
+
+    </script>
+{% endblock content %}
