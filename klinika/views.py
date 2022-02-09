@@ -475,28 +475,52 @@ def mypets(request):
         return redirect('signin')
 
 
-def pets(request):
+def mypet(request, petid):
     if request.session.get('my_user', False):
-        allpets = Pet.objects.filter().all()
-        if allpets.count() == 0:
-            return render(request, 'klinika/pets.html',
+        user = MyUser.objects.get(username=request.session.get('my_user', False))
+        owner = Owner.objects.get(user=user)
+
+        try:
+            pet = Pet.objects.get(id=petid, owner=owner)
+            if request.method == "POST":
+
+                if request.POST['type'] == 'name':
+                    name = bleach.clean(request.POST['name'])
+                    if len(name) > 32:
+                        return render(request, 'klinika/mypet.html',
+                                      {'username': request.session.get('my_user'),
+                                       'error': 'Imię zwierzęcia jest zbyt długie',
+                                       'pet': pet,
+                                       'adm': request.session.get('is_adm'),
+                                       'vet': request.session.get('is_vet'),
+                                       'rec': request.session.get('is_rec'),
+                                       'own': request.session.get('is_own'),
+                                       })
+                    pet.name = name
+                    pet.save()
+
+                if request.POST['type'] == 'additional_information':
+                    additional_information = bleach.clean(request.POST['additional_information'])
+                    pet.additional_information = additional_information
+                    pet.save()
+
+        except:
+            return render(request, 'klinika/mypet.html',
                           {'username': request.session.get('my_user'),
-                           'empty': True,
-                           'pet_list': 'Brak zwierząt do wyświetlenia',
+                           'error': 'Nie znaleziono zwierzęcia',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
                            'rec': request.session.get('is_rec'),
                            'own': request.session.get('is_own'),
                            })
 
-        return render(request, 'klinika/pets.html',
-                      {'username': request.session.get('my_user'),
-                       'pet_list': allpets,
-                       'adm': request.session.get('is_adm'),
-                       'vet': request.session.get('is_vet'),
-                       'rec': request.session.get('is_rec'),
-                       'own': request.session.get('is_own'),
-                       })
+        return render(request, 'klinika/mypet.html', {'username': request.session.get('my_user'),
+                                                      'pet': pet,
+                                                      'adm': request.session.get('is_adm'),
+                                                      'vet': request.session.get('is_vet'),
+                                                      'rec': request.session.get('is_rec'),
+                                                      'own': request.session.get('is_own'),
+                                                      })
     else:
         return redirect('signin')
 
