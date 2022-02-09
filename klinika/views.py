@@ -675,6 +675,89 @@ def myvisits(request):
         return redirect('signin')
 
 
+def upcomvisits(request):
+    if request.session.get('my_user', False):
+        allvisit = Visit.objects.filter(status='Zaplanowana').all()
+        if allvisit.count() == 0:
+            return render(request, 'klinika/visit.html',
+                          {'username': request.session.get('my_user'),
+                           'empty': True,
+                           'visit_list': 'Brak wizyt do wyświetlenia',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+
+        return render(request, 'klinika/visit.html',
+                      {'username': request.session.get('my_user'),
+                       'visit_list': allvisit,
+                       'adm': request.session.get('is_adm'),
+                       'vet': request.session.get('is_vet'),
+                       'rec': request.session.get('is_rec'),
+                       'own': request.session.get('is_own'),
+                       })
+    else:
+        return redirect('signin')
+
+
+# odbyte
+def visits(request):
+    if request.session.get('my_user', False):
+        allvisit = Visit.objects.filter(status='Odbyta').all()
+        if allvisit.count() == 0:
+            return render(request, 'klinika/visit.html',
+                          {'username': request.session.get('my_user'),
+                           'empty': True,
+                           'hide': True,
+                           'visit_list': 'Brak wizyt do wyświetlenia',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+
+        return render(request, 'klinika/visit.html',
+                      {'username': request.session.get('my_user'),
+                       'hide': True,
+                       'visit_list': allvisit,
+                       'adm': request.session.get('is_adm'),
+                       'vet': request.session.get('is_vet'),
+                       'rec': request.session.get('is_rec'),
+                       'own': request.session.get('is_own'),
+                       })
+    else:
+        return redirect('signin')
+
+
+def canceledvisits(request):
+    if request.session.get('my_user', False):
+        allvisit = Visit.objects.filter(status='Anulowana').all()
+        if allvisit.count() == 0:
+            return render(request, 'klinika/visit.html',
+                          {'username': request.session.get('my_user'),
+                           'hide': True,
+                           'empty': True,
+                           'visit_list': 'Brak wizyt do wyświetlenia',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+
+        return render(request, 'klinika/visit.html',
+                      {'username': request.session.get('my_user'),
+                       'hide': True,
+                       'visit_list': allvisit,
+                       'adm': request.session.get('is_adm'),
+                       'vet': request.session.get('is_vet'),
+                       'rec': request.session.get('is_rec'),
+                       'own': request.session.get('is_own'),
+                       })
+    else:
+        return redirect('signin')
+
+
 def addvisit(request):
     if request.session.get('my_user', False):
         pets = Pet.objects.filter().all()
