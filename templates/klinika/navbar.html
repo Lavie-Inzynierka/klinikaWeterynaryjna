@@ -41,7 +41,7 @@
             <ul>
             {% if  vet and own or adm or rec and own or own %}
                 <li>
-                    <a href="#"> Moje wizyty</a>
+                    <a href="{% url 'myvisits' %}"> Moje wizyty</a>
                 </li>
 
             {% endif %}
