@@ -644,16 +644,17 @@ def allvisits(request):
         return redirect('signin')
 
 
-# endregion
-
-
-def allvisits(request):
+def myvisits(request):
     if request.session.get('my_user', False):
-        allvisit = Visit.objects.filter().all()
+        user = MyUser.objects.get(username=request.session.get('my_user', False))
+        owner = Owner.objects.get(user=user)
+        allvisit = Visit.objects.filter(pet__owner__user_id=owner.user.id)
+
         if allvisit.count() == 0:
             return render(request, 'klinika/visit.html',
                           {'username': request.session.get('my_user'),
                            'empty': True,
+                           'hide': True,
                            'visit_list': 'Brak wizyt do wyświetlenia',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
@@ -663,6 +664,7 @@ def allvisits(request):
 
         return render(request, 'klinika/visit.html',
                       {'username': request.session.get('my_user'),
+                       'hide': True,
                        'visit_list': allvisit,
                        'adm': request.session.get('is_adm'),
                        'vet': request.session.get('is_vet'),
