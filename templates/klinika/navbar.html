@@ -48,9 +48,9 @@
         {% endif %}
         {% if rec or vet %}
             <li><a href="{% url 'allvisits' %}">Wszystkie wizyty</a></li>
-            <li><a href="#">Nadchodzące wizyty</a></li>
-            <li><a href="#">Odbyte wizyty</a></li>
-            <li><a href="#">Anulowane wizyty</a></li>
+            <li><a href="{% url 'upcomvisits' %}">Nadchodzące wizyty</a></li>
+            <li><a href="{% url 'visits' %}">Odbyte wizyty</a></li>
+            <li><a href="{% url 'canceledvisits' %}">Anulowane wizyty</a></li>
         {% endif %}
         </ul>
         </li>
