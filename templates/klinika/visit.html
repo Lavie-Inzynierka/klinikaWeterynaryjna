@@ -5,10 +5,12 @@
     <script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 {% endblock headAdditional %}
 {% block content %}
+    {% if not hide %}
     <div class="black">
         <a href="  {% url 'addvisit' %} " class="btn bstyle "> Dodaj wizyte
         </a>
     </div>
+    {% endif %}
     <div>
         {% if not empty %}
             <table id="table">
