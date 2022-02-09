@@ -323,7 +323,127 @@ def profile(request):
 # endregion
 # endregion
 
-# region zwierzęta
+# region pets
+
+def pets(request):
+    if request.session.get('my_user', False):
+        allpets = Pet.objects.filter().all()
+        if allpets.count() == 0:
+            return render(request, 'klinika/pets.html',
+                          {'username': request.session.get('my_user'),
+                           'empty': True,
+                           'pet_list': 'Brak zwierząt do wyświetlenia',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+
+        return render(request, 'klinika/pets.html',
+                      {'username': request.session.get('my_user'),
+                       'pet_list': allpets,
+                       'adm': request.session.get('is_adm'),
+                       'vet': request.session.get('is_vet'),
+                       'rec': request.session.get('is_rec'),
+                       'own': request.session.get('is_own'),
+                       })
+    else:
+        return redirect('signin')
+
+
+def addpets(request):
+    if request.session.get('my_user', False):
+        owners = UserType.objects.filter(user_type='PET_OWNER').all()
+        if request.method == 'GET':
+            return render(request, 'klinika/addpets.html', {'username': request.session.get('my_user'),
+                                                            'owners': owners,
+                                                            'adm': request.session.get('is_adm'),
+                                                            'vet': request.session.get('is_vet'),
+                                                            'rec': request.session.get('is_rec'),
+                                                            'own': request.session.get('is_own'),
+                                                            })
+        if request.method == 'POST':
+            name = bleach.clean(request.POST['name'])
+            date_of_birth = bleach.clean(request.POST['date_of_birth'])
+            sex = bleach.clean(request.POST['sex'])
+            species = bleach.clean(request.POST['species'])
+            additional_information = bleach.clean(request.POST['additional_information'])
+
+            if len(name) > 32:
+                return render(request, 'klinika/addpets.html',
+                              {'username': request.session.get('my_user'),
+                               'error': 'Imię zwierzęcia jest zbyt długie',
+                               'adm': request.session.get('is_adm'),
+                               'vet': request.session.get('is_vet'),
+                               'rec': request.session.get('is_rec'),
+                               'own': request.session.get('is_own'),
+                               })
+
+            if sex.capitalize() not in str(Gender_choices):
+                return render(request, 'klinika/addpets.html',
+                              {'username': request.session.get('my_user'),
+                               'error': 'Nieprawidłowa płeć!',
+                               'adm': request.session.get('is_adm'),
+                               'vet': request.session.get('is_vet'),
+                               'rec': request.session.get('is_rec'),
+                               'own': request.session.get('is_own'),
+                               })
+
+            if not Species.objects.filter(species_name=species):
+                species = Species.objects.create(species_name=species, additional_information='')
+                species.save()
+
+            if datetime.datetime.strptime(date_of_birth, '%Y-%m-%d') > datetime.datetime.now():
+                return render(request, 'klinika/addpets.html',
+                              {'username': request.session.get('my_user'),
+                               'error': 'Nieprawidłowa data urodzenia!',
+                               'adm': request.session.get('is_adm'),
+                               'vet': request.session.get('is_vet'),
+                               'rec': request.session.get('is_rec'),
+                               'own': request.session.get('is_own'),
+                               })
+            newspecies = Species.objects.get(species_name=species)
+
+            if request.POST['own'] == 'Dodaj':
+                first_name = bleach.clean(request.POST['first_name'])
+                last_name = bleach.clean(request.POST['last_name'])
+                phone_number = bleach.clean(request.POST['phone_number'])
+                email = bleach.clean(request.POST['email'])
+
+                owner = Owner.objects.create(
+                    first_name=first_name,
+                    last_name=last_name,
+                    phone_number=phone_number,
+                    email=email)
+
+                owner.save()
+            else:
+
+                user = MyUser.objects.get(email=request.POST['own'])
+                owner = Owner.objects.create(
+                    first_name=user.first_name,
+                    last_name=user.last_name,
+                    phone_number=user.phone_number,
+                    email=user.email,
+                    user=user
+                )
+                owner.save()
+
+            pet = Pet.objects.create(name=name,
+                                     date_of_birth=date_of_birth,
+                                     sex=sex,
+                                     species=newspecies,
+                                     additional_information=additional_information,
+                                     owner=owner)
+
+            pet.save()
+
+            return redirect('pets')
+    else:
+        return redirect('signin')
+
+
+# region User pets
 def mypets(request):
     if request.session.get('my_user', False):
         user = MyUser.objects.get(username=request.session.get('my_user', False))
