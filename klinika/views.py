@@ -351,6 +351,10 @@ def pets(request):
         return redirect('signin')
 
 
+def pet(request, petid):
+    return None
+
+
 def addpets(request):
     if request.session.get('my_user', False):
         owners = UserType.objects.filter(user_type='PET_OWNER').all()
