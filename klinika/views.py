@@ -524,15 +524,27 @@ def mypet(request, petid):
 
         try:
             pet = Pet.objects.get(id=petid, owner=owner)
+
+            if Visit.objects.filter(pet__id=petid, status='Zaplanowana').exists():
+                recdate = Visit.objects.filter(pet__id=petid,
+                                               status='Zaplanowana').aggregate(visit_date=Min('visit_date'))
+                visit = Visit.objects.get(pet__id=petid, status='Zaplanowana', visit_date=recdate['visit_date'])
+                nothing = False
+            else:
+                nothing = True
+                visit = 'Brak wizyt do wyświetlenia!'
             if request.method == "POST":
 
                 if request.POST['type'] == 'name':
                     name = bleach.clean(request.POST['name'])
                     if len(name) > 32:
-                        return render(request, 'klinika/mypet.html',
+                        return render(request, 'klinika/pet.html',
                                       {'username': request.session.get('my_user'),
                                        'error': 'Imię zwierzęcia jest zbyt długie',
                                        'pet': pet,
+                                       'visit': visit,
+                                       'userpets': True,
+                                       'nothing': nothing,
                                        'adm': request.session.get('is_adm'),
                                        'vet': request.session.get('is_vet'),
                                        'rec': request.session.get('is_rec'),
@@ -545,24 +557,27 @@ def mypet(request, petid):
                     additional_information = bleach.clean(request.POST['additional_information'])
                     pet.additional_information = additional_information
                     pet.save()
-
         except:
-            return render(request, 'klinika/mypet.html',
+            return render(request, 'klinika/pet.html',
                           {'username': request.session.get('my_user'),
                            'error': 'Nie znaleziono zwierzęcia',
+                           'userpets': True,
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
                            'rec': request.session.get('is_rec'),
                            'own': request.session.get('is_own'),
                            })
 
-        return render(request, 'klinika/mypet.html', {'username': request.session.get('my_user'),
-                                                      'pet': pet,
-                                                      'adm': request.session.get('is_adm'),
-                                                      'vet': request.session.get('is_vet'),
-                                                      'rec': request.session.get('is_rec'),
-                                                      'own': request.session.get('is_own'),
-                                                      })
+        return render(request, 'klinika/pet.html', {'username': request.session.get('my_user'),
+                                                    'pet': pet,
+                                                    'visit': visit,
+                                                    'userpets': True,
+                                                    'nothing': nothing,
+                                                    'adm': request.session.get('is_adm'),
+                                                    'vet': request.session.get('is_vet'),
+                                                    'rec': request.session.get('is_rec'),
+                                                    'own': request.session.get('is_own'),
+                                                    })
     else:
         return redirect('signin')
 
