@@ -4,6 +4,7 @@ body
 {
   background-image: url("jaj.png");
   background-size: cover;
+  background-repeat: no-repeat;
   font-family: lato, sans-serif;
   font-style: oblique;
 }
@@ -42,7 +43,7 @@ a, a:visited
   /*float: left;*/
 }
 
-ol
+#nav ol
 {
   margin: 0;
   padding: 5px 0 0 0;
@@ -55,14 +56,14 @@ ol
   /*color: #8bb6db;*/
 }
 
-ol a
+#nav ol a
 {
   color: #8bb6db;
   text-decoration: none;
   display: block;
 }
 
-ol > li
+#nav ol > li
 {
   float: left;
   width: 200px;
@@ -76,13 +77,13 @@ ol > li
   background-color: #333333;
 }
 
-ol > li:hover
+#nav ol > li:hover
 {
   background-color: #66BCFA;
   color: #000000;
 }
 
-ol > li:first-child
+#nav ol > li:first-child
 {
   margin-left: 10px;
   margin-right: 60px;
@@ -90,18 +91,18 @@ ol > li:first-child
   font-weight: bolder;
 }
 
-ol > li:last-child
+#nav ol > li:last-child
 {
   float: right;
 }
 
 
-ol > li:hover > a
+#nav ol > li:hover > a
 {
   color: #000;
 }
 
-ol > li > ul
+#nav ol > li > ul
 {
   margin: 0;
   padding: 0;
@@ -113,12 +114,12 @@ ol > li > ul
   display: none;
 }
 
-ol > li:hover > ul
+#nav ol > li:hover > ul
 {
   display: block;
 }
 
-ol > li > ul > li
+#nav ol > li > ul > li
 {
   display: block;
   background-color: #333333;
@@ -126,19 +127,19 @@ ol > li > ul > li
   z-index: 100;
 }
 
-ol > li > ul > li:hover
+#nav ol > li > ul > li:hover
 {
   background-color: #66BCFA;
   color: #000000;
 }
 
-ol > li > ul > li:last-child
+#nav ol > li > ul > li:last-child
 {
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
 }
 
-ol > li > ul > li:hover > a
+#nav ol > li > ul > li:hover > a
 {
   color: #000000;
 }
@@ -181,6 +182,53 @@ main
   width: 700px;
 }
 
+#form
+{
+  background-color: rgba(255, 255, 255, 0.8);
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 25px;
+  width: 1000px;
+}
+
+#subnav
+{
+  text-align: center;
+  padding: 10px 0;
+  margin-bottom: 20px;
+  width: 1000px;
+  border-bottom: solid 1px #999;
+}
+
+#subnav > ul
+{
+  margin: 0;
+  padding: 5px 0 0 0;
+  list-style-type: none;
+  height: 25px;
+  line-height: 200%;
+  display: inline-block;
+
+}
+
+#subnav ul > li
+{
+  float: left;
+  width: 180px;
+  height: 30px;
+  margin-right: 20px;
+  font-size: 18px;
+  font-weight: bold;
+  display: block;
+
+}
+#subnav ul > li:hover,
+.active
+{
+  border-bottom: #0d6713 solid 3px;
+}
+
 .about
 {
   font-size: 24px;
@@ -213,8 +261,10 @@ main
   outline: none;
 }
 
-#form2  input,
-#form2  textarea
+#form2 input,
+#form3 input,
+#form2 textarea,
+#form3 textarea
 {
   font-size: 18px;
   border: #ddd solid 2px;
@@ -228,13 +278,17 @@ main
   margin-right: 10px;
   color: black;
 }
-#form2  input:disabled,
-  #form2 textarea:disabled
+
+#form2 input:disabled,
+#form2 textarea:disabled,
+#form3 input:disabled,
+#form3 textarea:disabled
 {
-      background-color: rgb(255, 255, 255);
-    border: #ddd solid 2px;
-   color: black;
+  background-color: rgb(255, 255, 255);
+  border: #ddd solid 2px;
+  color: black;
 }
+
 #signin input[type=text]:focus,
 #signin input[type=email]:focus,
 #signin input[type=password]:focus,
@@ -242,8 +296,12 @@ main
 #form2 input[type=email]:focus,
 #form2 input[type=password]:focus,
 #form2 input[type=tel]:focus,
-#form2 textarea:focus
-
+#form2 textarea:focus,
+#form3 input[type=text]:focus,
+#form3 input[type=email]:focus,
+#form3 input[type=password]:focus,
+#form3 input[type=tel]:focus,
+#form3 textarea:focus
 {
   border-color: #8bb6db;
   background-color: #e9eef3;
@@ -253,8 +311,9 @@ main
 #signin input[type=button],
 #signin input[type=submit],
 #form2 input[type=button],
-#form2  input[type=submit]
-
+#form2 input[type=submit],
+#form3 input[type=button],
+#form3 input[type=submit]
 {
   background-color: #336fd0;
   color: #ffffff;
@@ -273,7 +332,9 @@ main
 #signin input[type=submit]:hover,
 #signin input[type=button]:hover,
 #form2 input[type=submit]:hover,
-#form2 input[type=button]:hover
+#form2 input[type=button]:hover,
+#form3 input[type=submit]:hover,
+#form3 input[type=button]:hover
 {
   color: #fae1d2;
   border: solid 1px #0a2e4f;
@@ -295,7 +356,8 @@ main
   margin-bottom: 0;
 }
 
-#form2 label
+#form2 label,
+#form3 label
 {
   font-style: normal;
   font-weight: bold;
