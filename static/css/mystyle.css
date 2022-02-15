@@ -8,7 +8,7 @@ body
   font-family: lato, sans-serif;
   font-style: oblique;
 }
-
+/*todo: osobna stylizacja form od form2*/
 a, a:visited
 {
   text-decoration: none;
@@ -262,9 +262,9 @@ main
 }
 
 #form2 input,
-#form3 input,
+#form input,
 #form2 textarea,
-#form3 textarea
+#form textarea
 {
   font-size: 18px;
   border: #ddd solid 2px;
@@ -281,8 +281,8 @@ main
 
 #form2 input:disabled,
 #form2 textarea:disabled,
-#form3 input:disabled,
-#form3 textarea:disabled
+#form input:disabled,
+#form textarea:disabled
 {
   background-color: rgb(255, 255, 255);
   border: #ddd solid 2px;
@@ -297,11 +297,11 @@ main
 #form2 input[type=password]:focus,
 #form2 input[type=tel]:focus,
 #form2 textarea:focus,
-#form3 input[type=text]:focus,
-#form3 input[type=email]:focus,
-#form3 input[type=password]:focus,
-#form3 input[type=tel]:focus,
-#form3 textarea:focus
+#form input[type=text]:focus,
+#form input[type=email]:focus,
+#form input[type=password]:focus,
+#form input[type=tel]:focus,
+#form textarea:focus
 {
   border-color: #8bb6db;
   background-color: #e9eef3;
@@ -312,8 +312,8 @@ main
 #signin input[type=submit],
 #form2 input[type=button],
 #form2 input[type=submit],
-#form3 input[type=button],
-#form3 input[type=submit]
+#form input[type=button],
+#form input[type=submit]
 {
   background-color: #336fd0;
   color: #ffffff;
@@ -333,8 +333,8 @@ main
 #signin input[type=button]:hover,
 #form2 input[type=submit]:hover,
 #form2 input[type=button]:hover,
-#form3 input[type=submit]:hover,
-#form3 input[type=button]:hover
+#form input[type=submit]:hover,
+#form input[type=button]:hover
 {
   color: #fae1d2;
   border: solid 1px #0a2e4f;
@@ -357,7 +357,7 @@ main
 }
 
 #form2 label,
-#form3 label
+#form label
 {
   font-style: normal;
   font-weight: bold;
