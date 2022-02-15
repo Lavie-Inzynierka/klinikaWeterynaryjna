@@ -123,3 +123,29 @@ class Visit(models.Model):
     pet = models.ForeignKey(Pet, null=True, on_delete=models.PROTECT)
     vet = models.ForeignKey(MyUser, on_delete=models.PROTECT)
     note = models.TextField(null=True)
+
+
+class Prescription(models.Model):
+    id = models.AutoField(unique=True, primary_key=True, editable=False)
+    code = models.CharField(max_length=22, validators=[MinLengthValidator(22)], unique=True)
+    issue_date = models.DateField()
+    expiration_date = models.DateField()
+    vet = models.ForeignKey(MyUser, on_delete=models.PROTECT)
+    pet = models.ForeignKey(Pet, null=True, on_delete=models.PROTECT)
+    owner = models.ForeignKey(Owner, on_delete=models.PROTECT)
+
+
+class Cure(models.Model):
+    id = models.AutoField(unique=True, primary_key=True, editable=False)
+    name = models.CharField(max_length=64)
+    dose = models.DecimalField(max_digits=5, decimal_places=2)
+    dose_type = models.CharField(max_length=5, choices=Dose_choices)
+    quantity = models.IntegerField()
+    quantity_type = models.CharField(max_length=3, choices=Quantity_choices)
+
+
+class PrescriptionCure(models.Model):
+    id = models.AutoField(unique=True, primary_key=True, editable=False)
+    amount = models.IntegerField()
+    prescription = models.ForeignKey(Prescription, on_delete=models.PROTECT)
+    cure = models.ForeignKey(Cure, on_delete=models.PROTECT)
