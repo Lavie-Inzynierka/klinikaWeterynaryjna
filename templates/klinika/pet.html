@@ -1,0 +1,204 @@
+{% extends 'klinika/main.html' %}
+{% load static %}
+{% block content %}
+
+    <div id="form">
+        {% if error %}
+            <p class="error"> {{ error }}</p>
+        {% else %}
+            {% include "klinika/sub-navbar.html" %}
+            <div id="ch-pet" style="display: none;">
+                <label> Imię
+                    <input style="margin-left: 90px;" type="text" value="{{ pet.name }}" disabled>
+
+                {% if userpets %}
+                    <a id="btn-pet-name" class="btn bstyle green"> Zmień</a>
+                    <div id="ch-pet-name" style="display: none;">
+                        <form method="post">
+                            <input type="hidden" name="type" value="name">
+                            {% csrf_token %}
+                            <input style="margin-left: 220px;" type="text" name="name" placeholder="Nazwa zwierzęcia"
+                                   onfocus="this.placeholder=' ' "
+                                   onblur="this.placeholder='Nazwa zwierzęcia'" required>
+                            <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                        </form>
+                    </div>
+                {% endif %}
+                </label>
+                <label> Data urodzenia
+                    <input style="margin-left: 95px;" value="{{ pet.date_of_birth|date:'d-m-Y' }}" disabled>
+                </label>
+                <label> Płeć
+                    <input style="margin-left: 180px;" type="text" name="sex" value="{{ pet.sex }}" disabled>
+                </label>
+                <label> Gatunek
+                    <input style="margin-left: 145px;" type="text" name="species" value="{{ pet.species }}" disabled>
+                </label>
+                <label> Dodatkowe informacje
+                    <textarea style="margin-left: 30px; resize: none; margin-top: 20px;"
+                              disabled>{{ pet.additional_information }}</textarea>
+                    <a id="btn-pet-adi" class="btn bstyle green" style="margin-top: 10px;"> Zmień</a>
+                    <div id="ch-pet-adi" style="display: none;">
+                        <form method="post">
+                            <input type="hidden" name="type" value="additional_information">
+                            {% csrf_token %}
+                            <textarea style="margin-left: 220px; resize: none;" rows="5" name="additional_information"
+                                      placeholder="Dodatkowe informacje" onfocus="this.placeholder=' ' "
+                                      onblur="this.placeholder='Dodatkowe informacje'" required></textarea>
+                            <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                        </form>
+                    </div>
+                </label>
+            </div>
+            <div id="ch-own" style="display: none;">
+                <label> Imię
+                    <input style="margin-left: 90px;" type="text" value="{{ pet.owner.first_name }}" disabled>
+                </label>
+                <label> Nazwisko
+                    <input style="margin-left: 90px;" type="text" value="{{ pet.owner.last_name }}" disabled>
+                </label>
+                <label> Adres email
+                    <input style="margin-left: 90px;" type="text" value="{{ pet.owner.email }}" disabled>
+                </label>
+                <label> Numer telefonu
+                    <input style="margin-left: 90px;" type="text" value="{{ pet.owner.phone_number }}" disabled>
+                </label>
+            </div>
+
+            <div id="ch-visit" style="display: none;">
+                {% if not nothing %}
+                    <label> Data wizyty
+                        <input style="margin-left: 90px;" type="text" value="{{ visit.visit_date|date:'d-m-Y' }}"
+                               disabled>
+                    </label>
+                    <label> Data time
+                        <input style="margin-left: 90px;" type="text" value="{{ visit.visit_time|date:'H:i' }}"
+                               disabled>
+                    </label>
+                    <label> Weterynarz
+                        <input style="margin-left: 90px;" type="text"
+                               value="{{ visit.vet.first_name }} {{ visit.vet.last_name }}" disabled>
+                    </label>
+                {% else %}
+                    <p class="error"> {{ visit }}</p>
+                {% endif %}
+            </div>
+            <div id="ch-med" style="display: none;">
+                Test4
+            </div>
+            <div id="ch-prescription" style="display: none;">
+                Test5
+            </div>
+        {% endif %}
+        {% if not userpets %}
+            <a href="{% url 'pets' %}">
+                <input style="margin-left: 255px;" type="button" value="Wróć">
+            </a>
+        {% else %}
+            <a href="{% url 'mypets' %}">
+                <input style="margin-left: 255px;" type="button" value="Wróć">
+            </a>
+        {% endif %}
+    </div>
+
+    <script>
+        let show = {
+            pet: false,
+            petname: false,
+            petainfo: false,
+            own: false,
+            visit: false,
+            med: false,
+            prescription: false
+        };
+        $("#btn-pet").click(() => {
+            if (show.pet === false) {
+                $("#ch-pet").show(500)
+                $("#ch-own").hide(500)
+                $("#ch-visit").hide(500)
+                $("#ch-med").hide(500)
+                $("#ch-prescription").hide(500)
+                show.pet = true
+            } else {
+                $("#ch-pet").hide(500)
+                show.pet = false
+            }
+        });
+        $("#btn-pet-name").click(function () {
+            if (show.petname === false) {
+                $("#ch-pet-name").show(500)
+                show.petname = true
+            } else {
+                $("#ch-pet-name").hide(500)
+                show.petname = false
+            }
+        });
+        $("#btn-pet-adi").click(function () {
+            if (show.petainfo === false) {
+                $("#ch-pet-adi").show(500)
+                show.petainfo = true
+            } else {
+                $("#ch-pet-adi").hide(500)
+                show.petainfo = false
+            }
+        });
+        $("#btn-own").click(() => {
+            if (show.own === false) {
+                $("#ch-pet").hide(500)
+                $("#ch-own").show(500)
+                $("#ch-visit").hide(500)
+                $("#ch-med").hide(500)
+                $("#ch-prescription").hide(500)
+                show.own = true
+            } else {
+                $("#ch-own").hide(500)
+                show.own = false
+            }
+        });
+        $("#btn-visit").click(() => {
+            if (show.visit === false) {
+                $("#ch-pet").hide(500)
+                $("#ch-own").hide(500)
+                $("#ch-visit").show(500)
+                $("#ch-med").hide(500)
+                $("#ch-prescription").hide(500)
+                show.visit = true
+            } else {
+                $("#ch-visit").hide(500)
+                show.visit = false
+            }
+        });
+        $("#btn-med").click(() => {
+            if (show.med === false) {
+                $("#ch-pet").hide(500)
+                $("#ch-own").hide(500)
+                $("#ch-visit").hide(500)
+                $("#ch-med").show(500)
+                $("#ch-prescription").hide(500)
+                show.med = true
+            } else {
+                $("#ch-med").hide(500)
+                show.med = false
+            }
+        });
+        $("#btn-prescription").click(() => {
+            if (show.prescription === false) {
+                $("#ch-pet").hide(500)
+                $("#ch-own").hide(500)
+                $("#ch-visit").hide(500)
+                $("#ch-med").hide(500)
+                $("#ch-prescription").show(500)
+                show.prescription = true
+            } else {
+                $("#ch-prescription").hide(500)
+                show.prescription = false
+            }
+        });
+        jQuery(document).ready(function () {
+            jQuery('ul li').click(function () {
+                jQuery('ul li').removeClass("active");
+                jQuery(this).addClass("active");
+            });
+        });
+    </script>
+{% endblock %}
