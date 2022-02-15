@@ -1,0 +1,63 @@
+{% extends 'klinika/main.html' %}
+{% load static %}
+{% block headAdditional %}
+    <link href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+{% endblock headAdditional %}
+{% block content %}
+    <div class="black">
+     {% if not userprescrptions %}
+        <a href="#" class="btn bstyle "> Dodaj recepte
+        </a>
+    {% else %}
+         <a href="#" class="btn bstyle "> Dodaj recepte
+        </a>
+    {% endif %}
+    </div>
+ <div>
+        {% if not empty %}
+            <table id="table">
+                <thead>
+                <tr>
+                    <th>Kod</th>
+                    <th>Właściciel</th>
+                    <th>Zwierzę</th>
+                    <th>Wystawiający</th>
+                    <th>Szczegółowe informacje</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for rec in rec_list %}
+                    <tr>
+                        <td>{{ rec.code }}</td>
+                        <td>{{ rec.owner.first_name }} {{ rec.owner.last_name }}</td>
+                        <td>{{ rec.pet.name }}</td>
+                        <td>{{ rec.vet.first_name }} {{ rec.vet.last_name }}</td>
+                        <td>
+                            {% if not userpets %}
+                            <a href="#" class="btn bstyle">Podgląd </a>
+                            {% else %}
+                             <a href="#" class="btn bstyle">Podgląd </a>
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+                        <div style="clear: both"></div>
+        {% else %}
+            <p> {{ rec_list }} </p>
+        {% endif %}
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#table').DataTable({
+                language: {url: "{% static 'json/polish.json'%}"},
+                columnDefs: [
+                    {searchable: false, targets: 4}
+                ]
+            });
+        });
+    </script>
+{% endblock %}
