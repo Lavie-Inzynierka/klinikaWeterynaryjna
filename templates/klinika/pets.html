@@ -6,8 +6,13 @@
 {% endblock headAdditional %}
 {% block content %}
     <div class="black">
+     {% if not userpets %}
         <a href="{% url 'addpets' %}" class="btn bstyle "> Dodaj zwierze
         </a>
+    {% else %}
+         <a href="{% url 'addpet' %}" class="btn bstyle "> Dodaj zwierze
+        </a>
+    {% endif %}
     </div>
     <div>
         {% if not empty %}
@@ -31,7 +36,11 @@
                         <td>{{ pet.species.species_name }}</td>
                         <td>{{ pet.owner.first_name }} {{ pet.owner.last_name }}</td>
                         <td>
-                            <a href="#" class="btn bstyle">Podgląd </a>
+                            {% if not userpets %}
+                            <a href="/pet/{{ pet.id }} " class="btn bstyle">Podgląd </a>
+                            {% else %}
+                             <a href="/mypet/{{ pet.id }} " class="btn bstyle">Podgląd </a>
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}
