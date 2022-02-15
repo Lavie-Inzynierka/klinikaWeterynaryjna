@@ -568,17 +568,19 @@ p
 /*region footer*/
 #footer
 {
-  color: #8bb6db;
+  color: #77a1c2;
   text-align: right !important;
   opacity: 75%;
   width: 1800px;
   font-size: 14px;
+  position: fixed;
+  bottom: 20px;
 }
 
 footer > a, footer > a:visited
 {
 
-  color: #8bb6db;
+  color: #77a1c2;
 
 }
 
