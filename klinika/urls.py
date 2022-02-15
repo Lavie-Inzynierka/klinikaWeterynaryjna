@@ -22,5 +22,6 @@ urlpatterns = [
     path('visits/', views.visits, name="visits"),
     path('canceledvisits/', views.canceledvisits, name="canceledvisits"),
     path('addvisit/', views.addvisit, name="addvisit"),
+    path('prescriptions/', views.prescriptions, name="prescriptions"),
 
 ]
