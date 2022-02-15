@@ -918,6 +918,33 @@ def addvisit(request):
 
 # endregion
 
+def prescriptions(request):
+    if request.session.get('my_user', False):
+        allprescriptions = Prescription.objects.filter().all()
+        if allprescriptions.count() == 0:
+            return render(request, 'klinika/prescriptions.html',
+                          {'username': request.session.get('my_user'),
+                           'empty': True,
+                           'rec_list': 'Brak recept do wyświetlenia',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+
+
+        return render(request, 'klinika/prescriptions.html',
+                      {'username': request.session.get('my_user'),
+                       'rec_list': allprescriptions,
+                       'adm': request.session.get('is_adm'),
+                       'vet': request.session.get('is_vet'),
+                       'rec': request.session.get('is_rec'),
+                       'own': request.session.get('is_own'),
+                       })
+    else:
+        return redirect('signin')
+
+
 # region setup
 def setup(request):
     global mytype
