@@ -494,9 +494,8 @@ def mypets(request):
         try:
             owner = Owner.objects.get(user=user) or None
             pets = Pet.objects.filter(owner=owner).all() or None
-            user_type = UserType.objects.get(user=user, user_type='PET_OWNER')
         except:
-            return render(request, 'klinika/mypets.html',
+            return render(request, 'klinika/pets.html',
                           {'username': request.session.get('my_user'),
                            'pet_list': 'Brak zwierząt do wyświetlenia',
                            'adm': request.session.get('is_adm'),
@@ -505,10 +504,10 @@ def mypets(request):
                            'own': request.session.get('is_own'),
                            })
 
-        return render(request, 'klinika/mypets.html',
+        return render(request, 'klinika/pets.html',
                       {'username': request.session.get('my_user'),
+                       'userpets': True,
                        'pet_list': pets,
-                       'utype': user_type.user_type,
                        'adm': request.session.get('is_adm'),
                        'vet': request.session.get('is_vet'),
                        'rec': request.session.get('is_rec'),
