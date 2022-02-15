@@ -21,6 +21,21 @@ Status_choices = (
     ('Anulowana', 'a'),
 )
 
+Dose_choices = (
+    ('mg', 'mg'),
+    ('mg/g', 'mg/g'),
+    ('mg/ml', 'mg/ml'),
+    ('ml', 'ml'),
+)
+
+Quantity_choices = (
+    ('sz.', 'sz'),
+    ('mg', 'mg'),
+    ('ml', 'ml'),
+    ('op', 'op'),
+    ('lst', 'lst')
+)
+
 
 class MyUser(models.Model):
     id = models.AutoField(unique=True, primary_key=True, editable=False)
