@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 from django.db import models
 import enum
+from django.core.validators import MinLengthValidator
 
 
 class UserTypeEnum(enum.Enum):
