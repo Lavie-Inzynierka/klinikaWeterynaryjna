@@ -353,7 +353,45 @@ def pets(request):
 
 
 def pet(request, petid):
-    return None
+    if request.session.get('my_user', False):
+
+        try:
+            pet = Pet.objects.get(id=petid)
+            if Visit.objects.filter(pet__id=petid, status='Zaplanowana').exists():
+                recdate = Visit.objects.filter(pet__id=petid,
+                                               status='Zaplanowana').aggregate(visit_date=Min('visit_date'))
+                visit = Visit.objects.get(pet__id=petid, status='Zaplanowana', visit_date=recdate['visit_date'])
+                nothing = False
+            else:
+                nothing = True
+                visit = 'Brak wizyt do wyświetlenia!'
+            if request.method == "POST":
+                if request.POST['type'] == 'additional_information':
+                    additional_information = bleach.clean(request.POST['additional_information'])
+                    pet.additional_information = additional_information
+                    pet.save()
+
+        except:
+            return render(request, 'klinika/pet.html',
+                          {'username': request.session.get('my_user'),
+                           'error': 'Nie znaleziono zwierzęcia',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+
+        return render(request, 'klinika/pet.html', {'username': request.session.get('my_user'),
+                                                    'pet': pet,
+                                                    'visit': visit,
+                                                    'nothing': nothing,
+                                                    'adm': request.session.get('is_adm'),
+                                                    'vet': request.session.get('is_vet'),
+                                                    'rec': request.session.get('is_rec'),
+                                                    'own': request.session.get('is_own'),
+                                                    })
+    else:
+        return redirect('signin')
 
 
 def addpets(request):
