@@ -759,7 +759,7 @@ def upcomvisits(request):
         return redirect('signin')
 
 
-# odbyte
+# odbyte wizyry
 def visits(request):
     if request.session.get('my_user', False):
         allvisit = Visit.objects.filter(status='Odbyta').all()
@@ -918,7 +918,8 @@ def addvisit(request):
 
 # endregion
 
-def prescriptions(request):
+# region prescriptions
+def all_prescriptions(request):
     if request.session.get('my_user', False):
         allprescriptions = Prescription.objects.filter().all()
         if allprescriptions.count() == 0:
@@ -932,6 +933,31 @@ def prescriptions(request):
                            'own': request.session.get('is_own'),
                            })
 
+        return render(request, 'klinika/prescriptions.html',
+                      {'username': request.session.get('my_user'),
+                       'rec_list': allprescriptions,
+                       'adm': request.session.get('is_adm'),
+                       'vet': request.session.get('is_vet'),
+                       'rec': request.session.get('is_rec'),
+                       'own': request.session.get('is_own'),
+                       })
+    else:
+        return redirect('signin')
+
+
+def prescriptions(request):
+    if request.session.get('my_user', False):
+        allprescriptions = Prescription.objects.filter(status='Wystawiona').all()
+        if allprescriptions.count() == 0:
+            return render(request, 'klinika/prescriptions.html',
+                          {'username': request.session.get('my_user'),
+                           'empty': True,
+                           'rec_list': 'Brak recept do wyświetlenia',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
 
         return render(request, 'klinika/prescriptions.html',
                       {'username': request.session.get('my_user'),
@@ -945,6 +971,63 @@ def prescriptions(request):
         return redirect('signin')
 
 
+def completedprescriptions(request):
+    if request.session.get('my_user', False):
+        allprescriptions = Prescription.objects.filter(status='Zrealizowana').all()
+        if allprescriptions.count() == 0:
+            return render(request, 'klinika/prescriptions.html',
+                          {'username': request.session.get('my_user'),
+                           'empty': True,
+                           'rec_list': 'Brak recept do wyświetlenia',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+
+        return render(request, 'klinika/prescriptions.html',
+                      {'username': request.session.get('my_user'),
+                       'rec_list': allprescriptions,
+                       'adm': request.session.get('is_adm'),
+                       'vet': request.session.get('is_vet'),
+                       'rec': request.session.get('is_rec'),
+                       'own': request.session.get('is_own'),
+                       })
+    else:
+        return redirect('signin')
+
+
+def expiredprescriptions(request):
+    if request.session.get('my_user', False):
+        allprescriptions = Prescription.objects.filter(status='Wygasla').all()
+        if allprescriptions.count() == 0:
+            return render(request, 'klinika/prescriptions.html',
+                          {'username': request.session.get('my_user'),
+                           'empty': True,
+                           'rec_list': 'Brak recept do wyświetlenia',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+
+        return render(request, 'klinika/prescriptions.html',
+                      {'username': request.session.get('my_user'),
+                       'rec_list': allprescriptions,
+                       'adm': request.session.get('is_adm'),
+                       'vet': request.session.get('is_vet'),
+                       'rec': request.session.get('is_rec'),
+                       'own': request.session.get('is_own'),
+                       })
+    else:
+        return redirect('signin')
+
+
+def addprescription(request):
+    return None
+
+
+# endregion
 # region setup
 def setup(request):
     global mytype
