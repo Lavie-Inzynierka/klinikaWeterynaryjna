@@ -21,6 +21,11 @@ Status_choices = (
     ('Odbyta', 'o'),
     ('Anulowana', 'a'),
 )
+Prescription_Status_choices = (
+    ('Wystawiona', 'w'),
+    ('Zrealizowana', 'z'),
+    ('Wygasla', 'wy'),
+)
 
 Dose_choices = (
     ('mg', 'mg'),
@@ -133,6 +138,7 @@ class Prescription(models.Model):
     vet = models.ForeignKey(MyUser, on_delete=models.PROTECT)
     pet = models.ForeignKey(Pet, null=True, on_delete=models.PROTECT)
     owner = models.ForeignKey(Owner, on_delete=models.PROTECT)
+    status = models.CharField(max_length=12, choices=Prescription_Status_choices)
 
 
 class Cure(models.Model):
