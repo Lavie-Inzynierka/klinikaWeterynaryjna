@@ -11,19 +11,20 @@
                 <label> Imię
                     <input style="margin-left: 90px;" type="text" value="{{ pet.name }}" disabled>
 
-                {% if userpets %}
-                    <a id="btn-pet-name" class="btn bstyle green"> Zmień</a>
-                    <div id="ch-pet-name" style="display: none;">
-                        <form method="post">
-                            <input type="hidden" name="type" value="name">
-                            {% csrf_token %}
-                            <input style="margin-left: 220px;" type="text" name="name" placeholder="Nazwa zwierzęcia"
-                                   onfocus="this.placeholder=' ' "
-                                   onblur="this.placeholder='Nazwa zwierzęcia'" required>
-                            <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
-                        </form>
-                    </div>
-                {% endif %}
+                    {% if userpets %}
+                        <a id="btn-pet-name" class="btn bstyle green"> Zmień</a>
+                        <div id="ch-pet-name" style="display: none;">
+                            <form method="post">
+                                <input type="hidden" name="type" value="name">
+                                {% csrf_token %}
+                                <input style="margin-left: 220px;" type="text" name="name"
+                                       placeholder="Nazwa zwierzęcia"
+                                       onfocus="this.placeholder=' ' "
+                                       onblur="this.placeholder='Nazwa zwierzęcia'" required>
+                                <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                            </form>
+                        </div>
+                    {% endif %}
                 </label>
                 <label> Data urodzenia
                     <input style="margin-left: 95px;" value="{{ pet.date_of_birth|date:'d-m-Y' }}" disabled>
