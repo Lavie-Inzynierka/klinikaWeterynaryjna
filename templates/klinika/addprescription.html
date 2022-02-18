@@ -1,0 +1,257 @@
+{% extends 'klinika/main.html' %}
+{% load static %}
+{% block headAdditional %}
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+{% endblock headAdditional %}
+{% block content %}
+    <div id="form2">
+        {% if error %}
+            <p class="error"> {{ error }}</p>
+        {% endif %}
+        {% csrf_token %}
+        <header class="name">Vet Pet</header>
+        <label> Kod recepty
+            <input type="number" name="code" id="presccode" value="1234567890123456789009" disabled>
+        </label>
+        <label> Data ważności
+            <input type="date" name="expiration_date" id="expdate" placeholder="Data ważności"
+                   onfocus="this.placeholder=' ' "
+                   onblur="this.placeholder='Data ważności'">
+        </label>
+        <label>Zwierzę
+            <a id="btn-pet-choice" class="btn bstyle green" style="margin-top: 10px;"> Wybierz zwierzę</a>
+            <div id="ch-pet-choice" style="display: none;">
+                <select name="pet" id="pet-choice">
+                    <option disabled selected value="">Wybierz zwierzę</option>
+                    {% for pet in pets %}
+                        <option value="{{ pet.id }}">
+                            {{ pet.name }} {{ pet.date_of_birth|date:'d-m-Y' }}
+                            {{ pet.owner.first_name }} {{ pet.owner.last_name }}
+                        </option>
+
+                    {% endfor %}
+                    <option>Dodaj</option>
+                </select>
+            </div>
+            <div id="pet-add" style="display: none;">
+                <input type="text" name="name" id="petname" placeholder="Nazwa zwierzęcia"
+                       onfocus="this.placeholder=' ' "
+                       onblur="this.placeholder='Nazwa zwierzęcia'">
+                <input type="date" name="date_of_birth" id="petDoB" placeholder="Data urodzenia"
+                       onfocus="this.placeholder=' ' "
+                       onblur="this.placeholder='Data urodzenia'">
+                <input type="text" name="sex" id="petsex" placeholder="Płeć" onfocus="this.placeholder=' ' "
+                       onblur="this.placeholder='Płeć'">
+                <input type="text" name="species" id="petspecies" placeholder="Gatunek" onfocus="this.placeholder=' ' "
+                       onblur="this.placeholder='Gatunek'">
+                <input type="text" name="additional_information" id="petai" placeholder="Dodatkowe informacje"
+                       onfocus="this.placeholder=' ' "
+                       onblur="this.placeholder='Dodatkowe informacje' ">
+
+                <label> Właściciel
+                    <a id="btn-own-choice" class="btn bstyle green" style="margin-top: 10px;"> Wybierz
+                        Właściciela
+                    </a>
+                    <div id="ch-own-choice" style="display: none;">
+                        <select name="own" id="own-choice">
+                            <option disabled selected value="">Wybierz właściciela zwierzęcia</option>
+                            {% for own in owners %}
+                                <option value="{{ own.id }}">
+                                    {{ own.first_name }} {{ own.last_name }} {{ own.email }}
+                                </option>
+                            {% endfor %}
+                            <option>Dodaj</option>
+                        </select>
+                        <div id="own-add" style="display: none">
+                            <input type="text" id="fname" name="first_name" placeholder="Imię"
+                                   onfocus="this.placeholder=' ' "
+                                   onblur="this.placeholder='Imię'">
+                            <input type="text" id="lname" name="last_name" placeholder="Nazwisko"
+                                   onfocus="this.placeholder=' ' "
+                                   onblur="this.placeholder='Nazwisko'">
+                            <input type="email" id="email" name="email" placeholder="Email"
+                                   onfocus="this.placeholder=' ' "
+                                   onblur="this.placeholder='Email'">
+                            <input type="tel" id="phone" name="phone_number" placeholder="Numer telefonu"
+                                   onfocus="this.placeholder=' ' "
+                                   onblur="this.placeholder='Numer telefonu'">
+                        </div>
+                        <script>
+                            $(document).ready(() => {
+                                $('#own-choice').change(
+                                    () => {
+                                        if ($('#own-choice').val() === 'Dodaj')
+                                            $('#own-add').show(500)
+                                        else
+                                            $('#own-add').hide(500)
+                                    }
+                                )
+                            })
+                        </script>
+                    </div>
+                </label>
+            </div>
+        </label>
+        <script>
+            $(document).ready(() => {
+                $('#pet-choice').change(
+                    () => {
+                        if ($('#pet-choice').val() === 'Dodaj')
+                            $('#pet-add').show(500)
+                        else
+                            $('#pet-add').hide(500)
+                    }
+                )
+            })
+        </script>
+        <label>Lek/i
+            <a id="btn-cure-choice" class="btn bstyle green" style="margin-top: 10px;"> Wybierz
+                Lek/i
+            </a>
+            <div id="ch-cure-choice" style="display: none;">
+                <select name="cures" id="cure-choice">
+                    <option disabled selected value="">Wybierz leki</option>
+                    {% for cure in cures %}
+                        <option value="{{ cure.id }}" data-name="{{ cure.name }} {{ cure.dose }} {{ cure.dose_type }}">
+                            {{ cure.name }} {{ cure.dose }} {{ cure.dose_type }}
+                        </option>
+                    {% endfor %}
+                </select>
+                <input id="cure-quantity" type="number">
+                <select id="cure-unit">
+                    <option value="sz.">sztuki</option>
+                    <option value="ml">mililitry</option>
+                    <option value="op">opakowania</option>
+                    <option value="lst">listki</option>
+                </select>
+                <button id="cure-choice-add" class="btn bstyle green">Dodaj lek</button>
+            </div>
+        </label>
+
+        <table id="cure-table">
+            <thead>
+            <tr>
+                <th>Nazwa leku</th>
+                <th>Ilość</th>
+                <th>jm.</th>
+                <th>id</th>
+            </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <button id="get-data">Zapisz</button>
+    </div>
+    <script>
+        let show = {pet: false, own: false, cure: false};
+        $("#btn-pet-choice").click(() => {
+            if (show.pet === false) {
+                $("#ch-pet-choice").show(500)
+                show.pet = true
+            } else {
+                $("#ch-pet-choice").hide(500)
+                show.pet = false
+            }
+        });
+
+        $("#btn-own-choice").click(() => {
+            if (show.own === false) {
+                $("#ch-own-choice").show(500)
+                show.own = true
+            } else {
+                $("#ch-own-choice").hide(500)
+                show.own = false
+            }
+        });
+        $("#btn-cure-choice").click(() => {
+            if (show.cure === false) {
+                $("#ch-cure-choice").show(500)
+                show.cure = true
+            } else {
+                $("#ch-cure-choice").hide(500)
+                show.cure = false
+            }
+        });
+        $(document).ready(() => {
+            $('#pet-choice').select2({
+                placeholder: "Wybierz zwierzę",
+                allowClear: true,
+            });
+            $('#own-choice').select2({
+                placeholder: "Wybierz właściciela zwierzęcia",
+                allowClear: true,
+            });
+            const table = $('#cure-table').DataTable({
+                language: {url: "{% static 'json/polish.json'%}"},
+                columnDefs: [
+                    {visible: false, targets: 3},
+                    {searchable: false, targets: [1, 2, 3]}
+                ]
+            });
+            $('#cure-choice').select2({
+                placeholder: "Wybierz lek/i",
+                allowClear: true,
+            })
+            $('#cure-unit').select2()
+            {#    .on("click", function () {#}
+            {#    $myselect.select2("open");#}
+            {#;}).on("click", function () {#}
+            {#    $myselect.select2("close");#}
+            {#;}).on("click", function () {#}
+            {#    $example.val("{{ cure.id }}").trigger("change")#}
+            {#;})#}
+
+            $('#cure-choice-add').click(() => {
+                table.row.add([
+                        $("#cure-choice").select2().find(":selected").data("name"),
+                        $("#cure-quantity").val(),
+                        $("#cure-unit").select2().find(":selected").val(),
+                        $("#cure-choice").val(),
+
+                    ]
+                ).draw(false)
+
+            })
+
+            $('#get-data').click(() => {
+                const rowcount = table.rows().count();
+                const prescription = {
+                    code: $("#presccode").val(),
+                    expiration_date: $("#expdate").val(),
+                    pet: $("#pet-choice").val() !== 'Dodaj' ? parseInt($("#pet-choice").val()) : 0,
+                    newPet: $("#pet-choice").val() === 'Dodaj' ? {
+                        name: $("#petname").val(),
+                        date_of_birth: $("#petDoB").val(),
+                        sex: $("#petsex").val(),
+                        species: $("#petspecies").val(),
+                        additional_information: $("#petai").val(),
+                        owner: $("#own-choice").val() !== 'Dodaj' ? parseInt($("#own-choice").val()) : 0,
+                        newOwner: $("#own-choice").val() === 'Dodaj' ? {
+                            first_name: $("#fname").val(),
+                            last_name: $("#lname").val(),
+                            email: $("#email").val(),
+                            phone_number: $("#phone").val()
+                        } : undefined
+                    } : undefined,
+                    cures: []
+
+                }
+                const rowCount = table.rows().count();
+                for (let i = 0; i < rowCount; ++i) {
+                    const data = table.rows(i).data().toArray();
+                    console.log(data[0])
+                    prescription.cures.push({
+                        cure: parseInt(data[0][3]),
+                        quantity: parseInt(data[0][1]),
+                        quantity_type: data[0][2]
+                    })
+                }
+                $.post('/addprescriptions/', JSON.stringify(prescription), (data, status, jqxhr)=>{console.log(data)})
+            })
+
+        });
+    </script>
+{% endblock content %}
