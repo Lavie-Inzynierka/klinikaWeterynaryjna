@@ -368,6 +368,21 @@ def pet(request, petid):
             else:
                 nothing = True
                 visit = 'Brak wizyt do wyświetlenia!'
+            if Prescription.objects.filter(pet__id=petid, status='Wystawiona').exists():
+                recexpdate = Prescription.objects.filter(pet__id=petid,
+                                                         status='Wystawiona').aggregate(
+                    expiration_date=Min('expiration_date'))
+                prescription = Prescription.objects.get(pet__id=petid, status='Wystawiona',
+                                                        expiration_date=recexpdate['expiration_date'])
+
+                cures = PrescriptionCure.objects.filter(prescription__id=prescription.id).all()
+
+                nothing2 = False
+            else:
+                nothing2 = True
+                prescription = 'Brak recept do wyświetlenia!'
+                cures = 'Brak leków do wyświetlenia!'
+
             if request.method == "POST":
                 if request.POST['type'] == 'additional_information':
                     additional_information = bleach.clean(request.POST['additional_information'])
