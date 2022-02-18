@@ -725,8 +725,20 @@ def allvisits(request):
 def myvisits(request):
     if request.session.get('my_user', False):
         user = MyUser.objects.get(username=request.session.get('my_user', False))
-        owner = Owner.objects.get(user=user)
-        allvisit = Visit.objects.filter(pet__owner__user_id=owner.user.id)
+        if Owner.objects.filter(user=user).exists():
+            owner = Owner.objects.get(user=user)
+            allvisit = Visit.objects.filter(pet__owner__user_id=owner.user.id)
+        else:
+            return render(request, 'klinika/visit.html',
+                          {'username': request.session.get('my_user'),
+                           'empty': True,
+                           'hide': True,
+                           'visit_list': 'Brak wizyt do wyświetlenia',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
 
         if allvisit.count() == 0:
             return render(request, 'klinika/visit.html',
