@@ -130,6 +130,13 @@ class Visit(models.Model):
     note = models.TextField(null=True)
 
 
+class Cure(models.Model):
+    id = models.AutoField(unique=True, primary_key=True, editable=False)
+    name = models.CharField(max_length=64)
+    dose = models.DecimalField(max_digits=5, decimal_places=2)
+    dose_type = models.CharField(max_length=5, choices=Dose_choices)
+
+
 class Prescription(models.Model):
     id = models.AutoField(unique=True, primary_key=True, editable=False)
     code = models.CharField(max_length=22, validators=[MinLengthValidator(22)], unique=True)
