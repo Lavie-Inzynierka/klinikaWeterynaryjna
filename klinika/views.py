@@ -1026,7 +1026,87 @@ def expiredprescriptions(request):
 
 
 def addprescription(request):
-    return None
+    if request.session.get('my_user', False):
+        pets = Pet.objects.filter().all()
+        owners = Owner.objects.filter().all()
+        cures = Cure.objects.filter().all()
+        if request.method == 'GET':
+            return render(request, 'klinika/addprescription.html',
+                          {'username': request.session.get('my_user'),
+                           'pets': pets,
+                           'owners': owners,
+                           'cures': cures,
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+        if request.method == 'POST':
+            vet = MyUser.objects.get(username=request.session.get('my_user'))
+            mybody = request.body.decode('utf-8')
+            body = json.loads(mybody)
+            if not addpresc_validator.validate(body):
+                return HttpResponse('{"status":"Bad json"}', content_type='aplication/json')
+            print(body['pet'])
+            if body['pet'] != 0:
+
+                pet = Pet.objects.get(id=body['pet'])
+            else:
+                if body['newPet']['owner'] != 0:
+                    owner = Owner.objects.get(id=body['newPet']['owner'])
+                else:
+                    owner = Owner.objects.create(
+                        first_name=body['newPet']['newOwner']['first_name'],
+                        last_name=body['newPet']['newOwner']['last_name'],
+                        email=body['newPet']['newOwner']['email'],
+                        phone_number=body['newPet']['newOwner']['phone_number'],
+                    )
+                    owner.save()
+
+                if not Species.objects.filter(species_name=body['newPet']['species']):
+                    species = Species.objects.create(species_name=body['newPet']['species'], additional_information='')
+                    species.save()
+                else:
+                    species = Species.objects.get(species_name=body['newPet']['species'])
+
+                pet = Pet.objects.create(
+                    name=body['newPet']['name'],
+                    date_of_birth=datetime.strptime(body['newPet']['date_of_birth'], '%Y-%m-%d'),
+                    sex=body['newPet']['sex'],
+                    species=species,
+                    additional_information=body['newPet']['additional_information'],
+                    owner=owner
+                )
+                pet.save()
+
+            pre = Prescription.objects.create(
+                code=body['code'],
+                issue_date=datetime.now(),
+                expiration_date=datetime.strptime(body['expiration_date'], '%Y-%m-%d'),
+                pet=pet,
+                vet=vet,
+                owner=pet.owner,
+                status='Wystawiona'
+            )
+            pre.save()
+
+            for c in body['cures']:
+                mcure = Cure.objects.get(id=c['cure'])
+                quantity = c['quantity']
+                q_type = c['quantity_type']
+
+                mycure = PrescriptionCure.objects.create(
+                    quantity=quantity,
+                    quantity_type=q_type,
+                    cure=mcure,
+                    prescription=pre
+                )
+                mycure.save()
+
+            return HttpResponse('{"status":"ok"}', content_type='aplication/json')
+
+    else:
+        return redirect('signin')
 
 
 # endregion
