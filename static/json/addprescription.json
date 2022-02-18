@@ -1,0 +1,27 @@
+{
+  "code": "code",
+  "expiration_date": "expiration_date",
+  "petid": 1,
+  "newPet": {
+    "name": "name",
+    "date_of_birth": "date_of_birth",
+    "sex": "sex",
+    "species": "species",
+    "additional_information": "additional_information",
+    "owner": 1,
+    "newOwner": {
+      "first_name": "first_name",
+      "last_name": "last_name",
+      "email": "email",
+      "phone_number": "phone_number"
+    }
+  },
+  "cures": [
+    {
+      "cure": 1,
+      "quantity": 4,
+      "quantity_type": "op"
+    }
+  ]
+
+}
