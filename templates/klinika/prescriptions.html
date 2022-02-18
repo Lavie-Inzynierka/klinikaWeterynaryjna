@@ -7,7 +7,7 @@
 {% block content %}
     <div class="black">
      {% if not userprescrptions %}
-        <a href="#" class="btn bstyle "> Dodaj recepte
+        <a href="{% url 'addprescriptions' %}" class="btn bstyle "> Dodaj recepte
         </a>
     {% else %}
          <a href="#" class="btn bstyle "> Dodaj recepte
