@@ -23,7 +23,7 @@
             <label>Zwierzę
                 <a id="btn-pet-choice" class="btn bstyle green" style="margin-top: 10px;"> Wybierz zwierzę</a>
                 <div id="ch-pet-choice" style="display: none;">
-                    <select name="pet" id="choice">
+                    <select name="pet" id="pet-choice">
                         {% for pet in pets %}
                             <option value="{{ pet.id }}">
                                 {{ pet.name }} {{ pet.date_of_birth|date:'d-m-Y' }}
@@ -52,7 +52,7 @@
                             Właściciela
                         </a>
                         <div id="ch-own-choice" style="display: none;">
-                            <select name="own" id="choice2">
+                            <select name="own" id="own-choice">
                                 {% for own in owners %}
                                     <option value="{{ own.user.email}}">
                                         {{ own.user.first_name }} {{ own.user.last_name }} {{ own.user.email }}
@@ -76,9 +76,9 @@
                             </div>
                             <script>
                                 $(document).ready(() => {
-                                    $('#choice2').change(
+                                    $('#own-choice').change(
                                         () => {
-                                            if ($('#choice2').val() === 'Dodaj')
+                                            if ($('#own-choice').val() === 'Dodaj')
                                                 $('#own-add').show(500)
                                             else
                                                 $('#own-add').hide(500)
@@ -92,9 +92,9 @@
             </label>
             <script>
                 $(document).ready(() => {
-                    $('#choice').change(
+                    $('#pet-choice').change(
                         () => {
-                            if ($('#choice').val() === 'Dodaj')
+                            if ($('#pet-choice').val() === 'Dodaj')
                                 $('#pet-add').show(500)
                             else
                                 $('#pet-add').hide(500)
@@ -105,7 +105,7 @@
             <label> Weterynarz
                 <a id="btn-vet-choice" class="btn bstyle green" style="margin-top: 10px;"> Wybierz weterynarza</a>
                 <div id="ch-vet-choice" style="display: none;">
-                    <select name="vet" id="choice3">
+                    <select name="vet" id="vet-choice">
                         {% for vet in vets %}
                             <option value="{{ vet.user.email }}">
                                 {{ vet.user.first_name }} {{ vet.user.last_name }}
@@ -152,13 +152,13 @@
             show.vet ^= true
         });
         $(document).ready(() => {
-            $('#choice').select2();
+            $('#pet-choice').select2();
         });
         $(document).ready(() => {
-            $('#choice2').select2();
+            $('#own-choice').select2();
         });
         $(document).ready(() => {
-            $('#choice3').select2();
+            $('#vet-choice').select2();
         });
     </script>
 
