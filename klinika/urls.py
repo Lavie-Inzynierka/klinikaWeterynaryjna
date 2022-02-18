@@ -26,5 +26,6 @@ urlpatterns = [
     path('prescriptions/', views.prescriptions, name="prescriptions"),
     path('completedprescriptions/', views.completedprescriptions, name="completedprescriptions"),
     path('expiredprescriptions/', views.expiredprescriptions, name="expiredprescriptions"),
+    path('addprescriptions/', views.addprescription, name="addprescriptions"),
 
 ]
