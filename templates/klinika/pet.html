@@ -236,5 +236,9 @@
                 jQuery(this).addClass("active");
             });
         });
+
+        const table = $('#cure-table').DataTable({
+                language: {url: "{% static 'json/polish.json'%}"}
+            });
     </script>
 {% endblock %}
