@@ -4,8 +4,8 @@ import os
 import bleach
 from django.contrib import messages
 from django.db.models import Min
-from .models import MyUser, Pet, Gender_choices, UserType, UserTypeEnum, Species, Owner, UserAddresses, Visit, \
-    Prescription
+from django.http import HttpResponse
+from .models import *
 from django.shortcuts import render, redirect
 from sendgrid import SendGridAPIClient
 import bcrypt
