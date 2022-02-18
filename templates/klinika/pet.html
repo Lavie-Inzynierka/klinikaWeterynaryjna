@@ -92,7 +92,38 @@
                 Test4
             </div>
             <div id="ch-prescription" style="display: none;">
-                Test5
+                {% if not nothing2 %}
+                    <label> Kod recepty
+                        <input style="margin-left: 90px;" type="text" value="{{ presc.code }}"
+                               disabled>
+                    </label>
+                    <label> Termin ważności
+                        <input style="margin-left: 90px;" type="text" value="{{ presc.expiration_date|date:'d-m-Y' }}"
+                               disabled>
+                    </label>
+
+                    <table id="cure-table">
+                        <thead>
+                        <tr>
+                            <th>Nazwa leku</th>
+                            <th>Ilość</th>
+                            <th>jm.</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for pcure in cures %}
+                    <tr>
+                        <td>{{ pcure.cure.name }}</td>
+                        <td>{{ pcure.quantity}}</td>
+                        <td>{{ pcure.quantity_type}}</td>
+
+                    </tr>
+                {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p class="error"> {{ presc }}</p>
+                {% endif %}
             </div>
         {% endif %}
         {% if not userpets %}
