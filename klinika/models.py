@@ -148,17 +148,9 @@ class Prescription(models.Model):
     status = models.CharField(max_length=12, choices=Prescription_Status_choices)
 
 
-class Cure(models.Model):
-    id = models.AutoField(unique=True, primary_key=True, editable=False)
-    name = models.CharField(max_length=64)
-    dose = models.DecimalField(max_digits=5, decimal_places=2)
-    dose_type = models.CharField(max_length=5, choices=Dose_choices)
-    quantity = models.IntegerField()
-    quantity_type = models.CharField(max_length=3, choices=Quantity_choices)
-
-
 class PrescriptionCure(models.Model):
     id = models.AutoField(unique=True, primary_key=True, editable=False)
-    amount = models.IntegerField()
+    quantity = models.IntegerField()
+    quantity_type = models.CharField(max_length=3, choices=Quantity_choices)
     prescription = models.ForeignKey(Prescription, on_delete=models.PROTECT)
     cure = models.ForeignKey(Cure, on_delete=models.PROTECT)
