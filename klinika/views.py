@@ -12,6 +12,8 @@ import bcrypt
 from klinika.models import Token
 from django.contrib.sites.shortcuts import get_current_site
 import re
+import json
+from .json_validator import addpresc_validator
 
 
 # region main
