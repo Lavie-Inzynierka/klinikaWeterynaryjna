@@ -1,0 +1,264 @@
+{
+    "$id": "http://example.com/example.json",
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "default": {},
+    "description": "The root schema comprises the entire JSON document.",
+    "required": [
+        "code",
+        "expiration_date",
+        "pet",
+        "cures"
+    ],
+    "title": "The root schema",
+    "type": "object",
+    "properties": {
+        "code": {
+            "$id": "#/properties/code",
+            "type": "string",
+            "title": "The code schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "pattern": "^[0-9]*$",
+            "examples": [
+                "1234567890098765432154"
+            ]
+        },
+        "expiration_date": {
+            "$id": "#/properties/expiration_date",
+            "type": "string",
+            "title": "The expiration_date schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": "",
+            "examples": [
+                "expiration_date"
+            ]
+        },
+        "pet": {
+            "$id": "#/properties/petid",
+            "type": "integer",
+            "title": "The petid schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": 0
+        },
+        "newPet": {
+            "$id": "#/properties/newPet",
+            "default": {},
+            "description": "An explanation about the purpose of this instance.",
+
+            "required": [
+                "name",
+                "date_of_birth",
+                "sex",
+                "species",
+                "owner"
+            ],
+            "title": "The newPet schema",
+            "type": "object",
+            "properties": {
+                "name": {
+                    "$id": "#/properties/newPet/properties/name",
+                    "pattern": "^[A-Za-z ]*$",
+                    "type": "string",
+                    "title": "The name schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "name"
+                    ]
+                },
+                "date_of_birth": {
+                    "$id": "#/properties/newPet/properties/date_of_birth",
+                    "type": "string",
+                    "title": "The date_of_birth schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "date_of_birth"
+                    ]
+                },
+                "sex": {
+                    "$id": "#/properties/newPet/properties/sex",
+                    "type": "string",
+                    "title": "The sex schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "Samica"
+                    ],
+                    "enum": ["Samiec", "Samica"]
+                },
+                "species": {
+                    "$id": "#/properties/newPet/properties/species",
+                    "type": "string",
+                    "pattern": "^[A-Za-z ]*$",
+                    "title": "The species schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "pies"
+                    ]
+                },
+                "additional_information": {
+                    "$id": "#/properties/newPet/properties/additional_information",
+                    "type": "string",
+                    "title": "The additional_information schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": "",
+                    "examples": [
+                        "albinos"
+                    ]
+                },
+                "owner": {
+                    "$id": "#/properties/newPet/properties/owner",
+                    "type": "integer",
+                    "title": "The owner schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": 0,
+                    "examples": [
+                        1
+                    ]
+                },
+                "newOwner": {
+                    "$id": "#/properties/newPet/properties/newOwner",
+                    "type": "object",
+                    "title": "The newOwner schema",
+                    "description": "An explanation about the purpose of this instance.",
+                    "default": {},
+                    "examples": [
+                        {
+                            "first_name": "first_name",
+                            "last_name": "last_name",
+                            "email": "email",
+                            "phone_number": "phone_number"
+                        }
+                    ],
+                    "required": [
+                        "first_name",
+                        "last_name",
+                        "email",
+                        "phone_number"
+                    ],
+                    "properties": {
+                        "first_name": {
+                            "$id": "#/properties/newPet/properties/newOwner/properties/first_name",
+                            "type": "string",
+                            "title": "The first_name schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "first_name"
+                            ]
+                        },
+                        "last_name": {
+                            "$id": "#/properties/newPet/properties/newOwner/properties/last_name",
+                            "type": "string",
+                            "title": "The last_name schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "last_name"
+                            ]
+                        },
+                        "email": {
+                            "$id": "#/properties/newPet/properties/newOwner/properties/email",
+                            "type": "string",
+                            "title": "The email schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "email"
+                            ]
+                        },
+                        "phone_number": {
+                            "$id": "#/properties/newPet/properties/newOwner/properties/phone_number",
+                            "type": "string",
+                            "title": "The phone_number schema",
+                            "description": "An explanation about the purpose of this instance.",
+                            "default": "",
+                            "examples": [
+                                "phone_number"
+                            ]
+                        }
+                    },
+                    "additionalProperties": true
+                }
+            },
+            "additionalProperties": true
+        },
+        "cures": {
+            "$id": "#/properties/cures",
+            "type": "array",
+            "title": "The cures schema",
+            "description": "An explanation about the purpose of this instance.",
+            "default": [],
+            "examples": [
+                [
+                    {
+                        "cure": 1,
+                        "quantity": 4,
+                        "quantity_type": "op"
+                    }
+                ]
+            ],
+            "additionalItems": true,
+            "items": {
+                "$id": "#/properties/cures/items",
+                "anyOf": [
+                    {
+                        "$id": "#/properties/cures/items/anyOf/0",
+                        "type": "object",
+                        "title": "The first anyOf schema",
+                        "description": "An explanation about the purpose of this instance.",
+                        "default": {},
+                        "examples": [
+                            {
+                                "cure": 1,
+                                "quantity": 4,
+                                "quantity_type": "op"
+                            }
+                        ],
+                        "required": [
+                            "cure",
+                            "quantity",
+                            "quantity_type"
+                        ],
+                        "properties": {
+                            "cure": {
+                                "$id": "#/properties/cures/items/anyOf/0/properties/cure",
+                                "type": "integer",
+                                "title": "The cure schema",
+                                "description": "An explanation about the purpose of this instance.",
+                                "default": 0,
+                                "examples": [
+                                    1
+                                ]
+                            },
+                            "quantity": {
+                                "$id": "#/properties/cures/items/anyOf/0/properties/quantity",
+                                "type": "integer",
+                                "title": "The quantity schema",
+                                "description": "An explanation about the purpose of this instance.",
+                                "default": 0,
+                                "examples": [
+                                    4
+                                ]
+                            },
+                            "quantity_type": {
+                                "$id": "#/properties/cures/items/anyOf/0/properties/quantity_type",
+                                "type": "string",
+                                "title": "The quantity_type schema",
+                                "description": "An explanation about the purpose of this instance.",
+                                "default": "",
+                                "examples": [
+                                    "op"
+                                ]
+                            }
+                        },
+                        "additionalProperties": true
+                    }
+                ]
+            }
+        }
+    },
+    "additionalProperties": true
+}
