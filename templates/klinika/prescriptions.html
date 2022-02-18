@@ -6,11 +6,8 @@
 {% endblock headAdditional %}
 {% block content %}
     <div class="black">
-     {% if not userprescrptions %}
+     {% if not hide %}
         <a href="{% url 'addprescriptions' %}" class="btn bstyle "> Dodaj recepte
-        </a>
-    {% else %}
-         <a href="#" class="btn bstyle "> Dodaj recepte
         </a>
     {% endif %}
     </div>
