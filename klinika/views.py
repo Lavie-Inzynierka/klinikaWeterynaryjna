@@ -577,6 +577,23 @@ def mypet(request, petid):
             else:
                 nothing = True
                 visit = 'Brak wizyt do wyświetlenia!'
+
+            if Prescription.objects.filter(pet__id=petid, status='Wystawiona').exists():
+                recexpdate = Prescription.objects.filter(pet__id=petid,
+                                                         status='Wystawiona').aggregate(
+                    expiration_date=Min('expiration_date'))
+                prescription = Prescription.objects.get(pet__id=petid, status='Wystawiona',
+                                                        expiration_date=recexpdate['expiration_date'])
+
+                cures = PrescriptionCure.objects.filter(prescription__id=prescription.id).all()
+
+                nothing2 = False
+            else:
+                nothing2 = True
+                prescription = 'Brak recept do wyświetlenia!'
+                cures = 'Brak leków do wyświetlenia!'
+
+
             if request.method == "POST":
 
                 if request.POST['type'] == 'name':
@@ -589,6 +606,9 @@ def mypet(request, petid):
                                        'visit': visit,
                                        'userpets': True,
                                        'nothing': nothing,
+                                       'nothing2': nothing2,
+                                       'presc': prescription,
+                                       'cures': cures,
                                        'adm': request.session.get('is_adm'),
                                        'vet': request.session.get('is_vet'),
                                        'rec': request.session.get('is_rec'),
@@ -617,6 +637,9 @@ def mypet(request, petid):
                                                     'visit': visit,
                                                     'userpets': True,
                                                     'nothing': nothing,
+                                                    'nothing2': nothing2,
+                                                    'presc': prescription,
+                                                    'cures': cures,
                                                     'adm': request.session.get('is_adm'),
                                                     'vet': request.session.get('is_vet'),
                                                     'rec': request.session.get('is_rec'),
