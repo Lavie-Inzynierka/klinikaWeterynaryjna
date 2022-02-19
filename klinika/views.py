@@ -689,7 +689,7 @@ def addpet(request):
                 species = Species.objects.create(species_name=species, additional_information='')
                 species.save()
 
-            if datetime.datetime.strptime(date_of_birth, '%Y-%m-%d') > datetime.datetime.now():
+            if datetime.strptime(date_of_birth, '%Y-%m-%d') > datetime.now():
                 return render(request, 'klinika/addpet.html',
                               {'username': request.session.get('my_user'),
                                'error': 'Nieprawidłowa data urodzenia!',
