@@ -12,8 +12,11 @@
                    onblur="this.placeholder='Nazwa zwierzęcia'" required>
             <input type="date" name="date_of_birth" placeholder="Data urodzenia" onfocus="this.placeholder=' ' "
                    onblur="this.placeholder='Data urodzenia'" required>
-            <input type="text" name="sex" placeholder="Płeć" onfocus="this.placeholder=' ' "
-                   onblur="this.placeholder='Płeć'" required>
+            <select name="sex">
+                <option disabled>Wybierz płeć zwierzęcia</option>
+                <option>Samiec</option>
+                <option>Samica</option>
+            </select>
             <input type="text" name="species" placeholder="Gatunek" onfocus="this.placeholder=' ' "
                    onblur="this.placeholder='Gatunek'" required>
             <input type="text" name="additional_information" placeholder="Dodatkowe informacje"
