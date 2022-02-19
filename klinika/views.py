@@ -533,7 +533,6 @@ def addpets(request):
 def mypets(request):
     if request.session.get('my_user', False):
         user = MyUser.objects.get(username=request.session.get('my_user', False))
-
         try:
             owner = Owner.objects.get(user=user) or None
             pets = Pet.objects.filter(owner=owner).all() or None
@@ -541,6 +540,8 @@ def mypets(request):
             return render(request, 'klinika/pets.html',
                           {'username': request.session.get('my_user'),
                            'pet_list': 'Brak zwierząt do wyświetlenia',
+                           'empty': True,
+                           'userpets': True,
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
                            'rec': request.session.get('is_rec'),
