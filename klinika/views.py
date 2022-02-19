@@ -82,93 +82,93 @@ def signin(request):
 
 # region signup
 
-# todo: zabezpieczenie przed stworzeniem useless usera gdy nie ma admina
-#   error - aplikacja nie została skonfigurowana! Skonfiguruj aplikacje!
 def signup(request):
-    if request.method == "POST":
-        username = bleach.clean(request.POST['username'])
-        first_name = bleach.clean(request.POST['first_name'])
-        last_name = bleach.clean(request.POST['last_name'])
-        email = bleach.clean(request.POST['email'])
-        pass1 = bleach.clean(request.POST['pass1'])
-        pass2 = bleach.clean(request.POST['pass2'])
+    if MyUser.objects.filter().exists():
+        if request.method == "POST":
+            username = bleach.clean(request.POST['username'])
+            first_name = bleach.clean(request.POST['first_name'])
+            last_name = bleach.clean(request.POST['last_name'])
+            email = bleach.clean(request.POST['email'])
+            pass1 = bleach.clean(request.POST['pass1'])
+            pass2 = bleach.clean(request.POST['pass2'])
 
-        if MyUser.objects.filter(username=username).exists():
-            return render(request, 'klinika/signup.html', {'error1': "Nazwa użytkownika jest już zajęta!"})
-        if MyUser.objects.filter(email=email).exists():
-            return render(request, 'klinika/signup.html', {'error2': "Podany adres email jest już zajęty!"})
+            if MyUser.objects.filter(username=username).exists():
+                return render(request, 'klinika/signup.html', {'error1': "Nazwa użytkownika jest już zajęta!"})
+            if MyUser.objects.filter(email=email).exists():
+                return render(request, 'klinika/signup.html', {'error2': "Podany adres email jest już zajęty!"})
 
-        if len(username) > 30:
-            return render(request, 'klinika/signup.html', {'error3': "Podana nazwa uzytkownika jest za dluga!"})
+            if len(username) > 30:
+                return render(request, 'klinika/signup.html', {'error3': "Podana nazwa uzytkownika jest za dluga!"})
 
-        if pass1 != pass2:
-            messages.error(request, "Hasła muszą się zgadzać!")
-            return render(request, 'klinika/signup.html', {'error4': "Hasła muszą się zgadzać!"})
+            if pass1 != pass2:
+                messages.error(request, "Hasła muszą się zgadzać!")
+                return render(request, 'klinika/signup.html', {'error4': "Hasła muszą się zgadzać!"})
 
-        if not username.isalnum():
-            return render(request, 'klinika/signup.html',
-                          {'error4': "Nazwa użytkownika musi się składać z liter oraz cyfr!"})
+            if not username.isalnum():
+                return render(request, 'klinika/signup.html',
+                              {'error4': "Nazwa użytkownika musi się składać z liter oraz cyfr!"})
 
-        regex = r"^[a-z_\.0-9]*@[a-z0-9\-]*\.[a-z]*$"
+            regex = r"^[a-z_\.0-9]*@[a-z0-9\-]*\.[a-z]*$"
 
-        if not re.search(regex, email):
-            return render(request, 'klinika/signup.html', {'error6': "Nieprawidłowy adress email!"})
+            if not re.search(regex, email):
+                return render(request, 'klinika/signup.html', {'error6': "Nieprawidłowy adress email!"})
 
-        passwd = bcrypt.hashpw(pass1.encode(encoding='UTF-8'), bcrypt.gensalt())
-        myuser = MyUser.objects.create(username=username,
-                                       first_name=first_name,
-                                       last_name=last_name,
-                                       email=email,
-                                       password=passwd)
-        myuser.save()
+            passwd = bcrypt.hashpw(pass1.encode(encoding='UTF-8'), bcrypt.gensalt())
+            myuser = MyUser.objects.create(username=username,
+                                           first_name=first_name,
+                                           last_name=last_name,
+                                           email=email,
+                                           password=passwd)
+            myuser.save()
 
-        t = hashlib.md5((username + str(datetime.datetime.now())).encode('utf-8')).hexdigest()
-        token = Token.objects.create(token=t, user=myuser)
-        token.save()
+            t = hashlib.md5((username + str(datetime.now())).encode('utf-8')).hexdigest()
+            token = Token.objects.create(token=t, user=myuser)
+            token.save()
 
-        domain = get_current_site(request).domain
+            domain = get_current_site(request).domain
 
-        activate_url = 'http://' + domain + '/activate/' + token.token
+            activate_url = 'http://' + domain + '/activate/' + token.token
 
-        email_body = 'Witaj ' + myuser.username + \
-                     '!<br/>Aktywuj swoje konto za pomocą ' \
-                     'poniższego linku<br/> <a href="' + activate_url + '">' \
-                                                                        '<button>Kliknij by aktywować</button></a>'
+            email_body = 'Witaj ' + myuser.username + \
+                         '!<br/>Aktywuj swoje konto za pomocą ' \
+                         'poniższego linku<br/> <a href="' + activate_url + '">' \
+                                                                            '<button>Kliknij by aktywować</button></a>'
 
-        message = {
-            'personalizations': [
-                {
-                    'to': [
-                        {
-                            'email': myuser.email
-                        }
-                    ],
-                    'subject': 'Witaj w VetPet!'
-                }
-            ],
-            'from': {
-                'email': 'vetpet1502@gmail.com'
-            },
-            'content': [
-                {
-                    'type': 'text/html',
-                    'value': email_body
-
+            message = {
+                'personalizations': [
+                    {
+                        'to': [
+                            {
+                                'email': myuser.email
+                            }
+                        ],
+                        'subject': 'Witaj w VetPet!'
+                    }
+                ],
+                'from': {
+                    'email': 'vetpet1502@gmail.com'
                 },
+                'content': [
+                    {
+                        'type': 'text/html',
+                        'value': email_body
+                    },
 
-            ],
+                ],
 
-        }
-        try:
-            sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
-            sg.send(message)
+            }
+            try:
+                sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+                sg.send(message)
 
-        except Exception as e:
-            print(str(e))
+            except Exception as e:
+                print(str(e))
 
-        return render(request, 'klinika/signup.html', {'success': "Konto utworzone pomyślnie!"})
+            return render(request, 'klinika/signup.html', {'success': "Konto utworzone pomyślnie!"})
 
-    return render(request, 'klinika/signup.html')
+        return render(request, 'klinika/signup.html')
+
+    return render(request, 'klinika/signup.html', {'system_error': "Skonfiguruj aplikacje!"})
 
 
 # endregion
