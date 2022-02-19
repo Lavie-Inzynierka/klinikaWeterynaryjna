@@ -14,6 +14,7 @@ from django.contrib.sites.shortcuts import get_current_site
 import re
 import json
 from .json_validator import addpresc_validator
+from .mytools import randstr
 
 
 # region main
