@@ -112,13 +112,13 @@
                         </thead>
                         <tbody>
                         {% for pcure in cures %}
-                    <tr>
-                        <td>{{ pcure.cure.name }}</td>
-                        <td>{{ pcure.quantity}}</td>
-                        <td>{{ pcure.quantity_type}}</td>
+                            <tr>
+                                <td>{{ pcure.cure.name }}</td>
+                                <td>{{ pcure.quantity }}</td>
+                                <td>{{ pcure.quantity_type }}</td>
 
-                    </tr>
-                {% endfor %}
+                            </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 {% else %}
@@ -238,7 +238,7 @@
         });
 
         const table = $('#cure-table').DataTable({
-                language: {url: "{% static 'json/polish.json'%}"}
-            });
+            language: {url: "{% static 'json/polish.json'%}"}
+        });
     </script>
 {% endblock %}
