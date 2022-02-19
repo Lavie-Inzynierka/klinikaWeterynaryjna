@@ -18,7 +18,7 @@
             </label>
             <label> Czas wizyty
                 <input type="time" name="visit_time" placeholder="Czas wizyty" onfocus="this.placeholder=' ' "
-                       onblur="this.placeholder='Czas wizyty'" >
+                       onblur="this.placeholder='Czas wizyty'">
             </label>
             <label>Zwierzę
                 <a id="btn-pet-choice" class="btn bstyle green" style="margin-top: 10px;"> Wybierz zwierzę</a>
@@ -36,13 +36,16 @@
                 </div>
                 <div id="pet-add" style="display: none;">
                     <input type="text" name="name" placeholder="Nazwa zwierzęcia" onfocus="this.placeholder=' ' "
-                           onblur="this.placeholder='Nazwa zwierzęcia'" >
+                           onblur="this.placeholder='Nazwa zwierzęcia'">
                     <input type="date" name="date_of_birth" placeholder="Data urodzenia" onfocus="this.placeholder=' ' "
-                           onblur="this.placeholder='Data urodzenia'" >
-                    <input type="text" name="sex" placeholder="Płeć" onfocus="this.placeholder=' ' "
-                           onblur="this.placeholder='Płeć'" >
+                           onblur="this.placeholder='Data urodzenia'">
+                    <select name="sex">
+                        <option disabled>Wybierz płeć zwierzęcia</option>
+                        <option>Samiec</option>
+                        <option>Samica</option>
+                    </select>
                     <input type="text" name="species" placeholder="Gatunek" onfocus="this.placeholder=' ' "
-                           onblur="this.placeholder='Gatunek'" >
+                           onblur="this.placeholder='Gatunek'">
                     <input type="text" name="additional_information" placeholder="Dodatkowe informacje"
                            onfocus="this.placeholder=' ' "
                            onblur="this.placeholder='Dodatkowe informacje' ">
@@ -54,25 +57,25 @@
                         <div id="ch-own-choice" style="display: none;">
                             <select name="own" id="own-choice">
                                 {% for own in owners %}
-                                    <option value="{{ own.user.email}}">
+                                    <option value="{{ own.user.email }}">
                                         {{ own.user.first_name }} {{ own.user.last_name }} {{ own.user.email }}
                                     </option>
                                 {% endfor %}
                                 <option>Dodaj</option>
                             </select>
                             <div id="own-add" style="display: none">
-                                <input type="text" name="first_name" placeholder="first_name"
+                                <input type="text" name="first_name" placeholder="Imię"
                                        onfocus="this.placeholder=' ' "
-                                       onblur="this.placeholder='first_name'" >
-                                <input type="text" name="last_name" placeholder="first_name"
+                                       onblur="this.placeholder='Imię'">
+                                <input type="text" name="last_name" placeholder="Nazwisko"
                                        onfocus="this.placeholder=' ' "
-                                       onblur="this.placeholder='first_name'" >
-                                <input type="email" name="email" placeholder="first_name"
+                                       onblur="this.placeholder='Nazwisko'">
+                                <input type="email" name="email" placeholder="Email"
                                        onfocus="this.placeholder=' ' "
-                                       onblur="this.placeholder='first_name'" >
-                                <input type="tel" name="phone_number" placeholder="first_name"
+                                       onblur="this.placeholder='Email'">
+                                <input type="tel" name="phone_number" placeholder="Numer telefonu"
                                        onfocus="this.placeholder=' ' "
-                                       onblur="this.placeholder='first_name'" >
+                                       onblur="this.placeholder='Numer telefonu'">
                             </div>
                             <script>
                                 $(document).ready(() => {
