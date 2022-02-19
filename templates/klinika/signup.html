@@ -2,53 +2,57 @@
 {% load static %}
 {% block content %}
     <div id="signin">
-        {% if success %}
-            <p class="success"> {{ success }}</p>
-            <p class="success">Sprawdź email w celu aktywacji konta!</p>
+        {% if system_error %}
+            <p class="error"> {{ system_error }}</p>
         {% else %}
-            <form method="post">
-                {% csrf_token %}
-                <header class="name">Vet Pet</header>
-                <input type="text" name="username" placeholder="Nazwa Użytkownika" onfocus="this.placeholder=' ' "
-                       onblur="this.placeholder='Nazwa Użytkownika' " required>
-                {% if error1 %}
-                    <p class="error"> {{ error1 }}</p>
-                {% endif %}
-                {% if error3 %}
-                    <p class="error"> {{ error3 }}</p>
-                {% endif %}
-                {% if error5 %}
-                    <p class="error"> {{ error5 }}</p>
-                {% endif %}
-                <input type="text" name="first_name" placeholder="Imie" onfocus="this.placeholder=' ' "
-                       onblur="this.placeholder='Imie' " required>
+            {% if success %}
+                <p class="success"> {{ success }}</p>
+                <p class="success">Sprawdź email w celu aktywacji konta!</p>
+            {% else %}
+                <form method="post">
+                    {% csrf_token %}
+                    <header class="name">Vet Pet</header>
+                    <input type="text" name="username" placeholder="Nazwa Użytkownika" onfocus="this.placeholder=' ' "
+                           onblur="this.placeholder='Nazwa Użytkownika' " required>
+                    {% if error1 %}
+                        <p class="error"> {{ error1 }}</p>
+                    {% endif %}
+                    {% if error3 %}
+                        <p class="error"> {{ error3 }}</p>
+                    {% endif %}
+                    {% if error5 %}
+                        <p class="error"> {{ error5 }}</p>
+                    {% endif %}
+                    <input type="text" name="first_name" placeholder="Imie" onfocus="this.placeholder=' ' "
+                           onblur="this.placeholder='Imie' " required>
 
-                <input type="text" name="last_name" placeholder="Nazwisko" onfocus="this.placeholder=' ' "
-                       onblur="this.placeholder='Nazwisko' " required>
+                    <input type="text" name="last_name" placeholder="Nazwisko" onfocus="this.placeholder=' ' "
+                           onblur="this.placeholder='Nazwisko' " required>
 
-                <input type="email" name="email" placeholder="Adres email" onfocus="this.placeholder=' ' "
-                       onblur="this.placeholder='Adres email' " required>
-                {% if error2 %}
-                    <p class="error"> {{ error2 }}</p>
-                {% endif %}
-                {% if error6 %}
-                    <p class="error"> {{ error6 }}</p>
-                {% endif %}
+                    <input type="email" name="email" placeholder="Adres email" onfocus="this.placeholder=' ' "
+                           onblur="this.placeholder='Adres email' " required>
+                    {% if error2 %}
+                        <p class="error"> {{ error2 }}</p>
+                    {% endif %}
+                    {% if error6 %}
+                        <p class="error"> {{ error6 }}</p>
+                    {% endif %}
 
-                <input type="password" name="pass1" placeholder="hasło" onfocus="this.placeholder=' ' "
-                       onblur="this.placeholder='hasło' " required>
+                    <input type="password" name="pass1" placeholder="hasło" onfocus="this.placeholder=' ' "
+                           onblur="this.placeholder='hasło' " required>
 
-                <input type="password" name="pass2" placeholder="powtórz hasło" onfocus="this.placeholder=' ' "
-                       onblur="this.placeholder='powtórz hasło' " required>
-                {% if error4 %}
-                    <p class="error"> {{ error4 }}</p>
-                {% endif %}
-                <input type="submit" class="green" value="Zarejestruj się">
-            </form>
-            <label>Masz już konto, zaloguj się!</label>
+                    <input type="password" name="pass2" placeholder="powtórz hasło" onfocus="this.placeholder=' ' "
+                           onblur="this.placeholder='powtórz hasło' " required>
+                    {% if error4 %}
+                        <p class="error"> {{ error4 }}</p>
+                    {% endif %}
+                    <input type="submit" class="green" value="Zarejestruj się">
+                </form>
+                <label>Masz już konto, zaloguj się!</label>
+            {% endif %}
+            <a href="{% url 'signin' %}">
+                <input type="button" value="Zaloguj się">
+            </a>
         {% endif %}
-        <a href="{% url 'signin' %}">
-            <input type="button" value="Zaloguj się">
-        </a>
     </div>
 {% endblock content %}
