@@ -36,7 +36,6 @@ Dose_choices = (
 
 Quantity_choices = (
     ('sz.', 'sz'),
-    ('mg', 'mg'),
     ('ml', 'ml'),
     ('op', 'op'),
     ('lst', 'lst')
