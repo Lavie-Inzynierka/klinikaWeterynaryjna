@@ -1109,12 +1109,17 @@ def addprescription(request):
         pets = Pet.objects.filter().all()
         owners = Owner.objects.filter().all()
         cures = Cure.objects.filter().all()
+        prescode = randstr.id_generator(22, string.digits)
+        while Prescription.objects.filter(code=prescode).exists():
+            prescode = randstr.id_generator(22, string.digits)
+
         if request.method == 'GET':
             return render(request, 'klinika/addprescription.html',
                           {'username': request.session.get('my_user'),
                            'pets': pets,
                            'owners': owners,
                            'cures': cures,
+                           'code': prescode,
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
                            'rec': request.session.get('is_rec'),
