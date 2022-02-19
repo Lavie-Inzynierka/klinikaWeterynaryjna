@@ -721,7 +721,7 @@ def addpet(request):
                 owner.save()
             owner = Owner.objects.get(user=user)
             if not UserType.objects.filter(user=user, user_type='PET_OWNER').exists():
-                user_type = UserType.objects.create(user=owner,
+                user_type = UserType.objects.create(user=user,
                                                     user_type='PET_OWNER')
                 user_type.save()
             pet = Pet.objects.create(name=name,
