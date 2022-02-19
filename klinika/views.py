@@ -701,17 +701,7 @@ def addpet(request):
             newspecies = Species.objects.get(species_name=species)
 
             user = MyUser.objects.get(username=request.session.get('my_user', False))
-            if not Owner.objects.filter(user=user):
-                owner = Owner.objects.create(
-                    first_name=user.first_name,
-                    last_name=user.last_name,
-                    phone_number=user.phone_number,
-                    email=user.email,
-                    user=user)
-
-                owner.save()
-            owner = Owner.objects.get(user=user)
-            if not Owner.objects.filter(user=user, phone_number=owner.phone_number).exists():
+            if not user.phone_number:
                 return render(request, 'klinika/addpet.html',
                               {'username': request.session.get('my_user'),
                                'error': 'Uzupełnij dane kontaktowe w swoim profilu przed dodatniem zwierzęcia!',
