@@ -1,27 +1,26 @@
 {
-  "code": "code",
-  "expiration_date": "expiration_date",
-  "petid": 1,
+  "code": "9651742898673848748872",
+  "expiration_date": "2022-03-10",
+  "pet": 0,
   "newPet": {
-    "name": "name",
-    "date_of_birth": "date_of_birth",
-    "sex": "sex",
-    "species": "species",
-    "additional_information": "additional_information",
-    "owner": 1,
+    "name": "Belle",
+    "date_of_birth": "2019-08-20",
+    "sex": "Samica",
+    "species": "pies",
+    "additional_information": "Labrador retriever biszkoptowa sierść",
+    "owner": 0,
     "newOwner": {
-      "first_name": "first_name",
-      "last_name": "last_name",
-      "email": "email",
-      "phone_number": "phone_number"
+      "first_name": "Joanna",
+      "last_name": "Slyszewska",
+      "email": "joannaslyszewska1502@gmail.com",
+      "phone_number": "+48 666 666 666"
     }
   },
   "cures": [
     {
-      "cure": 1,
-      "quantity": 4,
-      "quantity_type": "op"
+      "cure": 2,
+      "quantity": 10,
+      "quantity_type": "sz."
     }
   ]
-
 }
