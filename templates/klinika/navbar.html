@@ -36,10 +36,10 @@
                 </ul>
             </li>
         {% endif %}
-        {% if  vet or adm or rec or own %}
+        {% if  vet or adm or rec or own or username %}
             <li><a href="#"> Wizyty </a>
             <ul>
-            {% if  vet and own or adm or rec and own or own %}
+            {% if  vet and own or adm or rec and own or own or username%}
                 <li>
                     <a href="{% url 'myvisits' %}"> Moje wizyty</a>
                 </li>
