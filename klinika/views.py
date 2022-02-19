@@ -710,7 +710,16 @@ def addpet(request):
                                'rec': request.session.get('is_rec'),
                                'own': request.session.get('is_own'),
                                })
+            if not Owner.objects.filter(user=user):
+                owner = Owner.objects.create(
+                    first_name=user.first_name,
+                    last_name=user.last_name,
+                    phone_number=user.phone_number,
+                    email=user.email,
+                    user=user)
 
+                owner.save()
+            owner = Owner.objects.get(user=user)
             if not UserType.objects.filter(user=user, user_type='PET_OWNER').exists():
                 user_type = UserType.objects.create(user=owner,
                                                     user_type='PET_OWNER')
