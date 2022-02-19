@@ -18,7 +18,7 @@
             "title": "The code schema",
             "description": "An explanation about the purpose of this instance.",
             "default": "",
-            "pattern": "^[0-9]*$",
+            "pattern": "^[0-9]{22}$",
             "examples": [
                 "1234567890098765432154"
             ]
@@ -26,11 +26,12 @@
         "expiration_date": {
             "$id": "#/properties/expiration_date",
             "type": "string",
+            "pattern": "^[1-9][0-9]{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])$",
             "title": "The expiration_date schema",
             "description": "An explanation about the purpose of this instance.",
             "default": "",
             "examples": [
-                "expiration_date"
+                "2019-08-20"
             ]
         },
         "pet": {
@@ -69,11 +70,12 @@
                 "date_of_birth": {
                     "$id": "#/properties/newPet/properties/date_of_birth",
                     "type": "string",
+                    "pattern": "^[1-9][0-9]{3}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1])",
                     "title": "The date_of_birth schema",
                     "description": "An explanation about the purpose of this instance.",
                     "default": "",
                     "examples": [
-                        "date_of_birth"
+                        "2019-08-20"
                     ]
                 },
                 "sex": {
@@ -143,6 +145,7 @@
                             "$id": "#/properties/newPet/properties/newOwner/properties/first_name",
                             "type": "string",
                             "title": "The first_name schema",
+                            "pattern": "^[A-ZÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð][a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$",
                             "description": "An explanation about the purpose of this instance.",
                             "default": "",
                             "examples": [
@@ -153,6 +156,7 @@
                             "$id": "#/properties/newPet/properties/newOwner/properties/last_name",
                             "type": "string",
                             "title": "The last_name schema",
+                            "pattern": "^[A-ZÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð][a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+$",
                             "description": "An explanation about the purpose of this instance.",
                             "default": "",
                             "examples": [
@@ -163,20 +167,22 @@
                             "$id": "#/properties/newPet/properties/newOwner/properties/email",
                             "type": "string",
                             "title": "The email schema",
+                            "pattern": "^[a-z_.0-9]*@[a-z0-9-]*.[a-z]*$",
                             "description": "An explanation about the purpose of this instance.",
                             "default": "",
                             "examples": [
-                                "email"
+                                "joannaslyszewska1502@gmail.com"
                             ]
                         },
                         "phone_number": {
                             "$id": "#/properties/newPet/properties/newOwner/properties/phone_number",
                             "type": "string",
                             "title": "The phone_number schema",
+                            "pattern": "^([+]?[ 0-9])?(([0-9]{3}|[(]?[0-9]+[)])?([-]?[ ]?[0-9])+){9,15}$",
                             "description": "An explanation about the purpose of this instance.",
                             "default": "",
                             "examples": [
-                                "phone_number"
+                                "666 666 666"
                             ]
                         }
                     },
@@ -251,7 +257,8 @@
                                 "default": "",
                                 "examples": [
                                     "op"
-                                ]
+                                ],
+                                "enum": ["op", "sz.","lst","ml"]
                             }
                         },
                         "additionalProperties": true
