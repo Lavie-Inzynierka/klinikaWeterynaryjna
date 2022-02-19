@@ -207,14 +207,25 @@ def profile(request):
             if request.POST['type'] == 'first_name':
                 fname = bleach.clean(request.POST['first_name'])
 
+                if Owner.objects.filter(user=user).exists():
+                    owner = Owner.objects.get(user=user)
+                    owner.first_name = fname
+                    owner.save()
+
                 user.first_name = fname
                 user.save()
 
             if request.POST['type'] == 'last_name':
                 lname = bleach.clean(request.POST['last_name'])
 
+                if Owner.objects.filter(user=user).exists():
+                    owner = Owner.objects.get(user=user)
+                    owner.last_name = lname
+                    owner.save()
+
                 user.last_name = lname
                 user.save()
+
             if request.POST['type'] == 'password':
                 passwd = bleach.clean(request.POST['pass'])
                 pass1 = bleach.clean(request.POST['pass1'])
@@ -253,6 +264,11 @@ def profile(request):
 
             if request.POST['type'] == 'phone_number':
                 phone = bleach.clean(request.POST['phone_number'])
+
+                if Owner.objects.filter(user=user).exists():
+                    owner = Owner.objects.get(user=user)
+                    owner.phone_number = phone
+                    owner.save()
                 user.phone_number = phone
                 user.save()
 
@@ -283,6 +299,10 @@ def profile(request):
                                                                     'rec': request.session.get('is_rec'),
                                                                     'own': request.session.get('is_own'),
                                                                     })
+                if Owner.objects.filter(user=user).exists():
+                    owner = Owner.objects.get(user=user)
+                    owner.email = email
+                    owner.save()
 
                 user.email = email
                 user.save()
