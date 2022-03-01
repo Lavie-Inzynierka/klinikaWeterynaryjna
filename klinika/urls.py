@@ -20,6 +20,7 @@ urlpatterns = [
     path('myvisits/', views.myvisits, name="myvisits"),
     path('upcomvisits/', views.upcomvisits, name="upcomvisits"),
     path('visits/', views.visits, name="visits"),
+    path('visit/<visitid>/', views.visit, name="visit"),
     path('canceledvisits/', views.canceledvisits, name="canceledvisits"),
     path('addvisit/', views.addvisit, name="addvisit"),
     path('allprescriptions/', views.all_prescriptions, name="allprescriptions"),
