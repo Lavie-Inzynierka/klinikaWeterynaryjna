@@ -32,9 +32,9 @@
                         <td>{{ rec.vet.first_name }} {{ rec.vet.last_name }}</td>
                         <td>
                             {% if not userpets %}
-                            <a href="#" class="btn bstyle">Podgląd </a>
+                            <a href="/prescription/{{ rec.id }} " class="btn bstyle">Podgląd </a>
                             {% else %}
-                             <a href="#" class="btn bstyle">Podgląd </a>
+                             <a href="/prescription/{{ rec.id }} " class="btn bstyle">Podgląd </a>
                             {% endif %}
                         </td>
                     </tr>
