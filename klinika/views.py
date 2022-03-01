@@ -914,8 +914,8 @@ def addvisit(request):
             visit_time = bleach.clean(request.POST['visit_time'])
             note = bleach.clean(request.POST['note'])
 
-            now = datetime.datetime.now()
-            if datetime.datetime.strptime(visit_date + 'T' + visit_time, '%Y-%m-%dT%H:%M') < now:
+            now = datetime.now()
+            if datetime.strptime(visit_date + 'T' + visit_time, '%Y-%m-%dT%H:%M') < now:
                 return render(request, 'klinika/addvisit.html',
                               {'username': request.session.get('my_user'),
                                'error': 'Nieprawidłowy czas wizyty!',
@@ -979,7 +979,7 @@ def addvisit(request):
             vet = MyUser.objects.get(email=request.POST['vet'])
             visit = Visit.objects.create(visit_date=visit_date,
                                          visit_time=visit_time,
-                                         visit_planned=datetime.datetime.now(),
+                                         visit_planned=datetime.now(),
                                          status='Zaplanowana',
                                          pet=pet,
                                          vet=vet,
