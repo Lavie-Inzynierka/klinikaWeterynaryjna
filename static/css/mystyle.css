@@ -8,7 +8,7 @@ body
   font-family: lato, sans-serif;
   font-style: oblique;
 }
-/*todo: osobna stylizacja form od form2*/
+
 a, a:visited
 {
   text-decoration: none;
@@ -22,9 +22,6 @@ a, a:visited
 
 #logo
 {
-  /*float: left;*/
-  /*margin: 20px 20px 20px 20px;*/
-  /*padding: 0;*/
   position: fixed;
   top: 20px;
   left: 50px;
@@ -53,7 +50,6 @@ a, a:visited
   height: 35px;
   line-height: 200%;
   display: inline-block;
-  /*color: #8bb6db;*/
 }
 
 #nav ol a
@@ -95,7 +91,6 @@ a, a:visited
 {
   float: right;
 }
-
 
 #nav ol > li:hover > a
 {
@@ -162,7 +157,7 @@ main
   margin-right: auto;
 }
 
-#signin
+#form3
 {
   background-color: rgba(255, 255, 255, 0.8);
   margin-top: 50px;
@@ -180,6 +175,16 @@ main
   margin-right: auto;
   padding: 25px;
   width: 700px;
+}
+
+#form4
+{
+  background-color: rgba(255, 255, 255, 0.8);
+  margin-top: 50px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 25px;
+  width: 500px;
 }
 
 #form
@@ -223,6 +228,7 @@ main
   display: block;
 
 }
+
 #subnav ul > li:hover,
 .active
 {
@@ -245,7 +251,7 @@ main
   font-weight: 700;
 }
 
-#signin input
+#form3 input
 {
   border: #ddd solid 2px;
   border-radius: 5px;
@@ -261,9 +267,7 @@ main
   outline: none;
 }
 
-#form2 input,
 #form input,
-#form2 textarea,
 #form textarea
 {
   font-size: 18px;
@@ -279,8 +283,133 @@ main
   color: black;
 }
 
+#form2 #btn-pet-choice
+{
+  margin-left: 225px;
+  margin-top: 10px;
+
+}
+
+#form2 #pet-choice
+{
+  font-size: 20px;
+}
+
+#form2 #btn-own-choice
+{
+  margin-bottom: 20px;
+  margin-left: 194px;
+}
+
+#form4 #btn-own-choice
+{
+  margin-bottom: 20px;
+  margin-left: 160px;
+}
+
+#form2 #own-choice
+{
+  margin-top: 20px;
+  margin-left: 200px;
+  font-weight: bold;
+  font-style: normal;
+}
+#form4 .select2-container
+{
+  margin-top: 20px;
+  margin-left: 80px;
+  font-weight: bold;
+  font-style: normal;
+}
+#form2  #ch-own-choice .select2-container
+{
+  margin-top: 20px;
+  margin-left: 208px;
+  font-weight: bold;
+  font-style: normal;
+}
+#form2  #ch-vet-choice .select2-container
+{
+  margin-top: 20px;
+  margin-left: 208px;
+  font-weight: bold;
+  font-style: normal;
+}
+#from2 > #pet-add > label > #ch-own-choice #own-choice {
+  margin-left: 208px;
+  margin-top: 25px;
+}
+
+/*form2 label:last-child{*/
+/*  margin-right: 0;*/
+/*}*/
+.select2-container--default .select2-selection--single .select2-selection__rendered,
+.select2-container .select2-selection--single
+{
+  line-height: 45px;
+  height: 45px;
+}
+
+#form2 #btn-vet-choice
+{
+  margin-left: 175px;
+  margin-top: 10px;
+}
+
+#form2 #ch-pet-choice
+{
+  margin-top: 25px;
+  margin-left: 208px;
+}
+
+#form2 input,
+#form2 textarea
+{
+  font-size: 18px;
+  border: #ddd solid 2px;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+  outline: 0;
+  width: 320px;
+  margin-top: 20px;
+  margin-left: 208px;
+  margin-right: 10px;
+  color: black;
+}
+
+#form4 input,
+#form4 textarea
+{
+  font-size: 18px;
+  border: #ddd solid 2px;
+  border-radius: 5px;
+  padding: 10px;
+  text-align: center;
+  outline: 0;
+  width: 320px;
+  margin-top: 20px;
+  margin-left: 80px;
+  margin-right: 20px;
+  color: black;
+}
+
+#form2 #pet-add
+{
+  margin: 0;
+  padding: 0;
+}
+
+#form2 #pet-add label
+{
+  padding: 0;
+  margin: 0;
+}
+
 #form2 input:disabled,
 #form2 textarea:disabled,
+#form4 input:disabled,
+#form4 textarea:disabled,
 #form input:disabled,
 #form textarea:disabled
 {
@@ -289,14 +418,19 @@ main
   color: black;
 }
 
-#signin input[type=text]:focus,
-#signin input[type=email]:focus,
-#signin input[type=password]:focus,
+#form3 input[type=text]:focus,
+#form3 input[type=email]:focus,
+#form3 input[type=password]:focus,
 #form2 input[type=text]:focus,
 #form2 input[type=email]:focus,
 #form2 input[type=password]:focus,
 #form2 input[type=tel]:focus,
 #form2 textarea:focus,
+#form4 input[type=text]:focus,
+#form4 input[type=email]:focus,
+#form4 input[type=password]:focus,
+#form4 input[type=tel]:focus,
+#form4 textarea:focus,
 #form input[type=text]:focus,
 #form input[type=email]:focus,
 #form input[type=password]:focus,
@@ -308,10 +442,12 @@ main
   color: #2f69ba;
 }
 
-#signin input[type=button],
-#signin input[type=submit],
+#form3 input[type=button],
+#form3 input[type=submit],
 #form2 input[type=button],
 #form2 input[type=submit],
+#form4 input[type=button],
+#form4 input[type=submit],
 #form input[type=button],
 #form input[type=submit]
 {
@@ -324,25 +460,26 @@ main
   width: 274px;
 }
 
-#signin input[type=submit]:focus
+#form3 input[type=submit]:focus
 {
   background-color: #A3D11F;
 }
 
-#signin input[type=submit]:hover,
-#signin input[type=button]:hover,
+#form3 input[type=submit]:hover,
+#form3 input[type=button]:hover,
 #form2 input[type=submit]:hover,
 #form2 input[type=button]:hover,
+#form4 input[type=submit]:hover,
+#form4 input[type=button]:hover,
 #form input[type=submit]:hover,
 #form input[type=button]:hover
 {
   color: #fae1d2;
   border: solid 1px #0a2e4f;
   background-color: #0f4780;
-  /*border-radius: 12px;*/
 }
 
-#signin label
+#form3 label
 {
   background: -webkit-linear-gradient(270deg, rgba(51, 111, 208, 1) 0%, rgba(9, 121, 112, 1) 50%, rgba(13, 103, 19, 1) 100%);
   -webkit-background-clip: text;
@@ -356,7 +493,53 @@ main
   margin-bottom: 0;
 }
 
-#form2 label,
+#form3 select
+{
+  border: #ddd solid 2px;
+  border-radius: 5px;
+  padding: 10px;
+  color: #666;
+  background-color: #efefef;
+  font-size: 20px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 10px;
+  display: block;
+  width: 276px;
+  outline: none;
+}
+
+#form2 select
+{
+  text-align: center;
+  border: #ddd solid 2px;
+  border-radius: 5px;
+  padding: 10px;
+  color: #666;
+  background-color: #ffffff;
+  font-size: 20px;
+  margin: 20px 30px 0 208px;
+  display: block;
+  width: 342px;
+  outline: none;
+}
+
+#form4 select
+{
+  text-align: center;
+  border: #ddd solid 2px;
+  border-radius: 5px;
+  padding: 10px;
+  color: #666;
+  background-color: #ffffff;
+  font-size: 20px;
+  margin: 20px 30px 0 80px;
+  display: block;
+  width: 342px;
+  outline: none;
+}
+
 #form label
 {
   font-style: normal;
@@ -367,6 +550,28 @@ main
   display: block;
 }
 
+#form2 label
+{
+  font-style: normal;
+  font-weight: bold;
+  color: rgb(9, 121, 112);
+  font-size: 18px;
+  padding: 0 5px;
+  display: block;
+  margin-left: 10px;
+}
+
+#form4 label
+{
+  font-style: normal;
+  font-weight: bold;
+  color: rgb(9, 121, 112);
+  font-size: 18px;
+  padding: 0 5px;
+  display: block;
+  margin-left: 10px;
+  margin-top: 20px;
+}
 
 .green
 {
@@ -579,9 +784,7 @@ p
 
 footer > a, footer > a:visited
 {
-
   color: #77a1c2;
-
 }
 
 /*endregion*/
