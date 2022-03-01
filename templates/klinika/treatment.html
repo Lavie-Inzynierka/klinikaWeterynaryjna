@@ -1,0 +1,27 @@
+{% extends 'klinika/main.html' %}
+{% load static %}
+{% block headAdditional %}
+    <link href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+{% endblock headAdditional %}
+{% block content %}
+    <div id="form2">
+        <label> Zwierzę
+            <input style="margin-left: 90px;" type="text" value="{{ treat.pet.name }}" disabled>
+        </label>
+        <label> Właściciel
+            <input style="margin-left: 90px;" type="text"
+                   value="{{ treat.pet.owner.first_name }} {{ treat.pet.owner.last_name }}" disabled>
+        </label>
+        <label> Data i czas leczenia
+            <input style="margin-left: 90px;" type="text" value="{{ treat.date_time_treatment|date:'d-m-Y H:i' }}"
+                   disabled>
+        </label>
+        <label style="float: left; margin-top: 20px;"> Opis
+        </label>
+        <textarea style="margin-left: 90px; resize: none;" rows="5" disabled>
+                       {{ treat.description }}</textarea>
+        <div style="clear: both;"></div>
+        <input style="margin-left: 255px;" type="button" onclick="history.back()" value="Wróć">
+    </div>
+{% endblock content %}
