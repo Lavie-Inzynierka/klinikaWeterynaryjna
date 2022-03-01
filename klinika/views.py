@@ -1046,6 +1046,36 @@ def all_prescriptions(request):
         return redirect('signin')
 
 
+def myprescriptions(request):
+    if request.session.get('my_user', False):
+        user = MyUser.objects.get(username=request.session.get('my_user', False))
+        if Owner.objects.filter(user=user).exists():
+            owner = Owner.objects.get(user=user)
+            allprescriptions = Prescription.objects.filter(owner=owner).all()
+        else:
+            allprescriptions = 0
+        if allprescriptions.count() == 0:
+            return render(request, 'klinika/prescriptions.html',
+                          {'username': request.session.get('my_user'),
+                           'empty': True,
+                           'rec_list': 'Brak recept do wyświetlenia',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+
+        return render(request, 'klinika/prescriptions.html',
+                      {'username': request.session.get('my_user'),
+                       'rec_list': allprescriptions,
+                       'adm': request.session.get('is_adm'),
+                       'vet': request.session.get('is_vet'),
+                       'rec': request.session.get('is_rec'),
+                       'own': request.session.get('is_own'),
+                       })
+    else:
+        return redirect('signin')
+
 def prescriptions(request):
     if request.session.get('my_user', False):
         allprescriptions = Prescription.objects.filter(status='Wystawiona').all()
