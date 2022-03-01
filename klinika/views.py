@@ -709,7 +709,7 @@ def addpet(request):
                                'rec': request.session.get('is_rec'),
                                'own': request.session.get('is_own'),
                                })
-            if not Owner.objects.filter(user=user):
+            if not Owner.objects.filter(user=user).exists():
                 owner = Owner.objects.create(
                     first_name=user.first_name,
                     last_name=user.last_name,
@@ -945,21 +945,24 @@ def addvisit(request):
                 else:
 
                     user = MyUser.objects.get(email=request.POST['own'])
-                    owner = Owner.objects.create(
-                        first_name=user.first_name,
-                        last_name=user.last_name,
-                        phone_number=user.phone_number,
-                        email=user.email,
-                        user=user
-                    )
-                    owner.save()
+                    if not Owner.objects.filter(user=user).exists():
+                        owner = Owner.objects.create(
+                            first_name=user.first_name,
+                            last_name=user.last_name,
+                            phone_number=user.phone_number,
+                            email=user.email,
+                            user=user
+                        )
+                        owner.save()
+                    owner = Owner.objects.get(user=user)
+
                 name = bleach.clean(request.POST['name'])
                 date_of_birth = bleach.clean(request.POST['date_of_birth'])
                 sex = bleach.clean(request.POST['sex'])
                 species = bleach.clean(request.POST['species'])
                 additional_information = bleach.clean(request.POST['additional_information'])
 
-                if not Species.objects.filter(species_name=species):
+                if not Species.objects.filter(species_name=species).exists():
                     species = Species.objects.create(species_name=species, additional_information='')
                     species.save()
 

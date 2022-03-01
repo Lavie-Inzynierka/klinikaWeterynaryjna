@@ -95,7 +95,7 @@ class Owner(models.Model):
     first_name = models.CharField(max_length=32)
     last_name = models.CharField(max_length=100)
     phone_number = models.CharField(max_length=20, null=True)
-    email = models.EmailField(max_length=60)
+    email = models.EmailField(max_length=60, unique=True)
     user = models.ForeignKey(MyUser, null=True, on_delete=models.PROTECT)
 
 
