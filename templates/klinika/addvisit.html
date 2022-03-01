@@ -42,7 +42,7 @@
                     <input type="date" name="date_of_birth" placeholder="Data urodzenia" onfocus="this.placeholder=' ' "
                            onblur="this.placeholder='Data urodzenia'">
                     <select name="sex">
-                        <option disabled>Wybierz płeć zwierzęcia</option>
+                        <option disabled selected>Wybierz płeć zwierzęcia</option>
                         <option>Samiec</option>
                         <option>Samica</option>
                     </select>
@@ -108,8 +108,8 @@
                     )
                 })
             </script>
-            <label> Weterynarz
-                <a id="btn-vet-choice" class="btn bstyle green" style="margin-top: 10px;"> Wybierz weterynarza</a>
+            <label style="margin-top: 25px;"> Weterynarz
+                <a id="btn-vet-choice" class="btn bstyle green"> Wybierz weterynarza</a>
                 <div id="ch-vet-choice" style="display: none;">
                     <select name="vet" id="vet-choice">
                         {% for vet in vets %}
@@ -123,7 +123,7 @@
             <label> Dodatkowe informacje
                 <input type="text" name="note" placeholder="note"
                        onfocus="this.placeholder=' ' "
-                       onblur="this.placeholder='first_name'">
+                       onblur="this.placeholder='Dodatkowe info o wizycie'">
             </label>
 
             <input type="submit" class="green" value="zapisz dane">
@@ -136,26 +136,33 @@
     <script>
         let show = {pet: false, own: false, vet: false};
         $("#btn-pet-choice").click(() => {
-            if (show.pet === false)
+            if (show.pet === false) {
                 $("#ch-pet-choice").show(500)
-            else
+                show.pet = true
+            } else {
                 $("#ch-pet-choice").hide(500)
-            show.pet ^= true
+                show.pet = false
+            }
+
         });
 
         $("#btn-own-choice").click(() => {
-            if (show.own === false)
+            if (show.own === false) {
                 $("#ch-own-choice").show(500)
-            else
+                show.own = true
+            } else {
                 $("#ch-own-choice").hide(500)
-            show.own ^= true
+                show.own = false
+            }
         });
         $("#btn-vet-choice").click(() => {
-            if (show.vet === false)
+            if (show.vet === false) {
                 $("#ch-vet-choice").show(500)
-            else
+                show.vet = true
+            } else {
                 $("#ch-vet-choice").hide(500)
-            show.vet ^= true
+                show.vet = false
+            }
         });
         $(document).ready(() => {
             $('#pet-choice').select2();
