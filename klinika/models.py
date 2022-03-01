@@ -148,3 +148,10 @@ class PrescriptionCure(models.Model):
     quantity_type = models.CharField(max_length=3, choices=Quantity_choices)
     prescription = models.ForeignKey(Prescription, on_delete=models.PROTECT)
     cure = models.ForeignKey(Cure, on_delete=models.PROTECT)
+
+
+class Treatment(models.Model):
+    id = models.AutoField(unique=True, primary_key=True, editable=False)
+    date_time_treatment = models.DateTimeField()
+    pet = models.ForeignKey(Pet, on_delete=models.PROTECT)
+    description = models.TextField(null=True)
