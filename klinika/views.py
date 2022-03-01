@@ -1308,6 +1308,66 @@ def treatments(request, petid):
         return redirect('signin')
 
 
+def addtreatment(request, petid):
+    if request.session.get('my_user', False):
+        pet = Pet.objects.get(id=petid)
+
+        if request.method == 'GET':
+            return render(request, 'klinika/addtreatment.html',
+                          {'username': request.session.get('my_user'),
+                           'pet': pet,
+                           'error': False,
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+        if request.method == 'POST':
+            date_time_treatment = bleach.clean(request.POST['date_time_treatment'])
+            desc = bleach.clean(request.POST['description'])
+
+            treat = Treatment.objects.create(
+                date_time_treatment=date_time_treatment,
+                pet=pet,
+                description=desc
+            )
+            treat.save()
+
+            return redirect('treatments', petid=petid)
+    else:
+        return redirect('signin')
+
+
+def treatment(request, petid, treatid):
+    if request.session.get('my_user', False):
+        try:
+            pet = Pet.objects.get(id=petid)
+            treat = Treatment.objects.get(id=treatid, pet=pet)
+
+            if request.method == 'GET':
+                return render(request, 'klinika/treatment.html/',
+                              {'username': request.session.get('my_user'),
+                               'treat': treat,
+                               'error': False,
+                               'adm': request.session.get('is_adm'),
+                               'vet': request.session.get('is_vet'),
+                               'rec': request.session.get('is_rec'),
+                               'own': request.session.get('is_own'),
+                               })
+
+        # todo:     edycja opisu leczenia
+
+        except:
+            return render(request, 'klinika/treatment.html',
+                          {'username': request.session.get('my_user'),
+                           'error': 'Nie znaleziono historii medycznej!',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+
+
 # endregion
 
 # region setup
