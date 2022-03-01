@@ -1019,6 +1019,8 @@ def visit(request, visitid):
         return redirect('signin')
 
 
+# endregion
+
 # region prescriptions
 def all_prescriptions(request):
     if request.session.get('my_user', False):
@@ -1075,6 +1077,7 @@ def myprescriptions(request):
                        })
     else:
         return redirect('signin')
+
 
 def prescriptions(request):
     if request.session.get('my_user', False):
@@ -1274,6 +1277,9 @@ def prescription(request, prescid):
         return redirect('signin')
 
 
+# endregion
+
+# region treatment
 def treatments(request, petid):
     if request.session.get('my_user', False):
         try:
@@ -1303,6 +1309,7 @@ def treatments(request, petid):
 
 
 # endregion
+
 # region setup
 def setup(request):
     global mytype
