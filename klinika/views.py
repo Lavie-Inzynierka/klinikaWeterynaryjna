@@ -992,7 +992,32 @@ def addvisit(request):
         return redirect('signin')
 
 
-# endregion
+def visit(request, visitid):
+    if request.session.get('my_user', False):
+        try:
+            visit = Visit.objects.get(id=visitid)
+            status = visit.status
+            return render(request, 'klinika/the-visit.html',
+                          {'username': request.session.get('my_user'),
+                           'visit': visit,
+                           'pastvisit': status,
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+        except:
+            return render(request, 'klinika/the-visit.html',
+                          {'username': request.session.get('my_user'),
+                           'error': 'Brak danych wizyty!',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+    else:
+        return redirect('signin')
+
 
 # region prescriptions
 def all_prescriptions(request):
