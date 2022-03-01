@@ -1,0 +1,68 @@
+{% extends 'klinika/main.html' %}
+{% load static %}
+{% block headAdditional %}
+    <link href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+{% endblock headAdditional %}
+{% block content %}
+
+    <div id="form">
+        {% if error %}
+            <p class="error"> {{ error }}</p>
+        {% else %}
+
+            <label> Kod recepty
+                <input style="margin-left: 90px;" type="text" value="{{ presc.code}}"
+                       disabled>
+            </label>
+            <label> Termin ważności
+                <input style="margin-left: 90px;" type="text" value="{{ presc.expiration_date|date:'d-m-Y' }}"
+                       disabled>
+            </label>
+            <label> Status
+                <input style="margin-left: 90px;" type="text" value="{{ presc.status }}"
+                       disabled>
+            </label>
+
+            <label> Zwierzę
+                <input style="margin-left: 90px;" type="text" value="{{ presc.pet.name}}"
+                       disabled>
+            </label>
+
+            <label> Właściciel
+                <input style="margin-left: 90px;" type="text" value="{{ presc.owner.first_name }}{{ presc.prescription.owner.last_name }}"
+                       disabled>
+            </label>
+
+            <label> Weterynarz
+                <input style="margin-left: 90px;" type="text" value="{{ presc.vet.first_name}}{{ presc.prescription.vet.last_name}}"
+                       disabled>
+            </label>
+            <table id="cure-table">
+                <thead>
+                <tr>
+                    <th>Nazwa leku</th>
+                    <th>Ilość</th>
+                    <th>jm.</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for pcure in cures %}
+                    <tr>
+                        <td>{{ pcure.cure.name }}</td>
+                        <td>{{ pcure.quantity }}</td>
+                        <td>{{ pcure.quantity_type }}</td>
+
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+        <input style="margin-left: 255px;" type="button" onclick="history.back()" value="Wróć">
+    <script>
+        const table = $('#cure-table').DataTable({
+            language: {url: "{% static 'json/polish.json'%}"}
+        });
+    </script>
+{% endblock content %}
