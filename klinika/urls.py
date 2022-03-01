@@ -24,6 +24,7 @@ urlpatterns = [
     path('addvisit/', views.addvisit, name="addvisit"),
     path('allprescriptions/', views.all_prescriptions, name="allprescriptions"),
     path('prescriptions/', views.prescriptions, name="prescriptions"),
+    path('prescription/<prescid>/', views.prescription, name="prescription"),
     path('completedprescriptions/', views.completedprescriptions, name="completedprescriptions"),
     path('expiredprescriptions/', views.expiredprescriptions, name="expiredprescriptions"),
     path('addprescriptions/', views.addprescription, name="addprescriptions"),
