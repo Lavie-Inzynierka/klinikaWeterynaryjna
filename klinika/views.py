@@ -1217,6 +1217,61 @@ def addprescription(request):
         return redirect('signin')
 
 
+def prescription(request, prescid):
+    if request.session.get('my_user', False):
+        try:
+            prescription = Prescription.objects.get(id=prescid)
+            cures = PrescriptionCure.objects.filter(prescription__id=prescid).all()
+            return render(request, 'klinika/prescription.html',
+                          {'username': request.session.get('my_user'),
+                           'presc': prescription,
+                           'cures': cures,
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+        except:
+            return render(request, 'klinika/prescription.html',
+                          {'username': request.session.get('my_user'),
+                           'error': 'Brak danych recepty!',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+    else:
+        return redirect('signin')
+
+
+def treatments(request, petid):
+    if request.session.get('my_user', False):
+        try:
+            med = Treatment.objects.filter(pet__id=petid).all()
+            pet = Pet.objects.get(id=petid)
+            return render(request, 'klinika/treatments.html',
+                          {'username': request.session.get('my_user'),
+                           'med': med,
+                           'pet': pet,
+                           'error': False,
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+        except:
+            return render(request, 'klinika/treatments.html',
+                          {'username': request.session.get('my_user'),
+                           'error': 'Brak danych medycznych zwierzęcia!',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+    else:
+        return redirect('signin')
+
+
 # endregion
 # region setup
 def setup(request):
