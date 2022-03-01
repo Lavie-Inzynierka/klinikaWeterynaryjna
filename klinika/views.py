@@ -593,7 +593,6 @@ def mypet(request, petid):
                 prescription = 'Brak recept do wyświetlenia!'
                 cures = 'Brak leków do wyświetlenia!'
 
-
             if request.method == "POST":
 
                 if request.POST['type'] == 'name':
