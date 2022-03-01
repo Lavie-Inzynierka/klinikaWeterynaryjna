@@ -5,9 +5,9 @@
     <script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 {% endblock headAdditional %}
 {% block content %}
-
     <div id="form">
-        <a href="#" class="btn bstyle "> Dodaj informacje o leczeniu </a>
+
+        <a href="/addtreatment/{{ pet.id }} " class="btn bstyle "> Dodaj informacje o leczeniu </a>
         {% if error %}
             <p class="error"> {{ error }}</p>
         {% else %}
@@ -37,7 +37,7 @@
                             {% endif %}
                         </td>
                         <td>
-                            <a href="#" class="btn bstyle">Podgląd </a>
+                            <a href="/treatment/{{pet.id}}/{{ m.id }}/" class="btn bstyle">Podgląd </a>
                         </td>
                     </tr>
                 {% endfor %}
