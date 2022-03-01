@@ -13,15 +13,17 @@
             {% csrf_token %}
             <header class="name">Vet Pet</header>
             <label> Data wizyty
-                <input type="date" name="visit_date" placeholder="Data wizyty" onfocus="this.placeholder=' ' "
+                <input style="margin-left: 108px;" type="date" name="visit_date" placeholder="Data wizyty"
+                       onfocus="this.placeholder=' ' "
                        onblur="this.placeholder='Data wizyty'">
             </label>
             <label> Czas wizyty
-                <input type="time" name="visit_time" placeholder="Czas wizyty" onfocus="this.placeholder=' ' "
+                <input style="margin-left: 108px;" type="time" name="visit_time" placeholder="Czas wizyty"
+                       onfocus="this.placeholder=' ' "
                        onblur="this.placeholder='Czas wizyty'">
             </label>
-            <label>Zwierzę
-                <a id="btn-pet-choice" class="btn bstyle green" style="margin-top: 10px;"> Wybierz zwierzę</a>
+            <label style="margin-top: 25px; ">Zwierzę
+                <a id="btn-pet-choice" class="btn bstyle green"> Wybierz zwierzę</a>
                 <div id="ch-pet-choice" style="display: none;">
                     <select name="pet" id="pet-choice">
                         {% for pet in pets %}
@@ -46,12 +48,13 @@
                     </select>
                     <input type="text" name="species" placeholder="Gatunek" onfocus="this.placeholder=' ' "
                            onblur="this.placeholder='Gatunek'">
-                    <input type="text" name="additional_information" placeholder="Dodatkowe informacje"
+                    <input type="text" style="margin-bottom: 20px;" name="additional_information"
+                           placeholder="Dodatkowe informacje"
                            onfocus="this.placeholder=' ' "
                            onblur="this.placeholder='Dodatkowe informacje' ">
 
                     <label> Właściciel
-                        <a id="btn-own-choice" class="btn bstyle green" style="margin-top: 10px;"> Wybierz
+                        <a id="btn-own-choice" class="btn bstyle green"> Wybierz
                             Właściciela
                         </a>
                         <div id="ch-own-choice" style="display: none;">
