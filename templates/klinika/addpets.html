@@ -23,11 +23,11 @@
             </select>
             <input type="text" name="species" placeholder="Gatunek" onfocus="this.placeholder=' ' "
                    onblur="this.placeholder='Gatunek'">
-            <input type="text" name="additional_information" placeholder="Dodatkowe informacje"
+            <input style="margin-bottom: 25px;" type="text" name="additional_information" placeholder="Dodatkowe informacje"
                    onfocus="this.placeholder=' ' "
                    onblur="this.placeholder='Dodatkowe informacje' ">
 
-            <a id="btn-own-choice" class="btn bstyle green" style="margin-top: 10px;"> Wybierz Właściciela </a>
+            <a id="btn-own-choice" class="btn bstyle green"> Wybierz Właściciela </a>
             <div id="ch-own-choice" style="display: none;">
                 <select name="own" id="own-choice">
                     {% for own in owners %}
@@ -38,24 +38,24 @@
                     <option>Dodaj</option>
                 </select>
                 <div id="own-add" style="display: none;">
-                    <input type="text" name="first_name" placeholder="first_name"
+                    <input type="text" name="first_name" placeholder="Imię"
                            onfocus="this.placeholder=' ' "
-                           onblur="this.placeholder='first_name'">
-                    <input type="text" name="last_name" placeholder="first_name"
+                           onblur="this.placeholder='Imię'">
+                    <input type="text" name="last_name" placeholder="Nazwisko"
                            onfocus="this.placeholder=' ' "
-                           onblur="this.placeholder='first_name'">
-                    <input type="email" name="email" placeholder="first_name"
+                           onblur="this.placeholder='Nazwisko'">
+                    <input type="email" name="email" placeholder="Adres email"
                            onfocus="this.placeholder=' ' "
-                           onblur="this.placeholder='first_name'">
-                    <input type="tel" name="phone_number" placeholder="first_name"
+                           onblur="this.placeholder='Adres email'">
+                    <input type="tel" name="phone_number" placeholder="Numer telefonu"
                            onfocus="this.placeholder=' ' "
-                           onblur="this.placeholder='first_name'">
+                           onblur="this.placeholder='Numer telefonu'">
                 </div>
                 <script>
                     $(document).ready(() => {
-                        $('#choice2').change(
+                        $('#own-choice').change(
                             () => {
-                                if ($('#choice2').val() === 'Dodaj')
+                                if ($('#own-choice').val() === 'Dodaj')
                                     $('#own-add').show(500)
                                 else
                                     $('#own-add').hide(500)
@@ -64,10 +64,10 @@
                     })
                 </script>
             </div>
-            <input type="submit" class="green" value="zapisz dane">
+            <input style="margin-left: 115px;" type="submit" class="green" value="zapisz dane">
 
             <a href="{% url 'pets' %}">
-                <input type="button" value="Wróć">
+                <input style="margin-left: 115px;" type="button" value="Wróć">
             </a>
         </form>
     </div>
@@ -76,15 +76,19 @@
         let show = {pet: false, own: false, vet: false};
 
         $("#btn-own-choice").click(() => {
-            if (show.own === false)
+            if (show.own === false){
                 $("#ch-own-choice").show(500)
-            else
+                show.own=true
+                }
+            else{
                 $("#ch-own-choice").hide(500)
-            show.own ^= true
+                show.own=false
+                }
+
         });
 
         $(document).ready(() => {
-            $('#choice2').select2();
+            $('#own-choice').select2();
         });
 
     </script>
