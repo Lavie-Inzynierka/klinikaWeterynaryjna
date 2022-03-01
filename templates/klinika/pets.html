@@ -38,6 +38,7 @@
                         <td>
                             {% if not userpets %}
                             <a href="/pet/{{ pet.id }} " class="btn bstyle">Podgląd </a>
+                            <a href="/treatments/{{ pet.id }} " class="btn bstyle">lecz </a>
                             {% else %}
                              <a href="/mypet/{{ pet.id }} " class="btn bstyle">Podgląd </a>
                             {% endif %}
