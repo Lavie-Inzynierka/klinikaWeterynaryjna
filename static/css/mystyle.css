@@ -283,6 +283,11 @@ main
   color: black;
 }
 
+#form #table_length
+{
+  margin-top: 32px;
+}
+
 #form2 #btn-pet-choice
 {
   margin-left: 225px;
