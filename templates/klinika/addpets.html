@@ -5,7 +5,7 @@
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 {% endblock %}
 {% block content %}
-    <div id="form2">
+    <div id="form4">
         <form method="post">
             {% if error %}
                 <p class="error"> {{ error }}</p>
@@ -17,7 +17,7 @@
             <input type="date" name="date_of_birth" placeholder="Data urodzenia" onfocus="this.placeholder=' ' "
                    onblur="this.placeholder='Data urodzenia'">
             <select name="sex">
-                <option disabled>Wybierz płeć zwierzęcia</option>
+                <option disabled selected>Wybierz płeć zwierzęcia</option>
                 <option>Samiec</option>
                 <option>Samica</option>
             </select>
@@ -29,7 +29,7 @@
 
             <a id="btn-own-choice" class="btn bstyle green" style="margin-top: 10px;"> Wybierz Właściciela </a>
             <div id="ch-own-choice" style="display: none;">
-                <select name="own" id="choice2">
+                <select name="own" id="own-choice">
                     {% for own in owners %}
                         <option value="{{ own.user.email }}">
                             {{ own.user.first_name }} {{ own.user.last_name }} {{ own.user.email }}

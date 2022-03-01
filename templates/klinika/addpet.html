@@ -1,7 +1,7 @@
 {% extends 'klinika/main.html' %}
 {% load static %}
 {% block content %}
-    <div id="signin">
+    <div id="form3">
         <form method="post">
             {% if error %}
                 <p class="error"> {{ error }}</p>
@@ -13,7 +13,7 @@
             <input type="date" name="date_of_birth" placeholder="Data urodzenia" onfocus="this.placeholder=' ' "
                    onblur="this.placeholder='Data urodzenia'" required>
             <select name="sex">
-                <option disabled>Wybierz płeć zwierzęcia</option>
+                <option disabled selected>Wybierz płeć zwierzęcia</option>
                 <option>Samiec</option>
                 <option>Samica</option>
             </select>
