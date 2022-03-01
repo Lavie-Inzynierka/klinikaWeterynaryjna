@@ -1,0 +1,157 @@
+{% extends 'klinika/main.html' %}
+{% load static %}
+{% block headAdditional %}
+    <link href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+{% endblock headAdditional %}
+{% block content %}
+
+    <div id="form">
+        {% if error %}
+            <p class="error"> {{ error }}</p>
+        {% else %}
+            {% include "klinika/sub-navbar.html" %}
+            <div id="ch-pet" style="display: none;">
+                <label> Imię
+                    <input style="margin-left: 90px;" type="text" value="{{ visit.pet.name }}" disabled>
+                </label>
+                <label> Data urodzenia
+                    <input style="margin-left: 95px;" value="{{ visit.pet.date_of_birth|date:'d-m-Y' }}" disabled>
+                </label>
+                <label> Płeć
+                    <input style="margin-left: 180px;" type="text" name="sex" value="{{ visit.pet.sex }}" disabled>
+                </label>
+                <label> Gatunek
+                    <input style="margin-left: 145px;" type="text" name="species"
+                           value="{{ visit.pet.species.species_name }}"
+                           disabled>
+                </label>
+                <label> Dodatkowe informacje
+                    <textarea style="margin-left: 30px; resize: none; margin-top: 20px;"
+                              disabled>{{ visit.pet.additional_information }}</textarea>
+                </label>
+            </div>
+            <div id="ch-own" style="display: none;">
+                <label> Imię
+                    <input style="margin-left: 90px;" type="text" value="{{ visit.pet.owner.first_name }}" disabled>
+                </label>
+                <label> Nazwisko
+                    <input style="margin-left: 90px;" type="text" value="{{ visit.pet.owner.last_name }}" disabled>
+                </label>
+                <label> Adres email
+                    <input style="margin-left: 90px;" type="text" value="{{ visit.pet.owner.email }}" disabled>
+                </label>
+                <label> Numer telefonu
+                    <input style="margin-left: 90px;" type="text" value="{{ visit.pet.owner.phone_number }}" disabled>
+                </label>
+            </div>
+            <div id="ch-visit" style="display: none;">
+                <label> Data wizyty
+                    <input style="margin-left: 90px;" type="text" value="{{ visit.visit_date|date:'d-m-Y' }}"
+                           disabled>
+                </label>
+                <label> Data time
+                    <input style="margin-left: 90px;" type="text" value="{{ visit.visit_time|date:'H:i' }}"
+                           disabled>
+                </label>
+                <label> Status
+                    <input style="margin-left: 90px;" type="text"
+                           value="{{ visit.status}} " disabled>
+                </label>
+                <label> Weterynarz
+                    <input style="margin-left: 90px;" type="text"
+                           value="{{ visit.vet.first_name }} {{ visit.vet.last_name }}" disabled>
+                </label>
+            </div>
+
+
+        {% endif %}
+    </div>
+    <script>
+        let show = {
+            pet: false,
+            petname: false,
+            petainfo: false,
+            own: false,
+            visit: false,
+            med: false,
+            prescription: false
+        };
+        $("#btn-pet").click(() => {
+            if (show.pet === false) {
+                $("#ch-pet").show(500)
+                $("#ch-own").hide(500)
+                $("#ch-visit").hide(500)
+                $("#ch-med").hide(500)
+                $("#ch-prescription").hide(500)
+                show.pet = true
+            } else {
+                $("#ch-pet").hide(500)
+                show.pet = false
+            }
+        });
+        $("#btn-own").click(() => {
+            if (show.own === false) {
+                $("#ch-pet").hide(500)
+                $("#ch-own").show(500)
+                $("#ch-visit").hide(500)
+                $("#ch-med").hide(500)
+                $("#ch-prescription").hide(500)
+                show.own = true
+            } else {
+                $("#ch-own").hide(500)
+                show.own = false
+            }
+        });
+        $("#btn-visit").click(() => {
+            if (show.visit === false) {
+                $("#ch-pet").hide(500)
+                $("#ch-own").hide(500)
+                $("#ch-visit").show(500)
+                $("#ch-med").hide(500)
+                $("#ch-prescription").hide(500)
+                show.visit = true
+            } else {
+                $("#ch-visit").hide(500)
+                show.visit = false
+            }
+        });
+        $("#btn-med").click(() => {
+            if (show.med === false) {
+                $("#ch-pet").hide(500)
+                $("#ch-own").hide(500)
+                $("#ch-visit").hide(500)
+                $("#ch-med").show(500)
+                $("#ch-prescription").hide(500)
+                show.med = true
+            } else {
+                $("#ch-med").hide(500)
+                show.med = false
+            }
+        });
+        $("#btn-prescription").click(() => {
+            if (show.prescription === false) {
+                $("#ch-pet").hide(500)
+                $("#ch-own").hide(500)
+                $("#ch-visit").hide(500)
+                $("#ch-med").hide(500)
+                $("#ch-prescription").show(500)
+                show.prescription = true
+            } else {
+                $("#ch-prescription").hide(500)
+                show.prescription = false
+            }
+        });
+        jQuery(document).ready(function () {
+            jQuery('form ul li').click(function () {
+                jQuery('form ul li').removeClass("active");
+                jQuery(this).addClass("active");
+            });
+        });
+
+        const table = $('#cure-table').DataTable({
+            language: {url: "{% static 'json/polish.json'%}"}
+        });
+
+    </script>
+{% endblock content %}
