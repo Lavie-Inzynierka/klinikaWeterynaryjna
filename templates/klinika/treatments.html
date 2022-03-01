@@ -1,0 +1,55 @@
+{% extends 'klinika/main.html' %}
+{% load static %}
+{% block headAdditional %}
+    <link href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+{% endblock headAdditional %}
+{% block content %}
+
+    <div id="form">
+        <a href="#" class="btn bstyle "> Dodaj informacje o leczeniu </a>
+        {% if error %}
+            <p class="error"> {{ error }}</p>
+        {% else %}
+            <label> Zwierzę
+                <input style="margin-left: 90px;" type="text" value="{{ pet.name }}" disabled>
+            </label>
+            <label> Właściciel
+                <input style="margin-left: 90px;" type="text"
+                       value="{{ pet.owner.first_name }} {{ pet.owner.last_name }}" disabled>
+            </label>
+
+            <table id="table">
+                <thead>
+                <tr>
+                    <th>Data i czas</th>
+                    <th>Skrócony opis</th>
+                    <th>Szczegółowe informacje</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for m in med %}
+                    <tr>
+                        <td>{{ m.date_time_treatment|date:'d-m-Y H:i' }}</td>
+                        <td>{{ m.description|slice:":50" }}
+                            {% if m.description|length > 50 %}
+                                ...
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="#" class="btn bstyle">Podgląd </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+        <input style="margin-left: 255px;" type="button" onclick="history.back()" value="Wróć">
+    </div>
+
+    <script>
+        const table = $('#table').DataTable({
+            language: {url: "{% static 'json/polish.json'%}"}
+        });
+    </script>
+{% endblock content %}
