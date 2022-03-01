@@ -39,7 +39,7 @@
         {% if  vet or adm or rec or own or username %}
             <li><a href="#"> Wizyty </a>
             <ul>
-            {% if  vet and own or adm or rec and own or own or username%}
+            {% if  vet and own or adm or rec and own or own or username %}
                 <li>
                     <a href="{% url 'myvisits' %}"> Moje wizyty</a>
                 </li>
@@ -57,24 +57,31 @@
         {% if vet %}
             <li><a href="{% url 'pets' %}"> Zwierzęta </a>
             </li>
-            <li><a href="#"> Recepty </a>
-
+            {% endif %}
+            {% if own %}
+                <li><a href="#"> Recepty </a>
                 <ul>
-                    <li>
-                        <a href="{% url 'allprescriptions' %}">Wszystkie recepty</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'prescriptions' %}">Wystawione recepty</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'completedprescriptions' %}">Zrealizowane recepty</a>
-                    </li>
-                    <li>
-                        <a href="{% url 'expiredprescriptions' %}">Wygasłe recepty</a>
-                    </li>
-                </ul>
-            </li>
-        {% endif %}
+                <li>
+                    <a href="{% url 'myprescriptions' %}">Moje recepty</a>
+                </li>
+            {% endif %}
+    {% if vet %}
+        <li>
+            <a href="{% url 'allprescriptions' %}">Wszystkie recepty</a>
+        </li>
+        <li>
+            <a href="{% url 'prescriptions' %}">Wystawione recepty</a>
+        </li>
+        <li>
+            <a href="{% url 'completedprescriptions' %}">Zrealizowane recepty</a>
+        </li>
+        <li>
+            <a href="{% url 'expiredprescriptions' %}">Wygasłe recepty</a>
+        </li>
+     {% endif %}
+        </ul>
+        </li>
+
 
 
         {% if not username %}
