@@ -319,6 +319,7 @@ main
   font-weight: bold;
   font-style: normal;
 }
+
 #form4 .select2-container
 {
   margin-top: 20px;
@@ -326,21 +327,25 @@ main
   font-weight: bold;
   font-style: normal;
 }
-#form2  #ch-own-choice .select2-container
+
+#form2 #ch-own-choice .select2-container
 {
   margin-top: 20px;
   margin-left: 208px;
   font-weight: bold;
   font-style: normal;
 }
-#form2  #ch-vet-choice .select2-container
+
+#form2 #ch-vet-choice .select2-container
 {
   margin-top: 20px;
   margin-left: 208px;
   font-weight: bold;
   font-style: normal;
 }
-#from2 > #pet-add > label > #ch-own-choice #own-choice {
+
+#from2 > #pet-add > label > #ch-own-choice #own-choice
+{
   margin-left: 208px;
   margin-top: 25px;
 }
