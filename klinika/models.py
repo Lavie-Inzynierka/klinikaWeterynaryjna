@@ -53,9 +53,6 @@ class MyUser(models.Model):
     is_active = models.BooleanField(default=False)
     note = models.TextField(null=True)
 
-    def __str__(self):
-        return self.username
-
 
 class UserType(models.Model):
     user = models.ForeignKey(MyUser, on_delete=models.PROTECT)
@@ -72,17 +69,11 @@ class UserAddresses(models.Model):
     user = models.ForeignKey(MyUser, on_delete=models.PROTECT)
     current = models.BooleanField(default=False)
 
-    def __str__(self):
-        return self.address
-
 
 class Species(models.Model):
     id = models.AutoField(unique=True, primary_key=True, editable=False)
     species_name = models.CharField(max_length=255, unique=True)
     additional_information = models.TextField(null=True)
-
-    def __str__(self):
-        return self.species_name
 
 
 class Token(models.Model):
@@ -91,12 +82,12 @@ class Token(models.Model):
     created_at = models.DateTimeField(default=datetime.now)
     expires_at = models.DateTimeField(default=datetime.now() + timedelta(days=14))
     user = models.ForeignKey(MyUser, on_delete=models.PROTECT)
-
     is_active = models.BooleanField(default=True)
 
-    def expires(self):
-        if self.created_at + timedelta(days=14) > self.expires_at:
-            self.is_active = False
+    # todo: wywalić wygasania token, recepta do widoków xD
+    # def expires(self):
+    #     if self.created_at + timedelta(days=14) > self.expires_at:
+    #         self.is_active = False
 
 
 class Owner(models.Model):
@@ -145,6 +136,10 @@ class Prescription(models.Model):
     pet = models.ForeignKey(Pet, null=True, on_delete=models.PROTECT)
     owner = models.ForeignKey(Owner, on_delete=models.PROTECT)
     status = models.CharField(max_length=12, choices=Prescription_Status_choices)
+
+    # def expires(self):
+    #     if self.expiration_date < datetime.today():
+    #         self.status = 'Wygasla'
 
 
 class PrescriptionCure(models.Model):
