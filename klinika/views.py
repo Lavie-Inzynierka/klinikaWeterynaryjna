@@ -276,7 +276,7 @@ def profile(request):
                 email = bleach.clean(request.POST['email'])
                 regex = r"^[a-z_\.0-9]*@[a-z0-9\-]*\.[a-z]*$"
 
-                if not re.search(regex, email):
+                if not re.search(regex, email) or MyUser.objects.filter(email=email).exists():
                     try:
                         user_adress = UserAddresses.objects.get(user=user, current=True) or None
                     except:
