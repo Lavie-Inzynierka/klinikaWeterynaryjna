@@ -45,7 +45,7 @@
                 {% endfor %}
                 </tbody>
             </table>
-                        <div style="clear: both"></div>
+            <div style="clear: both"></div>
         {% else %}
             <p> Brak wizyt do wyświetlenia! </p>
         {% endif %}
@@ -55,9 +55,6 @@
         $(document).ready(function () {
             $('#table').DataTable({
                 language: {url: "{% static 'json/polish.json'%}"},
-                columnDefs: [
-                    {searchable: false, targets: 6}
-                ]
             });
         });
     </script>
