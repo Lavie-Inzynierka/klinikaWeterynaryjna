@@ -38,7 +38,7 @@
                             {% endif %}
                         </td>
                         <td>
-                            <a href="/treatment/{{pet.id}}/{{ m.id }}/" class="btn bstyle">Podgląd </a>
+                            <a href="/treatment/{{ pet.id }}/{{ m.id }}/" class="btn bstyle">Podgląd </a>
                         </td>
                     </tr>
                 {% endfor %}
@@ -47,7 +47,6 @@
         {% endif %}
         <input style="margin-left: 255px;" type="button" onclick="history.back()" value="Wróć">
     </div>
-
     <script>
         const table = $('#table').DataTable({
             language: {url: "{% static 'json/polish.json'%}"}
