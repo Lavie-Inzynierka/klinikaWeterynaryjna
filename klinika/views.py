@@ -1378,6 +1378,105 @@ def treatment(request, petid, treatid):
 
 # endregion
 
+# region Administration
+
+def usersmanagement(request):
+    if request.session.get('my_user', False):
+        users = MyUser.objects.filter().all()
+
+        return render(request, 'klinika/users.html',
+                      {'username': request.session.get('my_user'),
+                       'users': users,
+                       'adm': request.session.get('is_adm'),
+                       'vet': request.session.get('is_vet'),
+                       'rec': request.session.get('is_rec'),
+                       'own': request.session.get('is_own'),
+                       })
+
+    else:
+        return redirect('signin')
+
+
+def petsmanagement(request):
+    if request.session.get('my_user', False):
+        pets = Pet.objects.filter().all()
+        if pets.count() == 0:
+            return render(request, 'klinika/pets.html',
+                          {'username': request.session.get('my_user'),
+                           'empty': True,
+                           'pet_list': 'Brak zwierząt do wyświetlenia',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+
+        return render(request, 'klinika/pets.html',
+                      {'username': request.session.get('my_user'),
+                       'pet_list': pets,
+                       'adm': request.session.get('is_adm'),
+                       'vet': request.session.get('is_vet'),
+                       'rec': request.session.get('is_rec'),
+                       'own': request.session.get('is_own'),
+                       })
+    else:
+        return redirect('signin')
+
+
+def visitsmanagement(request):
+    if request.session.get('my_user', False):
+        visits = Visit.objects.filter().all()
+        if visits.count() == 0:
+            return render(request, 'klinika/visit.html',
+                          {'username': request.session.get('my_user'),
+                           'empty': True,
+                           'visit_list': 'Brak wizyt do wyświetlenia',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+
+        return render(request, 'klinika/visit.html',
+                      {'username': request.session.get('my_user'),
+                       'visit_list': visits,
+                       'admin': True,
+                       'adm': request.session.get('is_adm'),
+                       'vet': request.session.get('is_vet'),
+                       'rec': request.session.get('is_rec'),
+                       'own': request.session.get('is_own'),
+                       })
+    else:
+        return redirect('signin')
+
+
+def prescsmanagement(request):
+    if request.session.get('my_user', False):
+        prescs = Prescription.objects.filter().all()
+        if prescs.count() == 0:
+            return render(request, 'klinika/prescriptions.html',
+                          {'username': request.session.get('my_user'),
+                           'empty': True,
+                           'rec_list': 'Brak recept do wyświetlenia',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+
+        return render(request, 'klinika/prescriptions.html',
+                      {'username': request.session.get('my_user'),
+                       'rec_list': prescs,
+                       'adm': request.session.get('is_adm'),
+                       'vet': request.session.get('is_vet'),
+                       'rec': request.session.get('is_rec'),
+                       'own': request.session.get('is_own'),
+                       })
+    else:
+        return redirect('signin')
+
+
+# endregion
 # region setup
 def setup(request):
     global mytype
