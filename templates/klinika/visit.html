@@ -20,8 +20,10 @@
                     <th>Czas wizyty</th>
                     <th>Nazwa zwierzęcia</th>
                     <th>Właściciel</th>
-                    <th>Weterynarz </th>
-                    <th>Dodatkowe informacje </th>
+                    <th>Weterynarz</th>
+                    {% if admin %}
+                        <th>Status</th>
+                    {% endif %}
                     <th>Więcej</th>
                 </tr>
                 </thead>
@@ -29,11 +31,13 @@
                 {% for visit in visit_list %}
                     <tr>
                         <td>{{ visit.visit_date|date:'d-m-Y' }}</td>
-                        <td>{{ visit.visit_time|date:'H:i'}}</td>
-                        <td>{{ visit.pet.name}}</td>
-                        <td>{{ visit.pet.owner.first_name }} {{  visit.pet.owner.last_name }}</td>
-                        <td>{{ visit.vet.first_name }} {{ visit.vet.last_name}}</td>
-                        <td>{{ visit.note }} </td>
+                        <td>{{ visit.visit_time|date:'H:i' }}</td>
+                        <td>{{ visit.pet.name }}</td>
+                        <td>{{ visit.pet.owner.first_name }} {{ visit.pet.owner.last_name }}</td>
+                        <td>{{ visit.vet.first_name }} {{ visit.vet.last_name }}</td>
+                        {% if admin %}
+                            <td>{{ visit.status }}</td>
+                        {% endif %}
                         <td>
                             <a href="/visit/{{ visit.id }} " class="btn bstyle">Podgląd </a>
                         </td>
