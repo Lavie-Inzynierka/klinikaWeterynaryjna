@@ -6,10 +6,10 @@
 {% endblock headAdditional %}
 {% block content %}
     {% if not hide %}
-    <div class="black">
-        <a href="  {% url 'addvisit' %} " class="btn bstyle "> Dodaj wizyte
-        </a>
-    </div>
+        <div class="black">
+            <a href="  {% url 'addvisit' %} " class="btn bstyle "> Dodaj wizyte
+            </a>
+        </div>
     {% endif %}
     <div>
         {% if not empty %}
