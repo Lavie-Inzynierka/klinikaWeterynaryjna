@@ -1347,20 +1347,13 @@ def treatment(request, petid, treatid):
             pet = Pet.objects.get(id=petid)
             treat = Treatment.objects.get(id=treatid, pet=pet)
 
-            if request.method == 'GET':
-                return render(request, 'klinika/treatment.html/',
-                              {'username': request.session.get('my_user'),
-                               'treat': treat,
-                               'error': False,
-                               'adm': request.session.get('is_adm'),
-                               'vet': request.session.get('is_vet'),
-                               'rec': request.session.get('is_rec'),
-                               'own': request.session.get('is_own'),
-                               })
+            if request.method == "POST":
+                if request.POST['type'] == 'description':
+                    description = bleach.clean(request.POST['description'])
+                    treat.description = description
+                    treat.save()
 
-        # todo:     edycja opisu leczenia
-
-        except:
+        except():
             return render(request, 'klinika/treatment.html',
                           {'username': request.session.get('my_user'),
                            'error': 'Nie znaleziono historii medycznej!',
@@ -1369,6 +1362,18 @@ def treatment(request, petid, treatid):
                            'rec': request.session.get('is_rec'),
                            'own': request.session.get('is_own'),
                            })
+
+        return render(request, 'klinika/treatment.html/',
+                      {'username': request.session.get('my_user'),
+                       'treat': treat,
+                       'error': False,
+                       'adm': request.session.get('is_adm'),
+                       'vet': request.session.get('is_vet'),
+                       'rec': request.session.get('is_rec'),
+                       'own': request.session.get('is_own'),
+                       })
+    else:
+        return redirect('signin')
 
 
 # endregion
