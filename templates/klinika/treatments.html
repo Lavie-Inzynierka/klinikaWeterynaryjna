@@ -6,8 +6,9 @@
 {% endblock headAdditional %}
 {% block content %}
     <div id="form">
-
-        <a href="/addtreatment/{{ pet.id }} " class="btn bstyle "> Dodaj informacje o leczeniu </a>
+        <div class="black">
+            <a href="/addtreatment/{{ pet.id }} " class="btn bstyle "> Dodaj informacje o leczeniu </a>
+        </div>
         {% if error %}
             <p class="error"> {{ error }}</p>
         {% else %}
