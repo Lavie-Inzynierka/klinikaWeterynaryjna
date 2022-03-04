@@ -1397,6 +1397,55 @@ def usersmanagement(request):
         return redirect('signin')
 
 
+def usermanagement(request, uid):
+    if request.session.get('my_user', False):
+
+        try:
+            user = MyUser.objects.get(id=uid)
+            enum = UserTypeEnum.__members__.keys()
+            if UserType.objects.filter(user=user).exists():
+
+                utypes = UserType.objects.filter(user=user).all()
+                nothing = False
+            else:
+                nothing = True
+                utypes = 'Użytkownik nie ma żadnych uprawnień!\nNadaj mu odpowiedni typ w celu nadania uprawnień'
+            if UserAddresses.objects.filter(user=user).exists():
+                uadresses = UserAddresses.objects.filter(user=user).all()
+                nothing2 = False
+            else:
+                nothing2 = True
+                uadresses = 'Brak adresów do wyświetlenia!'
+
+            # if request.method == "POST":
+
+
+        except:
+            return render(request, 'klinika/user.html',
+                          {'username': request.session.get('my_user'),
+                           'error': 'Nie znaleziono użytkownika',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+
+        return render(request, 'klinika/user.html', {'username': request.session.get('my_user'),
+                                                     'user': user,
+                                                     'enum': enum,
+                                                     'utypes': utypes,
+                                                     'uaddresses': uadresses,
+                                                     'nothing': nothing,
+                                                     'nothing2': nothing2,
+                                                     'adm': request.session.get('is_adm'),
+                                                     'vet': request.session.get('is_vet'),
+                                                     'rec': request.session.get('is_rec'),
+                                                     'own': request.session.get('is_own'),
+                                                     })
+    else:
+        return redirect('signin')
+
+
 def petsmanagement(request):
     if request.session.get('my_user', False):
         pets = Pet.objects.filter().all()
