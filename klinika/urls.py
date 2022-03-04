@@ -33,10 +33,11 @@ urlpatterns = [
     path('treatments/<petid>/', views.treatments, name="treatments"),
     path('treatment/<petid>/<treatid>/', views.treatment, name="treatment"),
     path('addtreatment/<petid>/', views.addtreatment, name="addtreatment"),
-    path('usersmanagement', views.usersmanagement, name="usersmanagement"),
-    path('petsmanagement', views.petsmanagement, name="petsmanagement"),
-    path('visitsmanagement', views.visitsmanagement, name="visitsmanagement"),
-    path('prescsmanagement', views.prescsmanagement, name="prescsmanagement"),
+    path('usersmanagement/', views.usersmanagement, name="usersmanagement"),
+    path('usermanagement/<uid>/', views.usermanagement, name="usermanagement"),
+    path('petsmanagement/', views.petsmanagement, name="petsmanagement"),
+    path('visitsmanagement/', views.visitsmanagement, name="visitsmanagement"),
+    path('prescsmanagement/', views.prescsmanagement, name="prescsmanagement"),
 
 
 ]
