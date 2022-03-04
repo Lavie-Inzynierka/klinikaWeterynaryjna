@@ -1,0 +1,117 @@
+{% extends 'klinika/main.html' %}
+{% load static %}
+{% load myfilters %}
+{% block headAdditional %}
+    <link href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+{% endblock headAdditional %}
+{% block content %}
+    <div id="form">
+        {% if error %}
+            <p class="error"> {{ error }}</p>
+        {% else %}
+            <label> Nazwa użytkownika
+                <input style="margin-left: 152px;" type="text" value="{{ user.username }}" disabled>
+                <button id="btn-uname" class="btn bstyle green"> Zmień</button>
+                <div id="ch-uname" style="display: none;">
+                    <form method="post">
+                        <input type="hidden" name="type" value="username">
+                        {% csrf_token %}
+                        <input style="margin-left: 220px;" type="text" name="username" placeholder="Nazwa użytkownika "
+                               onfocus="this.placeholder=' ' "
+                               onblur="this.placeholder='Nazwa użytkownika '">
+                        <input style="margin-left: 250px;" class="green" type="submit" value="Zmień">
+                    </form>
+                </div>
+            </label>
+            <label> Imię
+                <input style="margin-left: 182px;" type="text" value="{{ user.first_name }}" disabled>
+                <button id="btn-fname" class="btn bstyle green"> Zmień</button>
+                <div id="ch-fname" style="display: none;">
+                    <form method="post">
+                        <input type="hidden" name="type" value="first_name">
+                        {% csrf_token %}
+                        <input style="margin-left: 220px;" type="text" name="first_name" placeholder="Imię "
+                               onfocus="this.placeholder=' ' "
+                               onblur="this.placeholder='Imię '">
+                        <input style="margin-left: 250px;" class="green" type="submit" value="Zmień">
+                    </form>
+                </div>
+            </label>
+
+            <label> Nazwisko
+                <input style="margin-left: 138px;" type="text" value="{{ user.last_name }}" disabled>
+                <button id="btn-lname" class="btn bstyle green"> Zmień</button>
+                <div id="ch-lname" style="display: none;">
+                    <form method="post">
+                        <input type="hidden" name="type" value="last_name">
+                        {% csrf_token %}
+                        <input style="margin-left: 220px;" type="text" name="last_name" placeholder="Nazwisko "
+                               onfocus="this.placeholder=' ' "
+                               onblur="this.placeholder='Nazwisko '">
+                        <input style="margin-left: 250px;" class="green" type="submit" value="Zmień">
+                    </form>
+                </div>
+            </label>
+
+            <label> Hasło
+                <input style="margin-left: 170px;" type="password" value="haslo" disabled>
+                <button id="btn-pass" class="btn bstyle green"> Zmień</button>
+                <div id="ch-pass" style="display: none;">
+                    <form method="post">
+                        <input type="hidden" name="type" value="password">
+                        {% csrf_token %}
+                        <input style="margin-left: 220px;" type="password" name="pass1" placeholder="Nowe Hasło "
+                               onfocus="this.placeholder=' ' "
+                               onblur="this.placeholder='Nowe Hasło '">
+                        <input style="margin-left: 220px;" type="password" name="pass2" placeholder="Powtórz Hasło "
+                               onfocus="this.placeholder=' ' "
+                               onblur="this.placeholder='Powtórz Hasło '">
+                        <input style="margin-left: 250px;" class="green" type="submit" value="Zmień">
+                    </form>
+                </div>
+            </label>
+
+            <label> Numer telefonu
+                <input style="margin-left: 90px;" type="tel" value="{{ user.phone_number }}" disabled>
+                <button id="btn-phone" class="btn bstyle green"> Zmień</button>
+                <div id="ch-phone" style="display: none;">
+                    <form method="post">
+                        <input type="hidden" name="type" value="phone_number">
+                        {% csrf_token %}
+                        <input style="margin-left: 220px;" type="tel" name="phone_number" placeholder="Numer telefonu "
+                               onfocus="this.placeholder=' ' "
+                               onblur="this.placeholder='Numer telefonu '">
+                        <input style="margin-left: 250px;" class="green" type="submit" value="Zmień">
+                    </form>
+                </div>
+            </label>
+
+            <label> Adres email
+                <input style="margin-left: 124px; resize: none;" value="{{ user.email }}" disabled>
+                <button id="btn-email" class="btn bstyle green"> Zmień</button>
+                <div id="ch-email" style="display: none;">
+                    <form method="post">
+                        <input type="hidden" name="type" value="email">
+                        {% csrf_token %}
+                        <input type="email" style="margin-left: 220px;" name="email" placeholder="Email adres"
+                               onfocus="this.placeholder=' ' "
+                               onblur="this.placeholder='Email adres'" required>
+                        <input style="margin-left: 250px;" class="green" type="submit" value="Zmień">
+                    </form>
+                </div>
+            </label>
+            <div> Typ użytkownika
+                {% for e in enum %}
+                    <p>
+
+                        <input type="checkbox" value="{{ e }}"
+                                {% if utypes|myany:e %} checked {% endif %}
+                               disabled>
+                        {{ e }}
+                    </p>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock content %}
