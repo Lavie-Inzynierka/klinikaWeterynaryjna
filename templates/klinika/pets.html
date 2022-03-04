@@ -6,13 +6,13 @@
 {% endblock headAdditional %}
 {% block content %}
     <div class="black">
-     {% if not userpets %}
-        <a href="{% url 'addpets' %}" class="btn bstyle "> Dodaj zwierze
-        </a>
-    {% else %}
-         <a href="{% url 'addpet' %}" class="btn bstyle "> Dodaj zwierze
-        </a>
-    {% endif %}
+        {% if not userpets %}
+            <a href="{% url 'addpets' %}" class="btn bstyle "> Dodaj zwierze
+            </a>
+        {% else %}
+            <a href="{% url 'addpet' %}" class="btn bstyle "> Dodaj zwierze
+            </a>
+        {% endif %}
     </div>
     <div>
         {% if not empty %}
@@ -37,10 +37,10 @@
                         <td>{{ pet.owner.first_name }} {{ pet.owner.last_name }}</td>
                         <td>
                             {% if not userpets %}
-                            <a href="/pet/{{ pet.id }} " class="btn bstyle">Podgląd </a>
-                            <a href="/treatments/{{ pet.id }} " class="btn bstyle">Leczenie </a>
+                                <a href="/pet/{{ pet.id }} " class="btn bstyle">Podgląd </a>
+                                <a href="/treatments/{{ pet.id }} " class="btn bstyle">Leczenie </a>
                             {% else %}
-                             <a href="/mypet/{{ pet.id }} " class="btn bstyle">Podgląd </a>
+                                <a href="/mypet/{{ pet.id }} " class="btn bstyle">Podgląd </a>
                             {% endif %}
                         </td>
                     </tr>
@@ -52,7 +52,6 @@
             <p> Brak zwierząt do wyświetlenia! </p>
         {% endif %}
     </div>
-
     <script type="text/javascript">
         $(document).ready(function () {
             $('#table').DataTable({
