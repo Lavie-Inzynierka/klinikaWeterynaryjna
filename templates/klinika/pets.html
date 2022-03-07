@@ -139,12 +139,42 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#table').DataTable({
+            $('#table1').DataTable({
                 language: {url: "{% static 'json/polish.json'%}"},
                 columnDefs: [
                     {searchable: false, targets: 5}
                 ]
             });
+            $('#table2').DataTable({
+                language: {url: "{% static 'json/polish.json'%}"},
+                columnDefs: [
+                    {searchable: false, targets: 2}
+                ]
+            });
+        });
+        let show = {
+            pet: false,
+            species: false,
+        };
+        $("#btn-pet").click(() => {
+            if (show.pet === false) {
+                $("#ch-pet").show(500)
+                $("#ch-species").hide(500)
+                show.pet = true
+            } else {
+                $("#ch-pet").hide(500)
+                show.pet = false
+            }
+        });
+        $("#btn-species").click(() => {
+            if (show.species === false) {
+                $("#ch-pet").hide(500)
+                $("#ch-species").show(500)
+                show.species = true
+            } else {
+                $("#ch-species").hide(500)
+                show.species = false
+            }
         });
     </script>
 {% endblock content %}
