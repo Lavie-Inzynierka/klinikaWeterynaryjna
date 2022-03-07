@@ -4,6 +4,13 @@
 {% block headAdditional %}
     <link href="//cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
     <script src="//cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <style>
+    .select2{
+        width: 320px!important;
+    }
+    </style>
 {% endblock headAdditional %}
 {% block content %}
     <div id="form">
@@ -12,17 +19,6 @@
         {% else %}
             <label> Nazwa użytkownika
                 <input style="margin-left: 152px;" type="text" value="{{ user.username }}" disabled>
-                <button id="btn-uname" class="btn bstyle green"> Zmień</button>
-                <div id="ch-uname" style="display: none;">
-                    <form method="post">
-                        <input type="hidden" name="type" value="username">
-                        {% csrf_token %}
-                        <input style="margin-left: 220px;" type="text" name="username" placeholder="Nazwa użytkownika "
-                               onfocus="this.placeholder=' ' "
-                               onblur="this.placeholder='Nazwa użytkownika '">
-                        <input style="margin-left: 250px;" class="green" type="submit" value="Zmień">
-                    </form>
-                </div>
             </label>
             <label> Imię
                 <input style="margin-left: 182px;" type="text" value="{{ user.first_name }}" disabled>
@@ -38,7 +34,6 @@
                     </form>
                 </div>
             </label>
-
             <label> Nazwisko
                 <input style="margin-left: 138px;" type="text" value="{{ user.last_name }}" disabled>
                 <button id="btn-lname" class="btn bstyle green"> Zmień</button>
@@ -53,7 +48,6 @@
                     </form>
                 </div>
             </label>
-
             <label> Hasło
                 <input style="margin-left: 170px;" type="password" value="haslo" disabled>
                 <button id="btn-pass" class="btn bstyle green"> Zmień</button>
@@ -71,7 +65,6 @@
                     </form>
                 </div>
             </label>
-
             <label> Numer telefonu
                 <input style="margin-left: 90px;" type="tel" value="{{ user.phone_number }}" disabled>
                 <button id="btn-phone" class="btn bstyle green"> Zmień</button>
@@ -86,9 +79,8 @@
                     </form>
                 </div>
             </label>
-
             <label> Adres email
-                <input style="margin-left: 124px; resize: none;" value="{{ user.email }}" disabled>
+                <input style="margin-left: 165px; resize: none;" value="{{ user.email }}" disabled>
                 <button id="btn-email" class="btn bstyle green"> Zmień</button>
                 <div id="ch-email" style="display: none;">
                     <form method="post">
@@ -101,17 +93,202 @@
                     </form>
                 </div>
             </label>
-            <div> Typ użytkownika
+            <button id="btn-utype" class="btn bstyle green" style="float: right; margin: 20px 200px 20px 0;"> Zmień
+            </button>
+            <div id="still-utype" style="float: left; margin: 20px 0 20px 0;"> Typ użytkownika
                 {% for e in enum %}
-                    <p>
-
-                        <input type="checkbox" value="{{ e }}"
+                    <p style="margin: 10px 10px; text-align: left">
+                        <input  type="checkbox"  style="margin: 0 0 0 110px;"
                                 {% if utypes|myany:e %} checked {% endif %}
                                disabled>
                         {{ e }}
                     </p>
                 {% endfor %}
             </div>
+            <div id="ch-utype" style="float: left; margin: 20px 0 20px 0; display: none"> Typ użytkownika
+                <form method="post">
+                    <input type="hidden" name="type" value="role">
+                    {% for e in enum %}
+                        <p style="margin: 10px 10px; text-align: left">
+                            <input type="checkbox" name="role-{{ e }}" style="margin: 0 0 0 110px;"
+                                    {% if utypes|myany:e %} checked {% endif %}>
+                            {{ e }}
+                        </p>
+                    {% endfor %}
+                    <input style="margin-left: 250px;" class="green" type="submit" value="Zmień">
+                </form>
+            </div>
+            <div style="clear: both"></div>
+
+            <label style="float: left;">Adres zamieszkania</label>
+            <textarea style="margin-left: 105px; float: left; resize: none;" disabled>
+                {{ uaddress.address }}</textarea>
+            <button id="btn-address" class="btn bstyle green" style="float: right; margin: 10px 78px 10px 0;"> Zmień
+                obecny adres
+            </button>
+            <button id="btn-address-all" class="btn bstyle green" style="float: right; margin: 10px 50px 10px 0;"> Pokaż
+                wszystkie adresy
+            </button>
+            <div id="ch-address" style="display: none;">
+                <form method="post">
+                    <input type="hidden" name="type" value="chaddress">
+                    {% csrf_token %}
+                    <select name="addresses" id="address-choice">
+                        <option disabled selected>Wybierz adres zamieszkania</option>
+                        {% for address in uaddresses %}
+                            <option value="{{ address.id }}">
+                                {{ address.address }}
+                            </option>
+                        {% endfor %}
+                        <option>Dodaj</option>
+                    </select>
+                    <div id="address-add" style="display: none">
+                        <textarea style="margin-left: 220px; resize: none;" rows="4" name="address"
+                                  placeholder="Adress zamieszkania " onfocus="this.placeholder=' ' "
+                                  onblur="this.placeholder='Adress zamieszkania '"></textarea>
+                    </div>
+                    <script>
+                        $(document).ready(() => {
+                            $('#address-choice').change(
+                                () => {
+                                    if ($('#address-choice').val() === 'Dodaj')
+                                        $('#address-add').show(500)
+                                    else
+                                        $('#address-add').hide(500)
+                                }
+                            )
+                        })
+                    </script>
+                    <input style="margin-left: 250px;" class="green" type="submit" value="Zmień na aktualny">
+                </form>
+            </div>
+            <div style="clear: both;"></div>
+            <div id="tbl-address" style="display: none">
+                <table id="table">
+                    <thead>
+                    <tr>
+                        <th style="width: 300px;">Adres</th>
+                        <th>Obecny</th>
+                        <th>Szczegóły</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for address in uaddresses %}
+                        <tr>
+                            <td>{{ address.address }}</td>
+                            <td>{% if address.current %}
+                                <label>
+                                    <input type="checkbox" value="Aktualny" checked disabled>
+                                </label>
+                            {% else %}
+                                <label>
+                                    <input type="checkbox" value="Nieaktualny" disabled>
+                                </label>
+                            {% endif %}
+                            </td>
+                            <td>
+                                <div class="black">
+                                    <a href="#" class="btn bstyle">Podgląd </a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         {% endif %}
+        <input style="margin-left: 312px;" type="button" onclick="history.back()" value="Wróć">
     </div>
+    <script>
+        let show = {
+            fname: false,
+            lname: false,
+            pass: false,
+            phone: false,
+            email: false,
+            utype: false,
+            address: false,
+            addresses: false
+        };
+        $("#btn-fname").click(() => {
+            if (show.fname === false) {
+                $("#ch-fname").show(500)
+                show.fname = true
+            } else {
+                $("#ch-fname").hide(500)
+                show.fname = false
+            }
+        });
+        $("#btn-lname").click(() => {
+            if (show.lname === false) {
+                $("#ch-lname").show(500)
+                show.lname = true
+            } else {
+                $("#ch-lname").hide(500)
+                show.lname = false
+            }
+        });
+        $("#btn-pass").click(() => {
+            if (show.pass === false) {
+                $("#ch-pass").show(500)
+                show.pass = true
+            } else {
+                $("#ch-pass").hide(500)
+                show.pass = false
+            }
+        });
+        $("#btn-phone").click(() => {
+            if (show.phone === false) {
+                $("#ch-phone").show(500)
+                show.phone = true
+            } else {
+                $("#ch-phone").hide(500)
+                show.phone = false
+            }
+        });
+        $("#btn-email").click(() => {
+            if (show.email === false) {
+                $("#ch-email").show(500)
+                show.email = true
+            } else {
+                $("#ch-email").hide(500)
+                show.email = false
+            }
+        });
+        $("#btn-utype").click(() => {
+            if (show.utype === false) {
+                $("#still-utype").hide(500)
+                $("#ch-utype").show(500)
+                show.utype = true
+            } else {
+                $("#ch-utype").hide(500)
+                $("#still-utype").show(500)
+                show.utype = false
+            }
+        });
+        $("#btn-address").click(() => {
+            if (show.address === false) {
+                $("#ch-address").show(500)
+                show.address = true
+            } else {
+                $("#ch-address").hide(500)
+                show.address = false
+            }
+        });
+        $("#btn-address-all").click(() => {
+            if (show.addresses === false) {
+                $("#tbl-address").show(500)
+                show.addresses = true
+            } else {
+                $("#tbl-address").hide(500)
+                show.addresses = false
+            }
+        });
+        $(document).ready(() => {
+            $('#table').DataTable({
+                language: {url: "{% static 'json/polish.json'%}"},
+            });
+            $('#address-choice').select2();
+        });
+    </script>
 {% endblock content %}
