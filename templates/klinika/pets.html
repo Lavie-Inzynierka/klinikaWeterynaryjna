@@ -6,52 +6,137 @@
 {% endblock headAdditional %}
 {% block content %}
     <div class="black">
-        {% if not userpets %}
-            <a href="{% url 'addpets' %}" class="btn bstyle "> Dodaj zwierze
-            </a>
-        {% else %}
-            <a href="{% url 'addpet' %}" class="btn bstyle "> Dodaj zwierze
-            </a>
-        {% endif %}
-    </div>
-    <div>
-        {% if not empty %}
-            <table id="table">
-                <thead>
-                <tr>
-                    <th>Nazwa</th>
-                    <th>data urodzenia</th>
-                    <th>płeć</th>
-                    <th>Gatunek</th>
-                    <th>Właściciel zwierzęcia</th>
-                    <th>Szczegółowe informacje</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for pet in pet_list %}
+        {% if not admin %}
+            {% if not userpets %}
+                <a href="{% url 'addpets' %}" class="btn bstyle "> Dodaj zwierze
+                </a>
+            {% else %}
+                <a href="{% url 'addpet' %}" class="btn bstyle "> Dodaj zwierze
+                </a>
+            {% endif %}
+            </div>
+            {% if not empty %}
+                <table id="table">
+                    <thead>
                     <tr>
-                        <td>{{ pet.name }}</td>
-                        <td>{{ pet.date_of_birth|date:'d-m-Y' }}</td>
-                        <td>{{ pet.sex }}</td>
-                        <td>{{ pet.species.species_name }}</td>
-                        <td>{{ pet.owner.first_name }} {{ pet.owner.last_name }}</td>
-                        <td>
-                            {% if not userpets %}
-                                <a href="/pet/{{ pet.id }} " class="btn bstyle">Podgląd </a>
-                                <a href="/treatments/{{ pet.id }} " class="btn bstyle">Leczenie </a>
-                            {% else %}
-                                <a href="/mypet/{{ pet.id }} " class="btn bstyle">Podgląd </a>
-                            {% endif %}
-                        </td>
+                        <th>Nazwa</th>
+                        <th>data urodzenia</th>
+                        <th>płeć</th>
+                        <th>Gatunek</th>
+                        <th>Właściciel zwierzęcia</th>
+                        <th>Szczegółowe informacje</th>
                     </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-            <div style="clear: both"></div>
+                    </thead>
+                    <tbody>
+                    {% for pet in pet_list %}
+                        <tr>
+                            <td>{{ pet.name }}</td>
+                            <td>{{ pet.date_of_birth|date:'d-m-Y' }}</td>
+                            <td>{{ pet.sex }}</td>
+                            <td>{{ pet.species.species_name }}</td>
+                            <td>{{ pet.owner.first_name }} {{ pet.owner.last_name }}</td>
+                            <td>
+                                {% if not userpets %}
+                                    <a href="/pet/{{ pet.id }} " class="btn bstyle">Podgląd </a>
+                                    <a href="/treatments/{{ pet.id }} " class="btn bstyle">Leczenie </a>
+                                {% else %}
+                                    <a href="/mypet/{{ pet.id }} " class="btn bstyle">Podgląd </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                <div style="clear: both"></div>
+            {% else %}
+                <p> Brak zwierząt do wyświetlenia! </p>
+            {% endif %}
         {% else %}
-            <p> Brak zwierząt do wyświetlenia! </p>
+            <div id="form">
+                <div id="subnav">
+                    <ul>
+                        <li>
+                            <a id="btn-pet"> Zwierzę</a>
+                        </li>
+                        <li>
+                            <a id="btn-species">Gatunek</a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="ch-pet" style="display: none;">
+                    <div class="black">
+                        <a href="{% url 'addpets' %}" class="btn bstyle "> Dodaj zwierzę</a>
+                    </div>
+                    <div>
+                        {% if not empty %}
+                            <table id="table1">
+                                <thead>
+                                <tr>
+                                    <th>Nazwa</th>
+                                    <th>data urodzenia</th>
+                                    <th>płeć</th>
+                                    <th>Gatunek</th>
+                                    <th>Właściciel zwierzęcia</th>
+                                    <th>Szczegółowe informacje</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for pet in pet_list %}
+                                    <tr>
+                                        <td>{{ pet.name }}</td>
+                                        <td>{{ pet.date_of_birth|date:'d-m-Y' }}</td>
+                                        <td>{{ pet.sex }}</td>
+                                        <td>{{ pet.species.species_name }}</td>
+                                        <td>{{ pet.owner.first_name }} {{ pet.owner.last_name }}</td>
+                                        <td>
+                                            <a href="/pet/{{ pet.id }} " class="btn bstyle" style="margin: 10px 0;">Podgląd </a>
+                                            <a href="/treatments/{{ pet.id }} " class="btn bstyle" style="margin: 0;">Leczenie </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <div style="clear: both"></div>
+                        {% else %}
+                            <p> Brak zwierząt do wyświetlenia! </p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div id="ch-species" style="display: none;">
+                    <div class="black">
+                        <a href="#" class="btn bstyle "> Dodaj Gatunek</a>
+                    </div>
+                    <div>
+                        {% if not empty %}
+                            <table id="table2">
+                                <thead>
+                                <tr>
+                                    <th>Nazwa</th>
+                                    <th>Dodatkowe informacje</th>
+                                    <th>Szczegóły</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for s in species %}
+                                    <tr>
+                                        <td>{{ s.species_name }}</td>
+                                        <td>{{ s.additional_information }}</td>
+                                        <td>
+                                            <a href="#" class="btn bstyle">Podgląd </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <div style="clear: both"></div>
+                        {% else %}
+                            <p> Brak Gatunków do wyświetlenia! </p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
         {% endif %}
-    </div>
+
     <script type="text/javascript">
         $(document).ready(function () {
             $('#table').DataTable({
