@@ -31,7 +31,6 @@
                                 {{ pet.name }} {{ pet.date_of_birth|date:'d-m-Y' }}
                                 {{ pet.owner.first_name }} {{ pet.owner.last_name }}
                             </option>
-
                         {% endfor %}
                         <option>Dodaj</option>
                     </select>
@@ -174,5 +173,4 @@
             $('#vet-choice').select2();
         });
     </script>
-
 {% endblock content %}
