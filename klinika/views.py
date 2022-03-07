@@ -1548,6 +1548,88 @@ def usermanagement(request, uid):
         return redirect('signin')
 
 
+def usermanagementadd(request):
+    if request.session.get('my_user', False):
+        user = MyUser.objects.get(username=request.session.get('my_user', False))
+        utypes = UserType.objects.filter(user=user).all()
+        enum = UserTypeEnum.__members__.keys()
+        if any(x.user_type == 'ADMIN' for x in utypes):
+
+            if request.method == "POST":
+                uname = bleach.clean(request.POST['username'])
+                pass1 = bleach.clean(request.POST['pass1'])
+                pass2 = bleach.clean(request.POST['pass2'])
+                fname = bleach.clean(request.POST['first_name'])
+                lname = bleach.clean(request.POST['last_name'])
+                email = bleach.clean(request.POST['email'])
+                phone = bleach.clean(request.POST['phone_number'])
+                address = bleach.clean(request.POST['address'])
+                note = bleach.clean(request.POST['note'])
+
+                if pass1 == pass2:
+                    passwd = bcrypt.hashpw(pass1.encode(encoding='UTF-8'), bcrypt.gensalt())
+                else:
+                    return render(request, 'klinika/useradd.html',
+                                  {'username': request.session.get('my_user'),
+                                   'error': 'Nieprawidłowe hasło!',
+                                   'adm': request.session.get('is_adm'),
+                                   'vet': request.session.get('is_vet'),
+                                   'rec': request.session.get('is_rec'),
+                                   'own': request.session.get('is_own'),
+                                   })
+
+                newuser = MyUser.objects.create(
+                    username=uname,
+                    password=passwd,
+                    first_name=fname,
+                    last_name=lname,
+                    email=email,
+                    phone_number=phone,
+                    is_active=True,
+                    note=note
+                )
+                newuser.save()
+
+                newaddress = UserAddresses.objects.create(
+                    user=newuser,
+                    address=address,
+                    current=True
+                )
+                newaddress.save()
+
+                if request.POST['type'] == "role":
+                    for e in enum:
+                        current_role = 'role-{}'.format(e)
+                        arole = request.POST.get(current_role, None)
+                        if arole == 'on':
+                            utype = UserType.objects.create(
+                                user=user,
+                                user_type=e
+                            )
+                            utype.save()
+
+            return render(request, 'klinika/useradd.html',
+                          {'username': request.session.get('my_user'),
+                           'enum': enum,
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+        else:
+            return render(request, 'klinika/useradd.html',
+                          {'username': request.session.get('my_user'),
+                           'error': 'Brak uprawnień',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+
+    else:
+        return redirect('signin')
+
+
 def petsmanagement(request):
     if request.session.get('my_user', False):
         pets = Pet.objects.filter().all()
