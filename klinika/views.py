@@ -1410,27 +1410,123 @@ def usersmanagement(request):
 
 def usermanagement(request, uid):
     if request.session.get('my_user', False):
-
         try:
             user = MyUser.objects.get(id=uid)
             enum = UserTypeEnum.__members__.keys()
-            if UserType.objects.filter(user=user).exists():
+            myuser = MyUser.objects.get(username=request.session.get('my_user', False))
+            utypes = UserType.objects.filter(user=myuser).all()
+            if any(x.user_type == 'ADMIN' for x in utypes):
+                if UserType.objects.filter(user=user).exists():
 
-                utypes = UserType.objects.filter(user=user).all()
-                nothing = False
-            else:
-                nothing = True
-                utypes = 'Użytkownik nie ma żadnych uprawnień!\nNadaj mu odpowiedni typ w celu nadania uprawnień'
-            if UserAddresses.objects.filter(user=user).exists():
-                uadresses = UserAddresses.objects.filter(user=user).all()
-                nothing2 = False
-            else:
-                nothing2 = True
-                uadresses = 'Brak adresów do wyświetlenia!'
+                    utypes = UserType.objects.filter(user=user).all()
+                    nothing = False
+                else:
+                    nothing = True
+                    utypes = 'Użytkownik nie ma żadnych uprawnień!\nNadaj mu odpowiedni typ w celu nadania uprawnień'
+                if UserAddresses.objects.filter(user=user).exists():
+                    uaddresses = UserAddresses.objects.filter(user=user).all()
+                    uaddress = UserAddresses.objects.get(user=user, current=True)
+                    nothing2 = False
+                else:
+                    nothing2 = True
+                    uaddresses = 'Brak adresów do wyświetlenia!'
+                    uaddress = 'Brak miejsca zamieszkania!'
 
-            # if request.method == "POST":
+                if request.method == "POST":
 
+                    if request.POST['type'] == 'first_name':
+                        fname = bleach.clean(request.POST['first_name'])
 
+                        if Owner.objects.filter(user=user).exists():
+                            owner = Owner.objects.get(user=user)
+                            owner.first_name = fname
+                            owner.save()
+
+                        user.first_name = fname
+                        user.save()
+
+                    if request.POST['type'] == 'last_name':
+                        lname = bleach.clean(request.POST['last_name'])
+
+                        if Owner.objects.filter(user=user).exists():
+                            owner = Owner.objects.get(user=user)
+                            owner.last_name = lname
+                            owner.save()
+
+                        user.last_name = lname
+                        user.save()
+
+                    if request.POST['type'] == 'password':
+                        pass1 = bleach.clean(request.POST['pass1'])
+                        pass2 = bleach.clean(request.POST['pass2'])
+                        if pass1 == pass2:
+                            password = bcrypt.hashpw(pass1.encode(encoding='UTF-8'), bcrypt.gensalt())
+                            user.password = password
+                            user.save()
+
+                    if request.POST['type'] == 'phone_number':
+                        phone = bleach.clean(request.POST['phone_number'])
+                        user.phone_number = phone
+                        user.save()
+
+                    if request.POST['type'] == 'email':
+                        email = bleach.clean(request.POST['email'])
+                        user.email = email
+                        user.save()
+
+                    if request.POST['type'] == "role":
+                        for e in enum:
+                            current_role = 'role-{}'.format(e)
+                            if user.username == request.session.get('my_user', False) and e == 'ADMIN':
+                                pass
+                            else:
+                                arole = request.POST.get(current_role, None)
+                                if arole == 'on':
+                                    if any(x.user_type == e for x in utypes):
+                                        pass
+                                    else:
+                                        utype = UserType.objects.create(
+                                            user=user,
+                                            user_type=e
+                                        )
+                                        utype.save()
+                                else:
+                                    if any(x.user_type == e for x in utypes):
+                                        UserType.objects.get(user=user, user_type=e).delete()
+                                utypes = UserType.objects.filter(user=user).all()
+
+                    if request.POST['type'] == 'chaddress':
+                        if request.POST['addresses'] == 'Dodaj':
+                            address = bleach.clean(request.POST['address'])
+                            uaddress.current = False
+                            uaddress.save()
+                            newaddress = UserAddresses.objects.create(
+                                user=user,
+                                address=address,
+                                current=True
+                            )
+                            newaddress.save()
+                        else:
+                            address = UserAddresses.objects.get(id=request.POST['addresses'])
+                            uaddress.current = False
+                            uaddress.save()
+                            address.current = True
+                            address.save()
+
+                    uaddress = UserAddresses.objects.get(user=user, current=True)
+                return render(request, 'klinika/user.html', {'username': request.session.get('my_user'),
+                                                             'user': user,
+                                                             'enum': enum,
+                                                             'utypes': utypes,
+                                                             'uaddresses': uaddresses,
+                                                             'uaddress': uaddress,
+                                                             'nothing': nothing,
+                                                             'nothing2': nothing2,
+                                                             'adm': request.session.get('is_adm'),
+                                                             'vet': request.session.get('is_vet'),
+                                                             'rec': request.session.get('is_rec'),
+                                                             'own': request.session.get('is_own'),
+                                                             })
         except:
             return render(request, 'klinika/user.html',
                           {'username': request.session.get('my_user'),
@@ -1441,18 +1537,13 @@ def usermanagement(request, uid):
                            'own': request.session.get('is_own'),
                            })
 
-        return render(request, 'klinika/user.html', {'username': request.session.get('my_user'),
-                                                     'user': user,
-                                                     'enum': enum,
-                                                     'utypes': utypes,
-                                                     'uaddresses': uadresses,
-                                                     'nothing': nothing,
-                                                     'nothing2': nothing2,
-                                                     'adm': request.session.get('is_adm'),
-                                                     'vet': request.session.get('is_vet'),
-                                                     'rec': request.session.get('is_rec'),
-                                                     'own': request.session.get('is_own'),
-                                                     })
+        return render(request, 'klinika/user.html',
+                      {'username': request.session.get('my_user'),
+                       'adm': request.session.get('is_adm'),
+                       'vet': request.session.get('is_vet'),
+                       'rec': request.session.get('is_rec'),
+                       'own': request.session.get('is_own'),
+                       })
     else:
         return redirect('signin')
 
