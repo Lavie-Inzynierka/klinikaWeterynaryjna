@@ -127,15 +127,7 @@
                 {% endif %}
             </div>
         {% endif %}
-        {% if not userpets %}
-            <a href="{% url 'pets' %}">
-                <input style="margin-left: 255px;" type="button" value="Wróć">
-            </a>
-        {% else %}
-            <a href="{% url 'mypets' %}">
-                <input style="margin-left: 255px;" type="button" value="Wróć">
-            </a>
-        {% endif %}
+        <input style="margin-left: 255px;" type="button" onclick="history.back()" value="Wróć">
     </div>
 
     <script>
