@@ -1382,16 +1382,27 @@ def treatment(request, petid, treatid):
 
 def usersmanagement(request):
     if request.session.get('my_user', False):
-        users = MyUser.objects.filter().all()
+        user = MyUser.objects.get(username=request.session.get('my_user', False))
+        utypes = UserType.objects.filter(user=user).all()
+        if any(x.user_type == 'ADMIN' for x in utypes):
+            users = MyUser.objects.filter().all()
 
-        return render(request, 'klinika/users.html',
-                      {'username': request.session.get('my_user'),
-                       'users': users,
-                       'adm': request.session.get('is_adm'),
-                       'vet': request.session.get('is_vet'),
-                       'rec': request.session.get('is_rec'),
-                       'own': request.session.get('is_own'),
-                       })
+            return render(request, 'klinika/users.html',
+                          {'username': request.session.get('my_user'),
+                           'users': users,
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+        else:
+            return render(request, 'klinika/users.html',
+                          {'username': request.session.get('my_user'),
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
 
     else:
         return redirect('signin')
