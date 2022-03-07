@@ -1632,26 +1632,45 @@ def usermanagementadd(request):
 
 def petsmanagement(request):
     if request.session.get('my_user', False):
-        pets = Pet.objects.filter().all()
-        if pets.count() == 0:
+        user = MyUser.objects.get(username=request.session.get('my_user', False))
+        utypes = UserType.objects.filter(user=user).all()
+        if any(x.user_type == 'ADMIN' for x in utypes):
+            pets = Pet.objects.filter().all()
+            species = Species.objects.filter().all()
+            if species.count() == 0:
+                return render(request, 'klinika/pets.html',
+                              {'username': request.session.get('my_user'),
+                               'empty': True,
+                               'admin': True,
+                               'pet_list': 'Brak zwierząt do wyświetlenia',
+                               'species': 'Brak gatunków do wyświetlenia',
+                               'adm': request.session.get('is_adm'),
+                               'vet': request.session.get('is_vet'),
+                               'rec': request.session.get('is_rec'),
+                               'own': request.session.get('is_own'),
+                               })
+            if pets.count() == 0:
+                return render(request, 'klinika/pets.html',
+                              {'username': request.session.get('my_user'),
+                               'empty': True,
+                               'admin': True,
+                               'species': species,
+                               'pet_list': 'Brak zwierząt do wyświetlenia',
+                               'adm': request.session.get('is_adm'),
+                               'vet': request.session.get('is_vet'),
+                               'rec': request.session.get('is_rec'),
+                               'own': request.session.get('is_own'),
+                               })
             return render(request, 'klinika/pets.html',
                           {'username': request.session.get('my_user'),
-                           'empty': True,
-                           'pet_list': 'Brak zwierząt do wyświetlenia',
+                           'admin': True,
+                           'pet_list': pets,
+                           'species': species,
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
                            'rec': request.session.get('is_rec'),
                            'own': request.session.get('is_own'),
                            })
-
-        return render(request, 'klinika/pets.html',
-                      {'username': request.session.get('my_user'),
-                       'pet_list': pets,
-                       'adm': request.session.get('is_adm'),
-                       'vet': request.session.get('is_vet'),
-                       'rec': request.session.get('is_rec'),
-                       'own': request.session.get('is_own'),
-                       })
     else:
         return redirect('signin')
 
