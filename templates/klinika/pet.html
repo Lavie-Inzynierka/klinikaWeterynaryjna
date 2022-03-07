@@ -37,7 +37,8 @@
                     <input style="margin-left: 180px;" type="text" name="sex" value="{{ pet.sex }}" disabled>
                 </label>
                 <label> Gatunek
-                    <input style="margin-left: 145px;" type="text" name="species" value="{{ pet.species.species_name }}" disabled>
+                    <input style="margin-left: 145px;" type="text" name="species" value="{{ pet.species.species_name }}"
+                           disabled>
                 </label>
                 <label> Dodatkowe informacje
                     <textarea style="margin-left: 30px; resize: none; margin-top: 20px;"
@@ -236,7 +237,6 @@
                 jQuery(this).addClass("active");
             });
         });
-
         const table = $('#cure-table').DataTable({
             language: {url: "{% static 'json/polish.json'%}"}
         });
