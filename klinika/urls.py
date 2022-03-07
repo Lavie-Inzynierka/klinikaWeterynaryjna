@@ -35,6 +35,7 @@ urlpatterns = [
     path('addtreatment/<petid>/', views.addtreatment, name="addtreatment"),
     path('usersmanagement/', views.usersmanagement, name="usersmanagement"),
     path('usermanagement/<uid>/', views.usermanagement, name="usermanagement"),
+    path('usermanagementadd', views.usermanagementadd, name="usermanagementadd"),
     path('petsmanagement/', views.petsmanagement, name="petsmanagement"),
     path('visitsmanagement/', views.visitsmanagement, name="visitsmanagement"),
     path('prescsmanagement/', views.prescsmanagement, name="prescsmanagement"),
