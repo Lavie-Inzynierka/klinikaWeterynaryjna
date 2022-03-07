@@ -1,0 +1,61 @@
+{% extends 'klinika/main.html' %}
+{% load static %}
+{% block content %}
+    <div id="form2">
+        <form method="post">
+            {% if error %}
+                <p class="error"> {{ error }}</p>
+            {% endif %}
+            <label> Nazwa użytkownika
+                <input type="text" name="username" placeholder="Nazwa użytkownika" onfocus="this.placeholder=' ' "
+                       onblur="this.placeholder='Nazwa użytkownika'" required>
+            </label>
+            <label> Hasło
+                <input style="margin-left: 220px;" type="password" name="pass1" placeholder="Hasło "
+                       onfocus="this.placeholder=' ' "
+                       onblur="this.placeholder='Hasło '">
+                <input style="margin-left: 220px;" type="password" name="pass2" placeholder="Powtórz Hasło "
+                       onfocus="this.placeholder=' ' "
+                       onblur="this.placeholder='Powtórz Hasło '">
+            </label>
+            <label> Imię
+                <input type="text" name="first_name" placeholder="Imie" onfocus="this.placeholder=' ' "
+                       onblur="this.placeholder='Imie' " required>
+            </label>
+            <label> Nazwisko
+                <input type="text" name="last_name" placeholder="Nazwisko" onfocus="this.placeholder=' ' "
+                       onblur="this.placeholder='Nazwisko' " required>
+            </label>
+            <label> Adres email
+                <input type="email" name="email" placeholder="Adres email" onfocus="this.placeholder=' ' "
+                       onblur="this.placeholder='Adres email' " required>
+            </label>
+            <label> Numer telefonu
+                <input style="margin-left: 220px;" type="tel" name="phone_number" placeholder="Numer telefonu "
+                       onfocus="this.placeholder=' ' "
+                       onblur="this.placeholder='Numer telefonu '">
+            </label>
+            <label> Adres zamieszkania
+            <textarea style="margin-left: 220px; resize: none;" rows="4" name="address"
+                      placeholder="Adress zamieszkania " onfocus="this.placeholder=' ' "
+                      onblur="this.placeholder='Adress zamieszkania '"></textarea>
+            </label>
+            <label> Dodatkowe informacje
+            <textarea style="margin-left: 220px; resize: none;" rows="4" name="note"
+                      placeholder="Dodatkowe informacje " onfocus="this.placeholder=' ' "
+                      onblur="this.placeholder='Dodatkowe informacje '"></textarea>
+            </label>
+            <label> Typ użytkownika
+                <input type="hidden" name="type" value="role">
+                {% for e in enum %}
+                    <p style="margin: 10px 10px; text-align: left">
+                        <input type="checkbox" name="role-{{ e }}" style="margin: 0 0 0 110px;">
+                        {{ e }}
+                    </p>
+                {% endfor %}
+            </label>
+            <input type="submit" class="green" value="zapisz dane">
+            <input style="margin-left: 255px;" type="button" onclick="history.back()" value="Wróć">
+        </form>
+    </div>
+{% endblock content %}
