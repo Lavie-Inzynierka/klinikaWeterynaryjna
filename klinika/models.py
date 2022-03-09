@@ -58,6 +58,9 @@ class UserType(models.Model):
     user = models.ForeignKey(MyUser, on_delete=models.PROTECT)
     user_type = models.CharField(max_length=12)
 
+    class Unique_types:
+        unique_together = ((MyUser, UserTypeEnum.__members__.keys()),)
+
     def type_check(self):
         if not UserTypeEnum.__members__.keys().__contains__(self.user_type):
             raise ValueError("Wartość nie istnieje!")
