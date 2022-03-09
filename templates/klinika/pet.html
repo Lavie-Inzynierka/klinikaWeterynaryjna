@@ -34,6 +34,20 @@
                 </label>
                 <label> Data urodzenia
                     <input style="margin-left: 95px;" value="{{ pet.date_of_birth|date:'d-m-Y' }}" disabled>
+                    {% if admin %}
+                        <a id="btn-pet-DoB" class="btn bstyle green" style="margin-top: 10px;"> Zmień</a>
+                        <div id="ch-pet-DoB" style="display: none;">
+                            <form method="post">
+                                <input type="hidden" name="type" value="date_of_birth">
+                                {% csrf_token %}
+                                <input style="margin-left: 220px;"
+                                       name="date_of_birth" type="date"
+                                       placeholder="Data urodzenia" onfocus="this.placeholder=' ' "
+                                       onblur="this.placeholder='Data urodzenia'" required>
+                                <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                            </form>
+                        </div>
+                    {% endif %}
                 </label>
                 <label> Płeć
                     <input style="margin-left: 180px;" type="text" name="sex" value="{{ pet.sex }}" disabled>
