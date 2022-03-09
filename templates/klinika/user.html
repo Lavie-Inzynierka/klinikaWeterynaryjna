@@ -7,9 +7,10 @@
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet"/>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <style>
-    .select2{
-        width: 320px!important;
-    }
+        .select2
+        {
+            width: 320px !important;
+        }
     </style>
 {% endblock headAdditional %}
 {% block content %}
@@ -98,7 +99,7 @@
             <div id="still-utype" style="float: left; margin: 20px 0 20px 0;"> Typ użytkownika
                 {% for e in enum %}
                     <p style="margin: 10px 10px; text-align: left">
-                        <input  type="checkbox"  style="margin: 0 0 0 110px;"
+                        <input type="checkbox" style="margin: 0 0 0 110px;"
                                 {% if utypes|myany:e %} checked {% endif %}
                                disabled>
                         {{ e }}
@@ -196,6 +197,16 @@
                     </tbody>
                 </table>
             </div>
+            <button style="margin-left: 250px; background-color: #ff3c1c; color: antiquewhite;" class="btn" id="btn-delete"
+                    type="button">Usuń</button>
+            <div id="ch-delete" style="display: none;">
+                <form method="post">
+                    <input type="hidden" name="type" value="delete">
+                    <p class="error">Czy napewno chcesz usunąć tego użytkownika?</p>
+                    <input style="margin-left: 250px; background-color: #ff3c1c; color: antiquewhite;" type="submit"
+                           value="delete">
+                </form>
+            </div>
         {% endif %}
         <input style="margin-left: 312px;" type="button" onclick="history.back()" value="Wróć">
     </div>
@@ -208,7 +219,8 @@
             email: false,
             utype: false,
             address: false,
-            addresses: false
+            addresses: false,
+            delete: false
         };
         $("#btn-fname").click(() => {
             if (show.fname === false) {
@@ -282,6 +294,15 @@
             } else {
                 $("#tbl-address").hide(500)
                 show.addresses = false
+            }
+        });
+        $("#btn-delete").click(() => {
+            if (show.delete === false) {
+                $("#ch-delete").show(500)
+                show.delete = true
+            } else {
+                $("#ch-delete").hide(500)
+                show.delete = false
             }
         });
         $(document).ready(() => {

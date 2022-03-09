@@ -1515,6 +1515,18 @@ def usermanagement(request, uid):
                             address.save()
 
                     uaddress = UserAddresses.objects.get(user=user, current=True)
+
+                    if request.POST['type'] == 'delete':
+                        for address in uaddresses:
+                            address.delete()
+
+                        for utype in utypes:
+                            utypes.delete()
+                        # todo: deaktywacja i usuwanie użytkownika
+                        # if Owner.objects.filter(user=user).exists():
+                        #     owner = Owner.objects.get(user=user)
+                        #     if Pet.objects.filter(owner=owner).exists():
+
                 return render(request, 'klinika/user.html', {'username': request.session.get('my_user'),
                                                              'user': user,
                                                              'enum': enum,
