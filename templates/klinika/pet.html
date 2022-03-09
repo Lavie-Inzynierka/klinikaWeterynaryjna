@@ -70,6 +70,20 @@
                 <label> Gatunek
                     <input style="margin-left: 145px;" type="text" name="species" value="{{ pet.species.species_name }}"
                            disabled>
+                    {% if admin %}
+                        <a id="btn-pet-spec" class="btn bstyle green" style="margin-top: 10px;"> Zmień</a>
+                        <div id="ch-pet-spec" style="display: none;">
+                            <form method="post">
+                                <input type="hidden" name="type" value="species">
+                                {% csrf_token %}
+                                <input style="margin-left: 220px;"
+                                       name="species" type="text"
+                                       placeholder="Gatunek" onfocus="this.placeholder=' ' "
+                                       onblur="this.placeholder='Gatunek'" required>
+                                <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                            </form>
+                        </div>
+                    {% endif %}
                 </label>
                 <label> Dodatkowe informacje
                     <textarea style="margin-left: 30px; resize: none; margin-top: 20px;"
