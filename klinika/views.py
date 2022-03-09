@@ -1000,6 +1000,7 @@ def visit(request, visitid):
         try:
             visit = Visit.objects.get(id=visitid)
             status = visit.status
+            # todo: leczenie i recepty
             return render(request, 'klinika/the-visit.html',
                           {'username': request.session.get('my_user'),
                            'visit': visit,
