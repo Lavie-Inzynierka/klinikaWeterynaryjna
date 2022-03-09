@@ -1828,6 +1828,80 @@ def petmanagement(request, petid):
         return redirect('signin')
 
 
+def treatmentsmanagement(request, petid):
+    if request.session.get('my_user', False):
+        try:
+            med = Treatment.objects.filter(pet__id=petid).all()
+            pet = Pet.objects.get(id=petid)
+            return render(request, 'klinika/treatments.html',
+                          {'username': request.session.get('my_user'),
+                           'med': med,
+                           'pet': pet,
+                           'error': False,
+                           'admin': True,
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+        except():
+            return render(request, 'klinika/treatments.html',
+                          {'username': request.session.get('my_user'),
+                           'error': 'Brak danych medycznych zwierzęcia!',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+    else:
+        return redirect('signin')
+
+
+def treatmentmanagement(request, petid, treatid):
+    if request.session.get('my_user', False):
+        try:
+            pet = Pet.objects.get(id=petid)
+            treat = Treatment.objects.get(id=treatid, pet=pet)
+
+            if request.method == "POST":
+
+                if request.POST['type'] == 'date_time_treatment':
+                    dt_treatment = bleach.clean(request.POST['date_time_treatment'])
+                    treat.date_time_treatment = dt_treatment
+                    treat.save()
+
+                if request.POST['type'] == 'description':
+                    description = bleach.clean(request.POST['description'])
+                    treat.description = description
+                    treat.save()
+
+                treat = Treatment.objects.get(id=treatid, pet=pet)
+
+
+        except():
+            return render(request, 'klinika/treatment.html',
+                          {'username': request.session.get('my_user'),
+                           'error': 'Nie znaleziono historii medycznej!',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+
+        return render(request, 'klinika/treatment.html/',
+                      {'username': request.session.get('my_user'),
+                       'treat': treat,
+                       'admin': True,
+                       'error': False,
+                       'adm': request.session.get('is_adm'),
+                       'vet': request.session.get('is_vet'),
+                       'rec': request.session.get('is_rec'),
+                       'own': request.session.get('is_own'),
+                       })
+    else:
+        return redirect('signin')
+
+
 def visitsmanagement(request):
     if request.session.get('my_user', False):
         user = MyUser.objects.get(username=request.session.get('my_user', False))
