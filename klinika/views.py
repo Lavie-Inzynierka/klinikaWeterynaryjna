@@ -1676,6 +1676,159 @@ def petsmanagement(request):
         return redirect('signin')
 
 
+def petmanagement(request, petid):
+    if request.session.get('my_user', False):
+        try:
+            user = MyUser.objects.get(username=request.session.get('my_user', False))
+            utypes = UserType.objects.filter(user=user).all()
+            vets = UserType.objects.filter(user_type='VET').all()
+            if any(x.user_type == 'ADMIN' for x in utypes):
+                pet = Pet.objects.get(id=petid)
+                owners = UserType.objects.filter(user_type='PET_OWNER').all()
+                if Visit.objects.filter(pet__id=petid, status='Zaplanowana').exists():
+                    recdate = Visit.objects.filter(pet__id=petid,
+                                                   status='Zaplanowana').aggregate(visit_date=Min('visit_date'))
+                    visit = Visit.objects.get(pet__id=petid, status='Zaplanowana', visit_date=recdate['visit_date'])
+                    nothing = False
+                else:
+                    nothing = True
+                    visit = 'Brak wizyt do wyświetlenia!'
+                if Prescription.objects.filter(pet__id=petid, status='Wystawiona').exists():
+                    recexpdate = Prescription.objects.filter(pet__id=petid,
+                                                             status='Wystawiona').aggregate(
+                        expiration_date=Min('expiration_date'))
+                    prescription = Prescription.objects.get(pet__id=petid, status='Wystawiona',
+                                                            expiration_date=recexpdate['expiration_date'])
+
+                    cures = PrescriptionCure.objects.filter(prescription__id=prescription.id).all()
+
+                    nothing2 = False
+                else:
+                    nothing2 = True
+                    prescription = 'Brak recept do wyświetlenia!'
+                    cures = 'Brak leków do wyświetlenia!'
+
+                if request.method == "POST":
+
+                    if request.POST['type'] == 'name':
+                        name = bleach.clean(request.POST['name'])
+                        pet.name = name
+                        pet.save()
+
+                    if request.POST['type'] == 'date_of_birth':
+                        date_of_birth = bleach.clean(request.POST['date_of_birth'])
+                        pet.date_of_birth = date_of_birth
+                        pet.save()
+
+                    if request.POST['type'] == 'sex':
+                        sex = bleach.clean(request.POST['sex'])
+                        pet.sex = sex
+                        pet.save()
+
+                    if request.POST['type'] == 'species':
+                        species = bleach.clean(request.POST['species'])
+                        pet.species = species
+                        pet.save()
+
+                    if request.POST['type'] == 'additional_information':
+                        additional_information = bleach.clean(request.POST['additional_information'])
+                        pet.additional_information = additional_information
+                        pet.save()
+                    if request.POST['type'] == 'owner':
+                        if request.POST['own'] == 'Dodaj':
+                            first_name = bleach.clean(request.POST['first_name'])
+                            last_name = bleach.clean(request.POST['last_name'])
+                            phone_number = bleach.clean(request.POST['phone_number'])
+                            email = bleach.clean(request.POST['email'])
+
+                            owner = Owner.objects.create(
+                                first_name=first_name,
+                                last_name=last_name,
+                                phone_number=phone_number,
+                                email=email)
+
+                            owner.save()
+                        else:
+                            user = MyUser.objects.get(email=request.POST['own'])
+                            if not Owner.objects.filter(user=user).exists():
+                                owner = Owner.objects.create(
+                                    first_name=user.first_name,
+                                    last_name=user.last_name,
+                                    phone_number=user.phone_number,
+                                    email=user.email,
+                                    user=user
+                                )
+                                owner.save()
+                            owner = Owner.objects.get(user=user)
+                        pet.owner = owner
+                        pet.save()
+
+
+                    if request.POST['type'] == 'visit_date':
+                        visit_date = bleach.clean(request.POST['visit_date'])
+                        visit.visit_date = visit_date
+                        visit.save()
+
+                        recdate = Visit.objects.filter(pet__id=petid,
+                                                       status='Zaplanowana').aggregate(visit_date=Min('visit_date'))
+                        visit = Visit.objects.get(pet__id=petid, status='Zaplanowana', visit_date=recdate['visit_date'])
+
+                    if request.POST['type'] == 'visit_time':
+                        visit_time = bleach.clean(request.POST['visit_time'])
+                        visit.visit_time = visit_time
+                        visit.save()
+
+                        recdate = Visit.objects.filter(pet__id=petid,
+                                                       status='Zaplanowana').aggregate(visit_date=Min('visit_date'))
+                        visit = Visit.objects.get(pet__id=petid, status='Zaplanowana', visit_date=recdate['visit_date'])
+
+                    if request.POST['type'] == 'vet':
+                        vet = MyUser.objects.get(email=request.POST['vet'])
+                        visit.vet = vet
+                        visit.save()
+
+                        recdate = Visit.objects.filter(pet__id=petid,
+                                                       status='Zaplanowana').aggregate(visit_date=Min('visit_date'))
+                        visit = Visit.objects.get(pet__id=petid, status='Zaplanowana', visit_date=recdate['visit_date'])
+
+                    pet = Pet.objects.get(id=petid)
+
+                return render(request, 'klinika/pet.html', {'username': request.session.get('my_user'),
+                                                            'pet': pet,
+                                                            'vets': vets,
+                                                            'owners': owners,
+                                                            'admin': True,
+                                                            'visit': visit,
+                                                            'presc': prescription,
+                                                            'cures': cures,
+                                                            'nothing': nothing,
+                                                            'nothing2': nothing2,
+                                                            'adm': request.session.get('is_adm'),
+                                                            'vet': request.session.get('is_vet'),
+                                                            'rec': request.session.get('is_rec'),
+                                                            'own': request.session.get('is_own'),
+                                                            })
+
+        except:
+            return render(request, 'klinika/pet.html',
+                          {'username': request.session.get('my_user'),
+                           'error': 'Nie znaleziono zwierzęcia',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+
+        return render(request, 'klinika/pet.html', {'username': request.session.get('my_user'),
+                                                    'adm': request.session.get('is_adm'),
+                                                    'vet': request.session.get('is_vet'),
+                                                    'rec': request.session.get('is_rec'),
+                                                    'own': request.session.get('is_own'),
+                                                    })
+    else:
+        return redirect('signin')
+
+
 def visitsmanagement(request):
     if request.session.get('my_user', False):
         user = MyUser.objects.get(username=request.session.get('my_user', False))
