@@ -16,6 +16,19 @@
         <label> Data i czas leczenia
             <input style="margin-left: 30px;" type="text" value="{{ treat.date_time_treatment|date:'d-m-Y H:i' }}"
                    disabled>
+            {% if admin %}
+                <a id="btn-treat-datetime" class="btn bstyle green" style="margin-top: 10px;"> Zmień</a>
+                <div id="ch-treat-datetime" style="display: none;">
+                    <form method="post">
+                        <input type="hidden" name="type" value="date_time_treatment">
+                        {% csrf_token %}
+                        <input type="datetime-local" name="date_time_treatment" placeholder="Data i czas leczenia"
+                               onfocus="this.placeholder=' ' "
+                               onblur="this.placeholder='Data i czas leczenia'">
+                        <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                    </form>
+                </div>
+            {% endif %}
         </label>
         <label style="float: left; margin-top: 20px;"> Opis
         </label>
