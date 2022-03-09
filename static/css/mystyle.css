@@ -664,6 +664,11 @@ p
 {
   margin-top: 30px;
 }
+#table1_wrapper,
+#table2_wrapper
+{
+  margin-top: 10px;
+}
 
 #table_wrapper #table_length
 {
@@ -674,24 +679,42 @@ p
   margin-left: 5px;
 }
 
-#table_wrapper #table_length select
+#table1_wrapper #table1_length,
+#table2_wrapper #table2_length
+{
+  margin-top: 30px;
+  float: left;
+  font-size: 20px;
+  font-style: normal;
+  margin-left: 5px;
+}
+
+#table_wrapper #table_length select,
+#table1_wrapper #table1_length select,
+#table2_wrapper #table2_length select
 {
   margin: 0 10px;
   font-size: 20px;
 }
 
-#table_wrapper #table_filter
+#table_wrapper #table_filter,
+#table1_wrapper #table1_filter,
+#table2_wrapper #table2_filter
 {
   margin-bottom: 10px;
   float: right;
 }
 
-#table_wrapper #table_filter input[type=search]
+#table_wrapper #table_filter input[type=search],
+#table1_wrapper #table1_filter input[type=search],
+#table2_wrapper #table2_filter input[type=search]
 {
   font-size: 20px;
 }
 
-#table_wrapper #table
+#table_wrapper #table,
+#table1_wrapper #table1,
+#table2_wrapper #table2
 {
   border: #1e408e solid 4px;
   clear: both;
@@ -700,30 +723,41 @@ p
   font-size: 20px;
 }
 
-#table_wrapper #table thead tr th
+
+#table_wrapper #table thead tr th,
+#table1_wrapper #table1 thead tr th,
+#table2_wrapper #table2 thead tr th
 {
   margin-right: 200px;
   border: #1e408e solid 4px;
 }
 
-#table_wrapper #table thead tr th:last-child
+#table_wrapper #table thead tr th:last-child,
+#table1_wrapper #table1 thead tr th:last-child,
+#table2_wrapper #table2 thead tr th:last-child
 {
   margin-right: 0;
 }
 
-#table_wrapper #table tbody tr td
+#table_wrapper #table tbody tr td,
+#table1_wrapper #table1 tbody tr td,
+#table2_wrapper #table2 tbody tr td
 {
   margin-right: 200px;
   border: #1e408e solid 2px;
   padding: 10px;
 }
 
-#table_wrapper #table tbody tr td:last-child
+#table_wrapper #table tbody tr td:last-child,
+#table1_wrapper #table1 tbody tr td:last-child,
+#table2_wrapper #table2 tbody tr td:last-child
 {
   margin-right: 0;
 }
 
-#table_wrapper #table tbody tr td:last-child a
+#table_wrapper #table tbody tr td:last-child a,
+#table1_wrapper #table1 tbody tr td:last-child a,
+#table2_wrapper #table2 tbody tr td:last-child a
 {
   padding: 5px 10px;
   margin-right: 10px;
@@ -733,7 +767,9 @@ p
   border-radius: 12px;
 }
 
-#table_wrapper #table tbody tr td:last-child a:hover
+#table_wrapper #table tbody tr td:last-child a:hover,
+#table1_wrapper #table1 tbody tr td:last-child a:hover,
+#table2_wrapper #table2 tbody tr td:last-child a:hover
 {
   color: #FAE1D2;
   border: solid 1px #0A2E4F;
@@ -741,7 +777,9 @@ p
   border-radius: 12px;
 }
 
-#table_wrapper #table_info
+#table_wrapper #table_info,
+#table1_wrapper #table1_info,
+#table2_wrapper #table2_info
 {
   margin-top: 10px;
   float: left;
@@ -750,14 +788,18 @@ p
   margin-left: 5px;
 }
 
-#table_wrapper #table_paginate
+#table_wrapper #table_paginate,
+#table1_wrapper #table1_paginate,
+#table2_wrapper #table2_paginate
 {
   margin-top: 10px;
   float: right;
   margin-bottom: 20px;
 }
 
-#table_wrapper #table_paginate span
+#table_wrapper #table_paginate span,
+#table1_wrapper #table1_paginate span,
+#table2_wrapper #table2_paginate span
 {
   margin: 0 10px;
   font-size: 18px;
@@ -765,7 +807,9 @@ p
   font-style: normal;
 }
 
-#table_wrapper #table_paginate a
+#table_wrapper #table_paginate a,
+#table1_wrapper #table1_paginate a,
+#table2_wrapper #table2_paginate a
 {
   color: black;
   padding: 5px 10px;
@@ -777,7 +821,9 @@ p
   font-style: normal;
 }
 
-#table_wrapper #table_paginate a:hover
+#table_wrapper #table_paginate a:hover,
+#table1_wrapper #table1_paginate a:hover,
+#table2_wrapper #table2_paginate a:hover
 {
   color: #FAE1D2;
   border: solid 1px #0A2E4F;
