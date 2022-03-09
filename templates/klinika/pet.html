@@ -169,6 +169,21 @@
                     <label> Data wizyty
                         <input style="margin-left: 90px;" type="text" value="{{ visit.visit_date|date:'d-m-Y' }}"
                                disabled>
+                        {% if admin %}
+                            <a id="btn-visit-date" class="btn bstyle green" style="margin-top: 10px;"> Zmień</a>
+                            <div id="ch-visit-date" style="display: none;">
+                                <form method="post">
+                                    <input type="hidden" name="type" value="visit_date">
+                                    {% csrf_token %}
+                                    <input style="margin-left: 108px;" type="date" name="visit_date"
+                                           placeholder="Data wizyty"
+                                           onfocus="this.placeholder=' ' "
+                                           onblur="this.placeholder='Data wizyty'">
+
+                                    <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                                </form>
+                            </div>
+                        {% endif %}
                     </label>
                     <label> Data time
                         <input style="margin-left: 90px;" type="text" value="{{ visit.visit_time|date:'H:i' }}"
