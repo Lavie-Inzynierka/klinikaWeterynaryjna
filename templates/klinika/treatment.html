@@ -53,6 +53,7 @@
     <script>
         let show = {
             desc: false,
+            datetime: false,
         };
         $("#btn-treat-desc").click(function () {
             if (show.desc === false) {
@@ -61,6 +62,15 @@
             } else {
                 $("#ch-treat-desc").hide(500)
                 show.desc = false
+            }
+        });
+        $("#btn-treat-datetime").click(function () {
+            if (show.datetime === false) {
+                $("#ch-treat-datetime").show(500)
+                show.datetime = true
+            } else {
+                $("#ch-treat-datetime").hide(500)
+                show.datetime = false
             }
         });
     </script>
