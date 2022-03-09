@@ -43,5 +43,4 @@ urlpatterns = [
     path('visitsmanagement/', views.visitsmanagement, name="visitsmanagement"),
     path('prescsmanagement/', views.prescsmanagement, name="prescsmanagement"),
 
-
 ]

@@ -1763,7 +1763,6 @@ def petmanagement(request, petid):
                         pet.owner = owner
                         pet.save()
 
-
                     if request.POST['type'] == 'visit_date':
                         visit_date = bleach.clean(request.POST['visit_date'])
                         visit.visit_date = visit_date
