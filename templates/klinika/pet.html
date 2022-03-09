@@ -114,6 +114,54 @@
                 <label> Numer telefonu
                     <input style="margin-left: 90px;" type="text" value="{{ pet.owner.phone_number }}" disabled>
                 </label>
+                {% if admin %}
+                    <a id="btn-own-choice" style="margin: 10px 0 0 246px;">
+                        <input type="button" class="green" value="Zmień Właśicicela"> </a>
+                    <div id="ch-own-choice" style="display: none;">
+                        <form method="post">
+                            <input type="hidden" name="type" value="owner">
+                            <label> Właściciel
+                                <select name="own" id="own-choice">
+                                    <option selected disabled>Wybierz właściciela</option>
+                                    {% for own in owners %}
+                                        <option value="{{ own.user.email }}">
+                                            {{ own.user.first_name }} {{ own.user.last_name }} {{ own.user.email }}
+                                        </option>
+                                    {% endfor %}
+                                    <option>Dodaj</option>
+                                </select>
+                                <div id="own-add" style="display: none">
+                                    <input type="text" name="first_name" placeholder="Imię"
+                                           onfocus="this.placeholder=' ' "
+                                           onblur="this.placeholder='Imię'">
+                                    <input type="text" name="last_name" placeholder="Nazwisko"
+                                           onfocus="this.placeholder=' ' "
+                                           onblur="this.placeholder='Nazwisko'">
+                                    <input type="email" name="email" placeholder="Email"
+                                           onfocus="this.placeholder=' ' "
+                                           onblur="this.placeholder='Email'">
+                                    <input type="tel" name="phone_number" placeholder="Numer telefonu"
+                                           onfocus="this.placeholder=' ' "
+                                           onblur="this.placeholder='Numer telefonu'">
+                                </div>
+                                <script>
+                                    $(document).ready(() => {
+                                        $('#own-choice').change(
+                                            () => {
+                                                if ($('#own-choice').val() === 'Dodaj')
+                                                    $('#own-add').show(500)
+                                                else
+                                                    $('#own-add').hide(500)
+                                            }
+                                        )
+                                    })
+                                </script>
+                                <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                            </label>
+                        </form>
+                    </div>
+
+                {% endif %}
             </div>
 
             <div id="ch-visit" style="display: none;">
