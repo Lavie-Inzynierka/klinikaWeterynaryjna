@@ -185,9 +185,24 @@
                             </div>
                         {% endif %}
                     </label>
-                    <label> Data time
+                    <label> Czas wizyty
                         <input style="margin-left: 90px;" type="text" value="{{ visit.visit_time|date:'H:i' }}"
                                disabled>
+                        {% if admin %}
+                            <a id="btn-visit-time" class="btn bstyle green" style="margin-top: 10px;"> Zmień</a>
+                            <div id="ch-visit-time" style="display: none;">
+                                <form method="post">
+                                    <input type="hidden" name="type" value="visit_time">
+                                    {% csrf_token %}
+
+                                    <input style="margin-left: 108px;" type="time" name="visit_time"
+                                           placeholder="Czas wizyty"
+                                           onfocus="this.placeholder=' ' "
+                                           onblur="this.placeholder='Czas wizyty'">
+                                    <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                                </form>
+                            </div>
+                        {% endif %}
                     </label>
                     <label> Weterynarz
                         <input style="margin-left: 90px;" type="text"
