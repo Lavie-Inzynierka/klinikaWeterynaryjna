@@ -51,6 +51,21 @@
                 </label>
                 <label> Płeć
                     <input style="margin-left: 180px;" type="text" name="sex" value="{{ pet.sex }}" disabled>
+                    {% if admin %}
+                        <a id="btn-pet-sex" class="btn bstyle green" style="margin-top: 10px;"> Zmień</a>
+                        <div id="ch-pet-sex" style="display: none;">
+                            <form method="post">
+                                <input type="hidden" name="type" value="sex">
+                                {% csrf_token %}
+                                <select name="sex">
+                                    <option disabled selected>Wybierz płeć zwierzęcia</option>
+                                    <option>Samiec</option>
+                                    <option>Samica</option>
+                                </select>
+                                <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                            </form>
+                        </div>
+                    {% endif %}
                 </label>
                 <label> Gatunek
                     <input style="margin-left: 145px;" type="text" name="species" value="{{ pet.species.species_name }}"
