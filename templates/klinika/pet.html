@@ -279,9 +279,15 @@
         let show = {
             pet: false,
             petname: false,
+            petDoB: false,
+            petsex: false,
+            petspec: false,
             petainfo: false,
             own: false,
             visit: false,
+            visitdate: false,
+            visittime: false,
+            vet: false,
             med: false,
             prescription: false
         };
@@ -307,6 +313,33 @@
                 show.petname = false
             }
         });
+        $("#btn-pet-DoB").click(function () {
+            if (show.petDoB === false) {
+                $("#ch-pet-DoB").show(500)
+                show.petDoB = true
+            } else {
+                $("#ch-pet-DoB").hide(500)
+                show.petDoB = false
+            }
+        });
+        $("#btn-pet-sex").click(function () {
+            if (show.petsex === false) {
+                $("#ch-pet-sex").show(500)
+                show.petsex = true
+            } else {
+                $("#ch-pet-sex").hide(500)
+                show.petsex = false
+            }
+        });
+        $("#btn-pet-spec").click(function () {
+            if (show.petspec === false) {
+                $("#ch-pet-spec").show(500)
+                show.petspec = true
+            } else {
+                $("#ch-pet-spec").hide(500)
+                show.petspec = false
+            }
+        });
         $("#btn-pet-adi").click(function () {
             if (show.petainfo === false) {
                 $("#ch-pet-adi").show(500)
@@ -329,6 +362,19 @@
                 show.own = false
             }
         });
+
+        $("#btn-own-choice").click(() => {
+            if (show.own === false) {
+                $("#ch-own-choice").show(500)
+                show.own = true
+            } else {
+                $("#ch-own-choice").hide(500)
+                show.own = false
+            }
+        });
+        $(document).ready(() => {
+            $('#own-choice').select2();
+        });
         $("#btn-visit").click(() => {
             if (show.visit === false) {
                 $("#ch-pet").hide(500)
@@ -342,6 +388,39 @@
                 show.visit = false
             }
         });
+        $("#btn-visit-date").click(function () {
+            if (show.visitdate === false) {
+                $("#ch-visit-date").show(500)
+                show.visitdate = true
+            } else {
+                $("#ch-visit-date").hide(500)
+                show.visitdate = false
+            }
+        });
+
+        $("#btn-visit-time").click(function () {
+            if (show.visittime === false) {
+                $("#ch-visit-time").show(500)
+                show.visittime = true
+            } else {
+                $("#ch-visit-time").hide(500)
+                show.visittime = false
+            }
+        });
+
+        $("#btn-vet-choice").click(() => {
+            if (show.vet === false) {
+                $("#ch-vet-choice").show(500)
+                show.vet = true
+            } else {
+                $("#ch-vet-choice").hide(500)
+                show.vet = false
+            }
+        });
+        $(document).ready(() => {
+            $('#vet-choice').select2();
+        });
+
         $("#btn-med").click(() => {
             if (show.med === false) {
                 $("#ch-pet").hide(500)
