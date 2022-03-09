@@ -38,6 +38,8 @@ urlpatterns = [
     path('usermanagementadd', views.usermanagementadd, name="usermanagementadd"),
     path('petsmanagement/', views.petsmanagement, name="petsmanagement"),
     path('petmanagement/<petid>/', views.petmanagement, name="petmanagement"),
+    path('treatmentsmanagement/<petid>/', views.treatmentsmanagement, name="treatmentsmanagement"),
+    path('treatmentmanagement/<petid>/<treatid>/', views.treatmentmanagement, name="treatmentmanagement"),
     path('visitsmanagement/', views.visitsmanagement, name="visitsmanagement"),
     path('prescsmanagement/', views.prescsmanagement, name="prescsmanagement"),
 
