@@ -139,6 +139,12 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
+            $('#table').DataTable({
+                language: {url: "{% static 'json/polish.json'%}"},
+                columnDefs: [
+                    {searchable: false, targets: 5}
+                ]
+            });
             $('#table1').DataTable({
                 language: {url: "{% static 'json/polish.json'%}"},
                 columnDefs: [
