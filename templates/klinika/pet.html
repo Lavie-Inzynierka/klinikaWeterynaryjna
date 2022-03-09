@@ -207,6 +207,28 @@
                     <label> Weterynarz
                         <input style="margin-left: 90px;" type="text"
                                value="{{ visit.vet.first_name }} {{ visit.vet.last_name }}" disabled>
+
+                        {% if admin %}
+                            <a id="btn-vet-choice" class="btn bstyle green" style="margin-top: 10px;">
+                                Zmień Weterynarza</a>
+                            <div id="ch-vet-choice" style="display: none;">
+                                <form method="post">
+                                    <input type="hidden" name="type" value="vet">
+                                    <label> Weterynarz
+                                        <select name="vet" id="vet-choice">
+                                            <option selected disabled>Wybierz weterynarza</option>
+                                            {% for vet in vets %}
+                                                <option value="{{ vet.user.email }}">
+                                                    {{ vet.user.first_name }} {{ vet.user.last_name }}
+                                                </option>
+                                            {% endfor %}
+                                        </select>
+                                        <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                                    </label>
+                                </form>
+                            </div>
+
+                        {% endif %}
                     </label>
                 {% else %}
                     <p class="error"> {{ visit }}</p>
