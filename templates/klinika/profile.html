@@ -91,20 +91,23 @@
             </div>
         </label>
 
-        <label> Adress zamieszkania
-            <textarea style="margin-left: 52px; resize: none;" disabled> {{ adr }}</textarea>
-            <button id="btn-adress" class="btn bstyle green"> Dodaj</button>
-            <div id="ch-adress" style="display: none;">
-                <form method="post">
-                    <input type="hidden" name="type" value="address">
-                    {% csrf_token %}
-                    <textarea style="margin-left: 220px; resize: none;" rows="4" name="address"
-                              placeholder="Adress zamieszkania " onfocus="this.placeholder=' ' "
-                              onblur="this.placeholder='Adress zamieszkania '" required></textarea>
-                    <input style="margin-left: 250px;" class="green" type="submit" value="Zmień na aktualny">
-                </form>
-            </div>
+        <label style="margin-top: 30px"> Adress zamieszkania
         </label>
+        <button id="btn-adress" class="btn bstyle green" style="margin-right: 20px; margin-top: -30px; float: right;">
+            Dodaj
+        </button>
+        <textarea style="margin-left: 238px; margin-top: -30px; resize: none;" disabled> {{ adr }}</textarea>
+        <div id="ch-adress" style="display: none;">
+            <form method="post">
+                <input type="hidden" name="type" value="address">
+                {% csrf_token %}
+                <textarea style="margin-left: 220px; resize: none;" rows="4" name="address"
+                          placeholder="Adress zamieszkania " onfocus="this.placeholder=' ' "
+                          onblur="this.placeholder='Adress zamieszkania '" required></textarea>
+                <input style="margin-left: 250px;" class="green" type="submit" value="Zmień na aktualny">
+            </form>
+        </div>
+
 
         <a href="{% url 'VetPet' %}">
             <input style="margin-left: 254px;" type="button" value="Wróć">
