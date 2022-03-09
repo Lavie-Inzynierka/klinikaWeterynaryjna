@@ -87,7 +87,7 @@ class Token(models.Model):
     user = models.ForeignKey(MyUser, on_delete=models.PROTECT)
     is_active = models.BooleanField(default=True)
 
-    # todo: wywalić wygasania token, recepta do widoków xD
+    # todo: wywalić wygasania token, vizyt i recept do widoków xD
     # def expires(self):
     #     if self.created_at + timedelta(days=14) > self.expires_at:
     #         self.is_active = False
