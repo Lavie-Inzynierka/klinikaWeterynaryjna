@@ -59,6 +59,9 @@ def signin(request):
         if MyUser.objects.filter(username=username).exists():
             user = MyUser.objects.get(username=username)
 
+            if not user.is_active:
+                return render(request, 'klinika/signin.html', {'error': 'Nieprawidłowy login lub hasło!'})
+
             if bcrypt.checkpw(password.encode(encoding='UTF-8'),
                               user.password.replace('b\'', '').replace('\'', '').encode(encoding='UTF-8')):
                 request.session['my_user'] = user.username
