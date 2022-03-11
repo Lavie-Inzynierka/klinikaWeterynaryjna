@@ -349,6 +349,15 @@ def profile(request):
         return redirect('signin')
 
 
+def profiledeactivation(request, uid):
+    if request.session.get('my_user', False):
+        user = MyUser.objects.get(id=uid)
+        user.is_active = False
+        user.save()
+        request.session.delete()
+        return redirect('signin')
+
+
 # endregion
 # endregion
 
