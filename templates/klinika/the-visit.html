@@ -63,7 +63,77 @@
                            value="{{ visit.vet.first_name }} {{ visit.vet.last_name }}" disabled>
                 </label>
             </div>
-{#todo: leczenie i recepty#}
+            <div id="ch-med" style="display: none;">
+                {% if not nothing2 %}
+                    <label> Data i czas leczenia
+                        <input style="margin-left: 30px;" type="text"
+                               value="{{ treat.date_time_treatment|date:'d-m-Y H:i' }}"
+                               disabled>
+                    </label>
+                    <label style="float: left; margin-top: 20px;"> Opis
+                    </label>
+                    <textarea style="margin-left: 90px; resize: none;" rows="5" disabled>
+                       {{ treat.description }}</textarea>
+                    <div style="clear: both;"></div>
+                {% else %}
+                    <p class="error"> {{ treat }}</p>
+                {% endif %}
+            </div>
+
+            <div id="ch-prescription" style="display: none;">
+                {% if not nothing %}
+                    <label> Kod recepty
+                        <input style="margin-left: 90px;" type="text" value="{{ presc.code }}"
+                               disabled>
+                    </label>
+                    <label> Termin ważności
+                        <input style="margin-left: 90px;" type="text" value="{{ presc.expiration_date|date:'d-m-Y' }}"
+                               disabled>
+                    </label>
+                    <label> Status
+                        <input style="margin-left: 90px;" type="text" value="{{ presc.status }}"
+                               disabled>
+                    </label>
+
+                    <label> Zwierzę
+                        <input style="margin-left: 90px;" type="text" value="{{ presc.pet.name }}"
+                               disabled>
+                    </label>
+
+                    <label> Właściciel
+                        <input style="margin-left: 90px;" type="text"
+                               value="{{ presc.owner.first_name }} {{ presc.owner.last_name }}"
+                               disabled>
+                    </label>
+
+                    <label> Weterynarz
+                        <input style="margin-left: 90px;" type="text"
+                               value="{{ presc.vet.first_name }} {{ presc.vet.last_name }}"
+                               disabled>
+                    </label>
+                    <table id="cure-table">
+                        <thead>
+                        <tr>
+                            <th>Nazwa leku</th>
+                            <th>Ilość</th>
+                            <th>jm.</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for pcure in cures %}
+                            <tr>
+                                <td>{{ pcure.cure.name }}</td>
+                                <td>{{ pcure.quantity }}</td>
+                                <td>{{ pcure.quantity_type }}</td>
+
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <p class="error"> {{ presc }}</p>
+                {% endif %}
+            </div>
 
         {% endif %}
     </div>
