@@ -122,7 +122,11 @@
                                 {% for s in species %}
                                     <tr>
                                         <td>{{ s.species_name }}</td>
-                                        <td>{{ s.additional_information }}</td>
+                                        <td>{{ s.additional_information|slice:":50" }}
+                                            {% if s.additional_information|length > 50 %}
+                                                ...
+                                            {% endif %}
+                                        </td>
                                         <td class="black">
                                             <a href="#" class="btn bstyle">Podgląd </a>
                                         </td>
