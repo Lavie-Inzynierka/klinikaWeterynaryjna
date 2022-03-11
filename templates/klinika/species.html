@@ -1,0 +1,70 @@
+{% extends 'klinika/main.html' %}
+{% load static %}
+{% block content %}
+    <div id="form2">
+        {% if error %}
+            <p class="error"> {{ error }}</p>
+        {% else %}
+            {% if error1 %}
+                <p>{{ error1 }}</p>
+            {% endif %}
+            <label> Nazwa gatunku
+                <input style="margin-left: 90px;" type="text" value="{{ species.species_name }}" disabled>
+                <a id="btn-species-name" class="btn bstyle green"> Zmień</a>
+                <div id="ch-species-name" style="display: none;">
+                    <form method="post">
+                        <input type="hidden" name="type" value="species_name">
+                        <input style="margin-left: 220px;" type="text" name="species_name"
+                               placeholder="Nazwa gatunku"
+                               onfocus="this.placeholder=' ' "
+                               onblur="this.placeholder='Nazwa gatunku'" required>
+                        <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                    </form>
+                </div>
+            </label>
+            <label style="float: left; margin-top: 30px"> Dodatkowe informacje</label>
+            <a id="btn-species-adi" class="btn bstyle green"
+               style="margin-top: 30px; margin-right: 26px; float: right;">
+                Zmień</a>
+            <textarea style="margin-left: 234px; resize: none; margin-top: -30px;" rows="5"
+                      disabled>{{ species.additional_information }}</textarea>
+            <div style="clear: both;"></div>
+            <div id="ch-species-adi" style="display: none;">
+                <form method="post">
+                    <input type="hidden" name="type" value="additional_information">
+                    {% csrf_token %}
+                    <textarea style="margin-left: 234px; resize: none;" rows="5" name="additional_information"
+                              placeholder="Dodatkowe informacje" onfocus="this.placeholder=' ' "
+                              onblur="this.placeholder='Dodatkowe informacje'" required></textarea>
+                    <input class="green" style="margin-left: 264px;" type="submit" value="Zmień">
+                </form>
+            </div>
+
+        {% endif %}
+        <input style="margin-left: 264px;" type="button" onclick="history.back()" value="Wróć">
+    </div>
+    <script>
+        let show = {
+            name: false,
+            ainfo: false,
+        };
+        $("#btn-species-name").click(function () {
+            if (show.name === false) {
+                $("#ch-species-name").show(500)
+                show.name = true
+            } else {
+                $("#ch-species-name").hide(500)
+                show.name = false
+            }
+        });
+        $("#btn-species-adi").click(function () {
+            if (show.ainfo === false) {
+                $("#ch-species-adi").show(500)
+                show.ainfo = true
+            } else {
+                $("#ch-species-adi").hide(500)
+                show.ainfo = false
+            }
+        });
+    </script>
+{% endblock content %}
