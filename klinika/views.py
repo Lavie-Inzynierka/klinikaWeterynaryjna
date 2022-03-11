@@ -2090,6 +2090,130 @@ def prescsmanagement(request):
         return redirect('signin')
 
 
+def curemanagement(request, cureid):
+    if request.session.get('my_user', False):
+        try:
+            user = MyUser.objects.get(username=request.session.get('my_user', False))
+            utypes = UserType.objects.filter(user=user).all()
+            if any(x.user_type == 'ADMIN' for x in utypes):
+                cure = Cure.objects.get(id=cureid)
+
+                if request.method == "POST":
+
+                    if request.POST['type'] == 'name':
+                        name = bleach.clean(request.POST['name'])
+                        if not Cure.objects.filter(name=name, dose=cure.dose, dose_type=cure.dose_type).exists():
+                            cure.name = name
+                            cure.save()
+                        else:
+                            return render(request, 'klinika/cure.html', {'username': request.session.get('my_user'),
+                                                                         'cure': cure,
+                                                                         'error1': 'Podany lek już istnieje!',
+                                                                         'adm': request.session.get('is_adm'),
+                                                                         'vet': request.session.get('is_vet'),
+                                                                         'rec': request.session.get('is_rec'),
+                                                                         'own': request.session.get('is_own'),
+                                                                         })
+                    if request.POST['type'] == 'dose':
+                        dose = bleach.clean(request.POST['dose'])
+                        if not Cure.objects.filter(name=cure.name, dose=dose, dose_type=cure.dose_type).exists():
+                            cure.dose = dose
+                            cure.save()
+                        else:
+                            return render(request, 'klinika/cure.html', {'username': request.session.get('my_user'),
+                                                                         'cure': cure,
+                                                                         'error1': 'Podany lek już istnieje!',
+                                                                         'adm': request.session.get('is_adm'),
+                                                                         'vet': request.session.get('is_vet'),
+                                                                         'rec': request.session.get('is_rec'),
+                                                                         'own': request.session.get('is_own'),
+                                                                         })
+                    if request.POST['type'] == 'dose_type':
+                        dose_type = bleach.clean(request.POST['dose_type'])
+                        if not Cure.objects.filter(name=cure.name, dose=cure.dose, dose_type=dose_type).exists():
+                            cure.dose_type = dose_type
+                            cure.save()
+                        else:
+                            return render(request, 'klinika/cure.html', {'username': request.session.get('my_user'),
+                                                                         'cure': cure,
+                                                                         'error1': 'Podany lek już istnieje!',
+                                                                         'adm': request.session.get('is_adm'),
+                                                                         'vet': request.session.get('is_vet'),
+                                                                         'rec': request.session.get('is_rec'),
+                                                                         'own': request.session.get('is_own'),
+                                                                         })
+
+                    cure = Cure.objects.get(id=cureid)
+
+                return render(request, 'klinika/cure.html', {'username': request.session.get('my_user'),
+                                                             'cure': cure,
+                                                             'adm': request.session.get('is_adm'),
+                                                             'vet': request.session.get('is_vet'),
+                                                             'rec': request.session.get('is_rec'),
+                                                             'own': request.session.get('is_own'),
+                                                             })
+        except():
+            return render(request, 'klinika/cure.html',
+                          {'username': request.session.get('my_user'),
+                           'error': 'Nie znaleziono leku',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+    else:
+        return redirect('signin')
+
+
+def curemanagementadd(request):
+    if request.session.get('my_user', False):
+        user = MyUser.objects.get(username=request.session.get('my_user', False))
+        utypes = UserType.objects.filter(user=user).all()
+
+        if any(x.user_type == 'ADMIN' for x in utypes):
+
+            if request.method == "POST":
+                name = bleach.clean(request.POST['name'])
+                dose_type = bleach.clean(request.POST['dose_type'])
+                dose = bleach.clean(request.POST['dose'])
+
+                if Cure.objects.filter(name=name, dose_type=dose_type, dose=dose).exists():
+                    return render(request, 'klinika/cureadd.html', {'username': request.session.get('my_user'),
+                                                                    'error1': 'Podany lek już istnieje!',
+                                                                    'adm': request.session.get('is_adm'),
+                                                                    'vet': request.session.get('is_vet'),
+                                                                    'rec': request.session.get('is_rec'),
+                                                                    'own': request.session.get('is_own'),
+                                                                    })
+
+                cure = Cure.objects.create(
+                    name=name,
+                    dose_type=dose_type,
+                    dose=dose
+                )
+                cure.save()
+
+            return render(request, 'klinika/cureadd.html',
+                          {'username': request.session.get('my_user'),
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+        else:
+            return render(request, 'klinika/cureadd.html',
+                          {'username': request.session.get('my_user'),
+                           'error': 'Brak uprawnień',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+
+    else:
+        return redirect('signin')
+
+
 # endregion
 # region setup
 def setup(request):
