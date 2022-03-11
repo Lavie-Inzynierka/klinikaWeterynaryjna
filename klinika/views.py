@@ -1012,11 +1012,48 @@ def visit(request, visitid):
         try:
             visit = Visit.objects.get(id=visitid)
             status = visit.status
-            # todo: leczenie i recepty
+
+            if status == 'Odbyta':
+                if Prescription.objects.filter(pet__id=visit.pet.id, status='Wystawiona').exists():
+                    recexpdate = Prescription.objects.filter(pet_id=visit.pet.id,
+                                                             status='Wystawiona').aggregate(
+                        expiration_date=Min('expiration_date'))
+                    prescription = Prescription.objects.get(pet__id=visit.pet.id, status='Wystawiona',
+                                                            expiration_date=recexpdate['expiration_date'])
+
+                    cures = PrescriptionCure.objects.filter(prescription__id=prescription.id).all()
+
+                    nothing = False
+                else:
+                    nothing = True
+                    prescription = 'Brak recept do wyświetlenia!'
+                    cures = 'Brak leków do wyświetlenia!'
+
+                if Treatment.objects.filter(pet__id=visit.pet.id).exists():
+                    recdttreat = Treatment.objects.filter(pet__id=visit.pet.id).aggregate(
+                        date_time_treatment=Min('date_time_treatment'))
+                    treatment = Treatment.objects.get(pet__id=visit.pet.id,
+                                                      date_time_treatment=recdttreat['date_time_treatment'])
+                    nothing2 = False
+                else:
+                    nothing2 = True
+                    treatment = 'Brak historii leczenia do wyświetlenia!'
+            else:
+                nothing = True
+                prescription = 'Brak recept do wyświetlenia!'
+                cures = 'Brak leków do wyświetlenia!'
+                nothing2 = True
+                treatment = 'Brak historii leczenia do wyświetlenia!'
+
             return render(request, 'klinika/the-visit.html',
                           {'username': request.session.get('my_user'),
                            'visit': visit,
                            'pastvisit': status,
+                           'nothing': nothing,
+                           'nothing2': nothing2,
+                           'treat': treatment,
+                           'presc': prescription,
+                           'cures': cures,
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
                            'rec': request.session.get('is_rec'),
