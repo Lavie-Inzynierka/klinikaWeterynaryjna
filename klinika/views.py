@@ -1599,6 +1599,36 @@ def usermanagement(request, uid):
         return redirect('signin')
 
 
+def userdeactivation(request, uid):
+    if request.session.get('my_user', False):
+        if MyUser.objects.filter(id=uid).exists():
+            user = MyUser.objects.get(id=uid)
+            myuser = MyUser.objects.get(username=request.session.get('my_user', False))
+            utypes = UserType.objects.filter(user=myuser).all()
+            if any(x.user_type == 'ADMIN' for x in utypes):
+                user.is_active = False
+                user.save()
+
+                return redirect('usermanagement', uid=uid)
+        return redirect('')
+    return redirect('signin')
+
+
+def userreactivation(request, uid):
+    if request.session.get('my_user', False):
+        if MyUser.objects.filter(id=uid).exists():
+            user = MyUser.objects.get(id=uid)
+            myuser = MyUser.objects.get(username=request.session.get('my_user', False))
+            utypes = UserType.objects.filter(user=myuser).all()
+            if any(x.user_type == 'ADMIN' for x in utypes):
+                user.is_active = True
+                user.save()
+
+                return redirect('usermanagement', uid=uid)
+        return redirect('')
+    return redirect('signin')
+
+
 def usermanagementadd(request):
     if request.session.get('my_user', False):
         user = MyUser.objects.get(username=request.session.get('my_user', False))

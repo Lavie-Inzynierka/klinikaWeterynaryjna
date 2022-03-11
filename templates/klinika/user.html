@@ -197,16 +197,30 @@
                     </tbody>
                 </table>
             </div>
-            <button style="margin-left: 250px; background-color: #ff3c1c; color: antiquewhite;" class="btn" id="btn-delete"
-                    type="button">Usuń</button>
-            <div id="ch-delete" style="display: none;">
-                <form method="post">
-                    <input type="hidden" name="type" value="delete">
-                    <p class="error">Czy napewno chcesz usunąć tego użytkownika?</p>
-                    <input style="margin-left: 250px; background-color: #ff3c1c; color: antiquewhite;" type="submit"
-                           value="delete">
-                </form>
-            </div>
+            {% if user.is_active %}
+                <button style="margin-left: 250px; background-color: #ff9800; color: antiquewhite;" class="btn"
+                        id="btn-delete"
+                        type="button">Dezaktywuj
+                </button>
+                <div id="ch-delete" style="display: none;">
+                    <p class="error">Czy napewno chcesz dezaktywować tego użytkownika?</p>
+
+                    <a href="/userdeactivation/{{ user.id }}"
+                       style="margin-left: 250px; background-color: #ff3c1c; color: antiquewhite;">Dezaktywuj</a>
+                </div>
+            {% else %}
+                <button style="margin-left: 250px; background-color: #249800; color: antiquewhite;" class="btn"
+                        id="btn-delete"
+                        type="button">Rezaktywuj
+                </button>
+                <div id="ch-delete" style="display: none;">
+                    <p class="success">Czy napewno chcesz rezaktywować tego użytkownika?</p>
+
+                    <a href="/userreactivation/{{ user.id }}"
+                       style="margin-left: 250px; background-color: #249800; color: antiquewhite;">Rezaktywuj</a>
+                </div>
+            {% endif %}
+
         {% endif %}
         <input style="margin-left: 312px;" type="button" onclick="history.back()" value="Wróć">
     </div>
