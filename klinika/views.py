@@ -1840,6 +1840,107 @@ def petmanagement(request, petid):
         return redirect('signin')
 
 
+def speciesmanagement(request, speciesid):
+    if request.session.get('my_user', False):
+        try:
+            user = MyUser.objects.get(username=request.session.get('my_user', False))
+            utypes = UserType.objects.filter(user=user).all()
+            if any(x.user_type == 'ADMIN' for x in utypes):
+                species = Species.objects.get(id=speciesid)
+
+                if request.method == "POST":
+
+                    if request.POST['type'] == 'species_name':
+                        name = bleach.clean(request.POST['species_name'])
+                        if not Species.objects.filter(species_name=name.lower()).exists():
+                            species.species_name = name
+                            species.save()
+                        else:
+                            return render(request, 'klinika/species.html', {'username': request.session.get('my_user'),
+                                                                            'species': species,
+                                                                            'error1': 'Podana nazwa gatunku jest już '
+                                                                                      'zajęta!',
+                                                                            'adm': request.session.get('is_adm'),
+                                                                            'vet': request.session.get('is_vet'),
+                                                                            'rec': request.session.get('is_rec'),
+                                                                            'own': request.session.get('is_own'),
+                                                                            })
+
+                    if request.POST['type'] == 'additional_information':
+                        ainfo = bleach.clean(request.POST['additional_information'])
+                        species.additional_information = ainfo
+                        species.save()
+
+                    species = Species.objects.get(id=speciesid)
+
+                return render(request, 'klinika/species.html', {'username': request.session.get('my_user'),
+                                                                'species': species,
+                                                                'adm': request.session.get('is_adm'),
+                                                                'vet': request.session.get('is_vet'),
+                                                                'rec': request.session.get('is_rec'),
+                                                                'own': request.session.get('is_own'),
+                                                                })
+        except():
+            return render(request, 'klinika/species.html',
+                          {'username': request.session.get('my_user'),
+                           'error': 'Nie znaleziono gatunku',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+    else:
+        return redirect('signin')
+
+
+def speciesmanagementadd(request):
+    if request.session.get('my_user', False):
+        user = MyUser.objects.get(username=request.session.get('my_user', False))
+        utypes = UserType.objects.filter(user=user).all()
+
+        if any(x.user_type == 'ADMIN' for x in utypes):
+
+            if request.method == "POST":
+                name = bleach.clean(request.POST['species_name'])
+                ainfo = bleach.clean(request.POST['additional_information'])
+
+                if Species.objects.filter(species_name=name).exists():
+                    return render(request, 'klinika/speciesadd.html', {'username': request.session.get('my_user'),
+                                                                       'error1': 'Podana nazwa gatunku jest już '
+                                                                                 'zajęta!',
+                                                                       'adm': request.session.get('is_adm'),
+                                                                       'vet': request.session.get('is_vet'),
+                                                                       'rec': request.session.get('is_rec'),
+                                                                       'own': request.session.get('is_own'),
+                                                                       })
+
+                species = Species.objects.create(
+                    species_name=name,
+                    additional_information=ainfo
+                )
+                species.save()
+
+            return render(request, 'klinika/speciesadd.html',
+                          {'username': request.session.get('my_user'),
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+        else:
+            return render(request, 'klinika/speciesadd.html',
+                          {'username': request.session.get('my_user'),
+                           'error': 'Brak uprawnień',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+
+    else:
+        return redirect('signin')
+
+
 def treatmentsmanagement(request, petid):
     if request.session.get('my_user', False):
         try:
