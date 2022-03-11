@@ -108,13 +108,24 @@
             </form>
         </div>
 
+        <button style="margin-left: 250px; background-color: #ff9800; color: antiquewhite;" class="btn"
+                id="btn-delete"
+                type="button">Dezaktywuj
+        </button>
+        <div id="ch-delete" style="display: none;">
+            <p class="error">Czy napewno chcesz dezaktywować tego użytkownika?</p>
+
+            <a href="/profiledeactivation/{{ usr.id }}"
+               style="margin-left: 250px; background-color: #ff3c1c; color: antiquewhite;">Dezaktywuj</a>
+        </div>
+
 
         <a href="{% url 'VetPet' %}">
             <input style="margin-left: 254px;" type="button" value="Wróć">
         </a>
     </div>
     <script type="text/javascript">
-        let show = {fname: false, lname: false, pass: false, phone: false, email: false, adress: false};
+        let show = {fname: false, lname: false, pass: false, phone: false, email: false, adress: false, delete: false};
         $("#btn-fname").click(function () {
             if (show.fname === false) {
                 $("#ch-fname").show(500)
@@ -168,6 +179,15 @@
             } else {
                 $("#ch-adress").hide(500)
                 show.adress = false
+            }
+        });
+        $("#btn-delete").click(() => {
+            if (show.delete === false) {
+                $("#ch-delete").show(500)
+                show.delete = true
+            } else {
+                $("#ch-delete").hide(500)
+                show.delete = false
             }
         });
     </script>
