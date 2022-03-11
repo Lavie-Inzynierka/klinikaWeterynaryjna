@@ -1,0 +1,37 @@
+{% extends 'klinika/main.html' %}
+{% load static %}
+{% block content %}
+    <div id="form2">
+        {% if error %}
+            <p class="error"> {{ error }}</p>
+        {% else %}
+            <form method="post">
+                {% if error1 %}
+                    <p class="error">{{ error1 }}</p>
+                {% endif %}
+                <label> Nazwa leku
+                    <input style="margin-left: 220px;" type="text" name="name"
+                           placeholder="Nazwa leku"
+                           onfocus="this.placeholder=' ' "
+                           onblur="this.placeholder='Nazwa leku'" required>
+                </label>
+                <label> Dawka - ilość
+                    <input type="number" name="dose" placeholder="Dawka"
+                           onfocus="this.placeholder=' ' "
+                           onblur="this.placeholder='Dawka'" required>
+                </label>
+                <label> Dawka - rodzaj
+                    <select name="dose_type">
+                        <option disabled selected>Wybierz rodzaj dawki</option>
+                        <option value="mg">miligram</option>
+                        <option value="mg/g">miligram/gram</option>
+                        <option value="mg/ml">miligram/mililitr</option>
+                        <option value="ml">mililitr</option>
+                    </select>
+                </label>
+                <input type="submit" class="green" value="zapisz dane">
+            </form>
+        {% endif %}
+        <input style="margin-left: 264px;" type="button" onclick="history.back()" value="Wróć">
+    </div>
+{% endblock content %}
