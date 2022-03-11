@@ -1,0 +1,29 @@
+{% extends 'klinika/main.html' %}
+{% load static %}
+{% block content %}
+    <div id="form2">
+        {% if error %}
+            <p class="error"> {{ error }}</p>
+        {% else %}
+            <form method="post">
+                {% if error1 %}
+                    <p class="error">{{ error1 }}</p>
+                {% endif %}
+                <label> Nazwa gatunku
+                    <input style="margin-left: 220px;" type="text" name="species_name"
+                           placeholder="Nazwa gatunku"
+                           onfocus="this.placeholder=' ' "
+                           onblur="this.placeholder='Nazwa gatunku'" required>
+                </label>
+
+                <label> Dodatkowe informacje
+                    <textarea style="margin-left: 234px; resize: none;" rows="5" name="additional_information"
+                              placeholder="Dodatkowe informacje" onfocus="this.placeholder=' ' "
+                              onblur="this.placeholder='Dodatkowe informacje'"></textarea>
+                </label>
+                <input type="submit" class="green" value="zapisz dane">
+            </form>
+        {% endif %}
+        <input style="margin-left: 264px;" type="button" onclick="history.back()" value="Wróć">
+    </div>
+{% endblock content %}
