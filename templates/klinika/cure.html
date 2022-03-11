@@ -1,0 +1,97 @@
+{% extends 'klinika/main.html' %}
+{% load static %}
+{% block content %}
+    <div id="form2">
+        {% if error %}
+            <p class="error"> {{ error }}</p>
+        {% else %}
+            {% if error1 %}
+                <p class="error">{{ error1 }}</p>
+            {% endif %}
+            <label> Nazwa leku
+                <input style="margin-left: 90px;" type="text" value="{{ cure.name }}" disabled>
+                <a id="btn-cure-name" class="btn bstyle green"> Zmień</a>
+                <div id="ch-cure-name" style="display: none;">
+                    <form method="post">
+                        <input type="hidden" name="type" value="name">
+                        <input style="margin-left: 220px;" type="text" name="name"
+                               placeholder="Nazwa leku"
+                               onfocus="this.placeholder=' ' "
+                               onblur="this.placeholder='Nazwa leku'" required>
+                        <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                    </form>
+                </div>
+            </label>
+            <label> Dawka - ilość
+                <input style="margin-left: 90px;" type="number" value="{{ cure.dose }}" disabled>
+                <a id="btn-cure-dose" class="btn bstyle green"> Zmień</a>
+                <div id="ch-cure-dose" style="display: none;">
+                    <form method="post">
+                        <input type="hidden" name="type" value="dose">
+                        <input style="margin-left: 220px;" type="number" name="dose"
+                               placeholder="Dawka"
+                               onfocus="this.placeholder=' ' "
+                               onblur="this.placeholder='Dawka'">
+                        <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                    </form>
+                </div>
+            </label>
+            <label> Dawka - rodzaj
+                <input style="margin-left: 90px;" type="text" value="{{ cure.dose_type }}" disabled>
+                <a id="btn-cure-type" class="btn bstyle green"> Zmień</a>
+                <div id="ch-cure-type" style="display: none;">
+                    <form method="post">
+                        <input type="hidden" name="type" value="dose_type">
+                        <select name="dose_type">
+                            <option disabled selected>Wybierz rodzaj dawki</option>
+                            <option value="mg">miligram</option>
+                            <option value="mg/g">miligram/gram</option>
+                            <option value="mg/ml">miligram/mililitr</option>
+                            <option value="ml">mililitr</option>
+                        </select>
+                        <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                    </form>
+                </div>
+            </label>
+
+
+        {% endif %}
+        <input style="margin-left: 264px;" type="button" onclick="history.back()" value="Wróć">
+    </div>
+    <script>
+        let show = {
+            name: false,
+            dose: false,
+            type: false,
+        };
+        $("#btn-cure-name").click(function () {
+            if (show.name === false) {
+                $("#ch-cure-name").show(500)
+                show.name = true
+            } else {
+                $("#ch-cure-name").hide(500)
+                show.name = false
+            }
+        });
+
+        $("#btn-cure-dose").click(function () {
+            if (show.dose === false) {
+                $("#ch-cure-dose").show(500)
+                show.dose = true
+            } else {
+                $("#ch-cure-dose").hide(500)
+                show.dose = false
+            }
+        });
+
+        $("#btn-cure-type").click(function () {
+            if (show.type === false) {
+                $("#ch-cure-type").show(500)
+                show.type = true
+            } else {
+                $("#ch-cure-type").hide(500)
+                show.type = false
+            }
+        });
+    </script>
+{% endblock content %}
