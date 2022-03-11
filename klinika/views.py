@@ -2051,9 +2051,11 @@ def prescsmanagement(request):
         utypes = UserType.objects.filter(user=user).all()
         if any(x.user_type == 'ADMIN' for x in utypes):
             prescs = Prescription.objects.filter().all()
+            cures = Cure.objects.filter().all()
             if prescs.count() == 0:
                 return render(request, 'klinika/prescriptions.html',
                               {'username': request.session.get('my_user'),
+                               'admin': True,
                                'empty': True,
                                'rec_list': 'Brak recept do wyświetlenia',
                                'adm': request.session.get('is_adm'),
@@ -2062,9 +2064,23 @@ def prescsmanagement(request):
                                'own': request.session.get('is_own'),
                                })
 
+            if cures.count() == 0:
+                return render(request, 'klinika/prescriptions.html',
+                              {'username': request.session.get('my_user'),
+                               'admin': True,
+                               'empty': True,
+                               'cures': 'Brak leków do wyświetlenia',
+                               'adm': request.session.get('is_adm'),
+                               'vet': request.session.get('is_vet'),
+                               'rec': request.session.get('is_rec'),
+                               'own': request.session.get('is_own'),
+                               })
+
             return render(request, 'klinika/prescriptions.html',
                           {'username': request.session.get('my_user'),
+                           'admin': True,
                            'rec_list': prescs,
+                           'cures': cures,
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
                            'rec': request.session.get('is_rec'),
