@@ -47,5 +47,7 @@ urlpatterns = [
     path('treatmentmanagement/<petid>/<treatid>/', views.treatmentmanagement, name="treatmentmanagement"),
     path('visitsmanagement/', views.visitsmanagement, name="visitsmanagement"),
     path('prescsmanagement/', views.prescsmanagement, name="prescsmanagement"),
+    path('curemanagement/<cureid>/', views.curemanagement, name="curemanagement"),
+    path('curemanagementadd/', views.curemanagementadd, name="curemanagementadd"),
 
 ]
