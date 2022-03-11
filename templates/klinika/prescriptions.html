@@ -6,46 +6,131 @@
 {% endblock headAdditional %}
 {% block content %}
     <div class="black">
-     {% if not hide %}
-        <a href="{% url 'addprescriptions' %}" class="btn bstyle "> Dodaj recepte
-        </a>
-    {% endif %}
-    </div>
- <div>
-        {% if not empty %}
-            <table id="table">
-                <thead>
-                <tr>
-                    <th>Kod</th>
-                    <th>Właściciel</th>
-                    <th>Zwierzę</th>
-                    <th>Wystawiający</th>
-                    <th>Szczegółowe informacje</th>
-                </tr>
-                </thead>
-                <tbody>
-                {% for rec in rec_list %}
-                    <tr>
-                        <td>{{ rec.code }}</td>
-                        <td>{{ rec.owner.first_name }} {{ rec.owner.last_name }}</td>
-                        <td>{{ rec.pet.name }}</td>
-                        <td>{{ rec.vet.first_name }} {{ rec.vet.last_name }}</td>
-                        <td>
-                            {% if not userpets %}
-                            <a href="/prescription/{{ rec.id }} " class="btn bstyle">Podgląd </a>
-                            {% else %}
-                             <a href="/prescription/{{ rec.id }} " class="btn bstyle">Podgląd </a>
-                            {% endif %}
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-                        <div style="clear: both"></div>
+        {% if not admin %}
+            {% if not hide %}
+                <a href="{% url 'addprescriptions' %}" class="btn bstyle "> Dodaj recepte
+                </a>
+            {% endif %}
+            </div>
+            <div>
+                {% if not empty %}
+                    <table id="table">
+                        <thead>
+                        <tr>
+                            <th>Kod</th>
+                            <th>Właściciel</th>
+                            <th>Zwierzę</th>
+                            <th>Wystawiający</th>
+                            <th>Szczegółowe informacje</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for rec in rec_list %}
+                            <tr>
+                                <td>{{ rec.code }}</td>
+                                <td>{{ rec.owner.first_name }} {{ rec.owner.last_name }}</td>
+                                <td>{{ rec.pet.name }}</td>
+                                <td>{{ rec.vet.first_name }} {{ rec.vet.last_name }}</td>
+                                <td>
+                                    {% if not userpets %}
+                                        <a href="/prescription/{{ rec.id }} " class="btn bstyle">Podgląd </a>
+                                    {% else %}
+                                        <a href="/prescription/{{ rec.id }} " class="btn bstyle">Podgląd </a>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                    <div style="clear: both"></div>
+                {% else %}
+                    <p> {{ rec_list }} </p>
+                {% endif %}
+            </div>
         {% else %}
-            <p> {{ rec_list }} </p>
+            <div id="form">
+                <div id="subnav">
+                    <ul>
+                        <li>
+                            <a id="btn-presc"> Recepty</a>
+                        </li>
+                        <li>
+                            <a id="btn-cure">Leki</a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="ch-presc" style="display: none;">
+                    <div class="black" style="margin-top: 30px;">
+                        <a href="{% url 'addprescriptions' %}" class="btn bstyle "> Dodaj recepte</a>
+                    </div>
+                    <div>
+                        {% if not empty %}
+                            <table id="table1">
+                                <thead>
+                                <tr>
+                                    <th>Kod</th>
+                                    <th>Właściciel</th>
+                                    <th>Zwierzę</th>
+                                    <th>Wystawiający</th>
+                                    <th>Szczegółowe informacje</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for rec in rec_list %}
+                                    <tr>
+                                        <td>{{ rec.code }}</td>
+                                        <td>{{ rec.owner.first_name }} {{ rec.owner.last_name }}</td>
+                                        <td>{{ rec.pet.name }}</td>
+                                        <td>{{ rec.vet.first_name }} {{ rec.vet.last_name }}</td>
+                                        <td>
+                                            <a href="/prescription/{{ rec.id }} " class="btn bstyle">Podgląd </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <div style="clear: both"></div>
+                        {% else %}
+                            <p> Brak recept do wyświetlenia! </p>
+                        {% endif %}
+                    </div>
+                </div>
+                <div id="ch-cure" style="display: none;">
+                    <div class="black" style="margin-top: 30px;">
+                        <a href="#" class="btn bstyle "> Dodaj lek</a>
+                    </div>
+                    <div>
+                        {% if not empty %}
+                            <table id="table2">
+                                <thead>
+                                <tr>
+                                    <th>Nazwa leku</th>
+                                    <th>Dawka</th>
+                                    <th>jm.</th>
+                                    <th>Więcej</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for cure in cures %}
+                                    <tr>
+                                        <td>{{ cure.name }}</td>
+                                        <td>{{ cure.dose }}</td>
+                                        <td>{{ cure.dose_type}}</td>
+                                    <td>
+                                            <a href="#" class="btn bstyle">Podgląd </a>
+                                        </td>
+                                    </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                            <div style="clear: both"></div>
+                        {% else %}
+                            <p> Brak Gatunków do wyświetlenia! </p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
         {% endif %}
-    </div>
 
     <script type="text/javascript">
         $(document).ready(function () {
@@ -55,6 +140,42 @@
                     {searchable: false, targets: 4}
                 ]
             });
+        });
+        $('#table1').DataTable({
+            language: {url: "{% static 'json/polish.json'%}"},
+            columnDefs: [
+                {searchable: false, targets: 4}
+            ]
+        });
+        $('#table2').DataTable({
+            language: {url: "{% static 'json/polish.json'%}"},
+            columnDefs: [
+                {searchable: false, targets: 3}
+            ]
+        });
+        let show = {
+            presc: false,
+            cure: false,
+        };
+        $("#btn-presc").click(() => {
+            if (show.presc === false) {
+                $("#ch-presc").show(500)
+                $("#ch-cure").hide(500)
+                show.presc = true
+            } else {
+                $("#ch-presc").hide(500)
+                show.presc = false
+            }
+        });
+        $("#btn-cure").click(() => {
+            if (show.cure === false) {
+                $("#ch-presc").hide(500)
+                $("#ch-cure").show(500)
+                show.cure = true
+            } else {
+                $("#ch-cure").hide(500)
+                show.cure = false
+            }
         });
     </script>
 {% endblock %}
