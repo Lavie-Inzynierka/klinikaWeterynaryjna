@@ -9,6 +9,7 @@ urlpatterns = [
     path('activate/<token>/', views.VerificationView, name="activate"),
     path('signin/', views.signin, name="signin"),
     path('profile/', views.profile, name="profile"),
+    path('profiledeactivation/<uid>/', views.profiledeactivation, name="profiledeactivation"),
     path('signout/', views.signout, name="signout"),
     path('mypets/', views.mypets, name="mypets"),
     path('mypet/<petid>/', views.mypet, name="mypet"),
