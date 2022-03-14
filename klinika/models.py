@@ -86,8 +86,6 @@ class Token(models.Model):
     created_at = models.DateTimeField(default=datetime.now)
     expires_at = models.DateTimeField(default=datetime.now() + timedelta(days=14))
     user = models.ForeignKey(MyUser, on_delete=models.PROTECT)
-    is_active = models.BooleanField(default=True)
-
 
 
 class Owner(models.Model):
