@@ -39,7 +39,11 @@
                             <td>{{ visit.status }}</td>
                         {% endif %}
                         <td>
-                            <a href="/visit/{{ visit.id }} " class="btn bstyle">Podgląd </a>
+                            {% if admin %}
+                                <a href="/visitmanagement/{{ visit.id }} " class="btn bstyle">Podgląd </a>
+                            {% else %}
+                                <a href="/visit/{{ visit.id }} " class="btn bstyle">Podgląd </a>
+                            {% endif %}
                         </td>
                     </tr>
                 {% endfor %}
