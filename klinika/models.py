@@ -88,10 +88,6 @@ class Token(models.Model):
     user = models.ForeignKey(MyUser, on_delete=models.PROTECT)
     is_active = models.BooleanField(default=True)
 
-    # todo: wywalić wygasania token, vizyt i recept do widoków xD
-    # def expires(self):
-    #     if self.created_at + timedelta(days=14) > self.expires_at:
-    #         self.is_active = False
 
 
 class Owner(models.Model):
@@ -140,10 +136,6 @@ class Prescription(models.Model):
     pet = models.ForeignKey(Pet, null=True, on_delete=models.PROTECT)
     owner = models.ForeignKey(Owner, on_delete=models.PROTECT)
     status = models.CharField(max_length=12, choices=Prescription_Status_choices)
-
-    # def expires(self):
-    #     if self.expiration_date < datetime.today():
-    #         self.status = 'Wygasla'
 
 
 class PrescriptionCure(models.Model):
