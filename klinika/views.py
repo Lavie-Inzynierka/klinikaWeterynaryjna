@@ -1044,6 +1044,19 @@ def visit(request, visitid):
                 nothing2 = True
                 treatment = 'Brak historii leczenia do wyświetlenia!'
 
+            if request.method == 'POST':
+                if request.POST['type'] == 'visit_date':
+                    visit_date = bleach.clean(request.POST['visit_date'])
+                    visit.visit_date = visit_date
+                    visit.save()
+
+                if request.POST['type'] == 'visit_time':
+                    visit_time = bleach.clean(request.POST['visit_time'])
+                    visit.visit_time = visit_time
+                    visit.save()
+
+                visit = Visit.objects.get(id=visitid)
+
             return render(request, 'klinika/the-visit.html',
                           {'username': request.session.get('my_user'),
                            'visit': visit,
