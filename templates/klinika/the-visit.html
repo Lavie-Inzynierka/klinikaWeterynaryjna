@@ -49,14 +49,55 @@
                 <label> Data wizyty
                     <input style="margin-left: 90px;" type="text" value="{{ visit.visit_date|date:'d-m-Y' }}"
                            disabled>
+                    <a id="btn-visit-date" class="btn bstyle green" style="margin-top: 10px;"> Zmień</a>
+                            <div id="ch-visit-date" style="display: none;">
+                                <form method="post">
+                                    <input type="hidden" name="type" value="visit_date">
+                                    {% csrf_token %}
+                                    <input style="margin-left: 108px;" type="date" name="visit_date"
+                                           placeholder="Data wizyty"
+                                           onfocus="this.placeholder=' ' "
+                                           onblur="this.placeholder='Data wizyty'">
+
+                                    <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                                </form>
+                            </div>
                 </label>
                 <label> Data time
                     <input style="margin-left: 90px;" type="text" value="{{ visit.visit_time|date:'H:i' }}"
                            disabled>
+                    <a id="btn-visit-time" class="btn bstyle green" style="margin-top: 10px;"> Zmień</a>
+                            <div id="ch-visit-time" style="display: none;">
+                                <form method="post">
+                                    <input type="hidden" name="type" value="visit_time">
+                                    {% csrf_token %}
+
+                                    <input style="margin-left: 108px;" type="time" name="visit_time"
+                                           placeholder="Czas wizyty"
+                                           onfocus="this.placeholder=' ' "
+                                           onblur="this.placeholder='Czas wizyty'">
+                                    <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                                </form>
+                            </div>
                 </label>
                 <label> Status
                     <input style="margin-left: 90px;" type="text"
                            value="{{ visit.status }} " disabled>
+                    {% if admin %}
+                <a id="btn-visit-status" class="btn bstyle green" style="margin-top: 10px;"> Zmień</a>
+                        <div id="ch-visit-status" style="display: none;">
+                            <form method="post">
+                                <input type="hidden" name="type" value="status">
+                                <select name="status">
+                                    <option disabled selected>Wybierz status wizyty</option>
+                                    <option>Zaplanowana</option>
+                                    <option>Odbyta</option>
+                                    <option>Anulowana</option>
+                                </select>
+                                <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                            </form>
+                        </div>
+                {% endif %}
                 </label>
                 <label> Weterynarz
                     <input style="margin-left: 90px;" type="text"
@@ -145,6 +186,9 @@
             petainfo: false,
             own: false,
             visit: false,
+            visitdate: false,
+            visittime: false,
+            status: false,
             med: false,
             prescription: false
         };
@@ -211,6 +255,35 @@
             } else {
                 $("#ch-prescription").hide(500)
                 show.prescription = false
+            }
+        });
+        $("#btn-visit-date").click(function () {
+            if (show.visitdate === false) {
+                $("#ch-visit-date").show(500)
+                show.visitdate = true
+            } else {
+                $("#ch-visit-date").hide(500)
+                show.visitdate = false
+            }
+        });
+
+        $("#btn-visit-time").click(function () {
+            if (show.visittime === false) {
+                $("#ch-visit-time").show(500)
+                show.visittime = true
+            } else {
+                $("#ch-visit-time").hide(500)
+                show.visittime = false
+            }
+        });
+
+        $("#btn-visit-status").click(function () {
+            if (show.status === false) {
+                $("#ch-visit-status").show(500)
+                show.status = true
+            } else {
+                $("#ch-visit-status").hide(500)
+                show.status = false
             }
         });
         jQuery(document).ready(function () {
