@@ -190,8 +190,9 @@ def signout(request):
 def VerificationView(request, token):
     if Token.objects.filter(token=token).exists():
         t = Token.objects.get(token=token)
-        t.user.is_active = True
-        t.user.save()
+        if t.expires_at > datetime.now():
+            t.user.is_active = True
+            t.user.save()
     else:
         return redirect('signin')
 
