@@ -2130,6 +2130,90 @@ def visitsmanagement(request):
         return redirect('signin')
 
 
+def visitmanagement(request, visitid):
+    if request.session.get('my_user', False):
+        try:
+            visit = Visit.objects.get(id=visitid)
+            status = visit.status
+
+            if status == 'Odbyta':
+                if Prescription.objects.filter(pet__id=visit.pet.id, status='Wystawiona').exists():
+                    recexpdate = Prescription.objects.filter(pet_id=visit.pet.id,
+                                                             status='Wystawiona').aggregate(
+                        expiration_date=Min('expiration_date'))
+                    prescription = Prescription.objects.get(pet__id=visit.pet.id, status='Wystawiona',
+                                                            expiration_date=recexpdate['expiration_date'])
+
+                    cures = PrescriptionCure.objects.filter(prescription__id=prescription.id).all()
+
+                    nothing = False
+                else:
+                    nothing = True
+                    prescription = 'Brak recept do wyświetlenia!'
+                    cures = 'Brak leków do wyświetlenia!'
+
+                if Treatment.objects.filter(pet__id=visit.pet.id).exists():
+                    recdttreat = Treatment.objects.filter(pet__id=visit.pet.id).aggregate(
+                        date_time_treatment=Min('date_time_treatment'))
+                    treatment = Treatment.objects.get(pet__id=visit.pet.id,
+                                                      date_time_treatment=recdttreat['date_time_treatment'])
+                    nothing2 = False
+                else:
+                    nothing2 = True
+                    treatment = 'Brak historii leczenia do wyświetlenia!'
+            else:
+                nothing = True
+                prescription = 'Brak recept do wyświetlenia!'
+                cures = 'Brak leków do wyświetlenia!'
+                nothing2 = True
+                treatment = 'Brak historii leczenia do wyświetlenia!'
+
+            if request.method == 'POST':
+                if request.POST['type'] == 'visit_date':
+                    visit_date = bleach.clean(request.POST['visit_date'])
+                    visit.visit_date = visit_date
+                    visit.save()
+
+                if request.POST['type'] == 'visit_time':
+                    visit_time = bleach.clean(request.POST['visit_time'])
+                    visit.visit_time = visit_time
+                    visit.save()
+
+                if request.POST['type'] == 'status':
+                    status = bleach.clean(request.POST['status'])
+                    visit.status = status
+                    visit.save()
+
+                visit = Visit.objects.get(id=visitid)
+
+            return render(request, 'klinika/the-visit.html',
+                          {'username': request.session.get('my_user'),
+                           'visit': visit,
+                           'pastvisit': status,
+                           'nothing': nothing,
+                           'nothing2': nothing2,
+                           'treat': treatment,
+                           'presc': prescription,
+                           'cures': cures,
+                           'admin': True,
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+        except:
+            return render(request, 'klinika/the-visit.html',
+                          {'username': request.session.get('my_user'),
+                           'error': 'Brak danych wizyty!',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+    else:
+        return redirect('signin')
+
+
 def prescsmanagement(request):
     if request.session.get('my_user', False):
         user = MyUser.objects.get(username=request.session.get('my_user', False))
