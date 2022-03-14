@@ -1320,6 +1320,11 @@ def prescription(request, prescid):
         try:
             prescription = Prescription.objects.get(id=prescid)
             cures = PrescriptionCure.objects.filter(prescription__id=prescid).all()
+
+            if prescription.expiration_date < datetime.now().date() and prescription.status == 'Wystawiona':
+                prescription.status = 'Wygasla'
+                prescription.save()
+
             return render(request, 'klinika/prescription.html',
                           {'username': request.session.get('my_user'),
                            'presc': prescription,
