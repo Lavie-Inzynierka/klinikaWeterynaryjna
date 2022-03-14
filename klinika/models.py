@@ -25,6 +25,7 @@ Prescription_Status_choices = (
     ('Wystawiona', 'w'),
     ('Zrealizowana', 'z'),
     ('Wygasla', 'wy'),
+    ('Anulowana', 'a'),
 )
 
 Dose_choices = (
