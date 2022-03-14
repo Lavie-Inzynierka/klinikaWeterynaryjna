@@ -2259,6 +2259,48 @@ def prescsmanagement(request):
         return redirect('signin')
 
 
+def prescmanagement(request, prescid):
+    if request.session.get('my_user', False):
+        try:
+            prescription = Prescription.objects.get(id=prescid)
+            cures = PrescriptionCure.objects.filter(prescription__id=prescid).all()
+
+            if prescription.expiration_date < datetime.today() and prescription.status == 'Wystawiona':
+                prescription.status = 'Wygasla'
+                prescription.save()
+
+            if request.method == "POST":
+
+                if request.POST['type'] == 'status':
+                    status = bleach.clean(request.POST['status'])
+                    prescription.status = status
+                    prescription.save()
+
+                prescription = Prescription.objects.get(id=prescid)
+
+            return render(request, 'klinika/prescription.html',
+                          {'username': request.session.get('my_user'),
+                           'presc': prescription,
+                           'cures': cures,
+                           'admin': True,
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+        except:
+            return render(request, 'klinika/prescription.html',
+                          {'username': request.session.get('my_user'),
+                           'error': 'Brak danych recepty!',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+    else:
+        return redirect('signin')
+
+
 def curemanagement(request, cureid):
     if request.session.get('my_user', False):
         try:
