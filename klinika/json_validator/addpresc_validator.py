@@ -10,7 +10,6 @@ with open(schema_path, 'r', encoding='utf-8') as fp:
 
 def validate(data):
     try:
-        # validator.validate(data)
         jsonschema.validate(data, schema)
         return True
     except:
