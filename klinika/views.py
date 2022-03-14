@@ -743,7 +743,6 @@ def addpet(request):
                                      additional_information=additional_information,
                                      owner=owner)
             pet.save()
-            # todo: zmienić redirect na render z message succes
             return redirect('mypets')
     else:
         return redirect('signin')
@@ -1002,7 +1001,6 @@ def addvisit(request):
                                          note=note)
 
             visit.save()
-            # todo: zmienić redirect na render z message succes
             return redirect('allvisits')
     else:
         return redirect('signin')
