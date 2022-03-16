@@ -6,17 +6,18 @@
 {% endblock headAdditional %}
 {% block content %}
     <div id="form">
-        <div class="black">
+    <header class="name header">Historia leczenia</header>
+        <div class="black" style="margin-bottom: 20px;">
             <a href="/addtreatment/{{ pet.id }} " class="btn bstyle "> Dodaj informacje o leczeniu </a>
         </div>
         {% if error %}
             <p class="error"> {{ error }}</p>
         {% else %}
             <label> Zwierzę
-                <input style="margin-left: 90px;" type="text" value="{{ pet.name }}" disabled>
+                <input style="margin-left: 106px;" class="disabled input_width" type="text" value="{{ pet.name }}" disabled>
             </label>
             <label> Właściciel
-                <input style="margin-left: 90px;" type="text"
+                <input style="margin-left: 90px;" class="disabled input_width" type="text"
                        value="{{ pet.owner.first_name }} {{ pet.owner.last_name }}" disabled>
             </label>
 
