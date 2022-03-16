@@ -6,15 +6,16 @@
 {% endblock headAdditional %}
 {% block content %}
     <div id="form2">
+    <header class="name header" >Historia leczenia - leczenie</header>
         <label> Zwierzę
-            <input style="margin-left: 90px;" type="text" value="{{ treat.pet.name }}" disabled>
+            <input style="margin-left: 98px;" class="disabled input_width" type="text" value="{{ treat.pet.name }}" disabled>
         </label>
         <label> Właściciel
-            <input style="margin-left: 90px;" type="text"
+            <input style="margin-left: 78px;" class="disabled input_width" type="text"
                    value="{{ treat.pet.owner.first_name }} {{ treat.pet.owner.last_name }}" disabled>
         </label>
         <label> Data i czas leczenia
-            <input style="margin-left: 30px;" type="text" value="{{ treat.date_time_treatment|date:'d-m-Y H:i' }}"
+            <input style="margin-left: 6px;" class="disabled input_width" type="text" value="{{ treat.date_time_treatment|date:'d-m-Y H:i' }}"
                    disabled>
             {% if admin %}
                 <a id="btn-treat-datetime" class="btn bstyle green" style="margin-top: 10px;"> Zmień</a>
@@ -22,32 +23,32 @@
                     <form method="post">
                         <input type="hidden" name="type" value="date_time_treatment">
                         {% csrf_token %}
-                        <input type="datetime-local" name="date_time_treatment" placeholder="Data i czas leczenia"
+                        <input type="datetime-local" class="input_width" style="margin-left: 164px !important;" name="date_time_treatment" placeholder="Data i czas leczenia"
                                onfocus="this.placeholder=' ' "
                                onblur="this.placeholder='Data i czas leczenia'">
-                        <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                        <input class="green" style="margin-left: 200px;" type="submit" value="Zmień">
                     </form>
                 </div>
             {% endif %}
         </label>
         <label style="float: left; margin-top: 20px;"> Opis
         </label>
-        <a id="btn-treat-desc" class="btn bstyle green" style="margin-top: 18px; margin-right: 56px; float: right;">
+        <a id="btn-treat-desc" class="btn bstyle green" style="margin-top: 18px; margin-right: 80px; float: right;">
             Zmień</a>
-        <textarea style="margin-left: 90px; resize: none;" rows="5" disabled>
+        <textarea  class="disabled input_width" style="margin-left: 122px; resize: none;" rows="5" disabled>
                        {{ treat.description }}</textarea>
         <div id="ch-treat-desc" style="display: none;">
             <form method="post">
                 <input type="hidden" name="type" value="description">
                 {% csrf_token %}
-                <textarea style="margin-left: 220px; resize: none;" rows="5" name="description"
+                <textarea class="input_width" style="margin-left: 178px; resize: none;" rows="5" name="description"
                           placeholder="Opis" onfocus="this.placeholder=' ' "
                           onblur="this.placeholder='Opis '"></textarea>
-                <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                <input class="green" style="margin-left: 215px;" type="submit" value="Zmień">
             </form>
         </div>
         <div style="clear: both;"></div>
-        <input style="margin-left: 255px;" type="button" onclick="history.back()" value="Wróć">
+        <input style="margin-left: 215px;" type="button" onclick="history.back()" value="Wróć">
     </div>
 
     <script>
