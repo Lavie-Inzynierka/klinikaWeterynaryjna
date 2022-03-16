@@ -26,15 +26,11 @@
                     <td>{{ user.username }}</td>
                     <td>{{ user.first_name }} {{ user.last_name }}</td>
                     <td>{{ user.email }}</td>
-                    <td>{% if user.is_active %}
-                        <label>
-                            <input type="checkbox" value="Aktywny" checked disabled>
+                    <td>
+                        <label class="checkbox">
+                            <input type="checkbox" value="Aktywny" {% if user.is_active %}checked{% endif %} disabled>
+                        <span></span>
                         </label>
-                    {% else %}
-                        <label>
-                            <input type="checkbox" value="Nieaktywny" disabled>
-                        </label>
-                    {% endif %}
                     </td>
                     <td>{{ user.note }}</td>
                     <td>

@@ -5,13 +5,13 @@
         {% if error %}
             <p class="error"> {{ error }}</p>
         {% endif %}
-        <header class="name">Vet Pet</header>
+        <header class="name"  style="font-size: 30px; margin-left: 50px; font-style: initial;">Profil użytkownika</header>
         <label> Nazwa użytkownika
-            <input style="margin-left: 54px;" type="text" value="{{ usr.username }}" disabled>
+            <input style="margin-left: 54px;" class="disabled" type="text" value="{{ usr.username }}" disabled>
         </label>
 
         <label> Imię
-            <input style="margin-left: 182px;" type="text" value="{{ usr.first_name }}" disabled>
+            <input style="margin-left: 182px;" class="disabled" type="text" value="{{ usr.first_name }}" disabled>
             <button id="btn-fname" class="btn bstyle green"> Zmień</button>
             <div id="ch-fname" style="display: none;">
                 <form method="post">
@@ -26,7 +26,7 @@
         </label>
 
         <label> Nazwisko
-            <input style="margin-left: 138px;" type="text" value="{{ usr.last_name }}" disabled>
+            <input style="margin-left: 138px;" class="disabled" type="text" value="{{ usr.last_name }}" disabled>
             <button id="btn-lname" class="btn bstyle green"> Zmień</button>
             <div id="ch-lname" style="display: none;">
                 <form method="post">
@@ -41,7 +41,7 @@
         </label>
 
         <label> Hasło
-            <input style="margin-left: 170px;" type="password" value="haslo" disabled>
+            <input style="margin-left: 170px;" class="disabled" type="password" value="haslo" disabled>
             <button id="btn-pass" class="btn bstyle green"> Zmień</button>
             <div id="ch-pass" style="display: none;">
                 <form method="post">
@@ -62,7 +62,7 @@
         </label>
 
         <label> Numer telefonu
-            <input style="margin-left: 90px;" type="tel" value="{{ usr.phone_number }}" disabled>
+            <input style="margin-left: 90px;" class="disabled" type="tel" value="{{ usr.phone_number }}" disabled>
             <button id="btn-phone" class="btn bstyle green"> Zmień</button>
             <div id="ch-phone" style="display: none;">
                 <form method="post">
@@ -77,7 +77,7 @@
         </label>
 
         <label> Adres email
-            <input style="margin-left: 124px; resize: none;" value="{{ usr.email }}" disabled>
+            <input style="margin-left: 124px; resize: none;" class="disabled" value="{{ usr.email }}" disabled>
             <button id="btn-email" class="btn bstyle green"> Zmień</button>
             <div id="ch-email" style="display: none;">
                 <form method="post">
@@ -96,34 +96,33 @@
         <button id="btn-adress" class="btn bstyle green" style="margin-right: 20px; margin-top: -30px; float: right;">
             Dodaj
         </button>
-        <textarea style="margin-left: 238px; margin-top: -30px; resize: none;" disabled> {{ adr }}</textarea>
+        <textarea style="margin-left: 238px; margin-top: -30px; resize: none;" class="disabled" disabled> {{ adr }}</textarea>
         <div id="ch-adress" style="display: none;">
             <form method="post">
                 <input type="hidden" name="type" value="address">
                 {% csrf_token %}
-                <textarea style="margin-left: 220px; resize: none;" rows="4" name="address"
+                <textarea style="margin-left: 238px; resize: none;" rows="4" name="address"
                           placeholder="Adress zamieszkania " onfocus="this.placeholder=' ' "
                           onblur="this.placeholder='Adress zamieszkania '" required></textarea>
                 <input style="margin-left: 250px;" class="green" type="submit" value="Zmień na aktualny">
             </form>
         </div>
-
-        <button style="margin-left: 250px; background-color: #ff9800; color: antiquewhite;" class="btn"
+        <button class="danger warn"
                 id="btn-delete"
                 type="button">Dezaktywuj
         </button>
         <div id="ch-delete" style="display: none;">
-            <p class="error">Czy napewno chcesz dezaktywować tego użytkownika?</p>
 
-            <a href="/profiledeactivation/{{ usr.id }}"
-               style="margin-left: 250px; background-color: #ff3c1c; color: antiquewhite;">Dezaktywuj</a>
+            <p style="color: #ff3c1c; margin-left: 60px; margin-bottom: 0; font-size: 20px; font-weight: bold;">Czy
+                napewno chcesz
+                dezaktywować</p>
+            <p style="color: #ff3c1c; font-size: 22px; margin-left: 60px; margin-bottom: 0; font-weight: bolder">swój
+                profil?</p>
+            <a href="/profiledeactivation/{{ usr.id }}">
+                <input class="danger danger_colour " type="button" value="Dezaktywuj"></a>
         </div>
-
-
-        <a href="{% url 'VetPet' %}">
-            <input style="margin-left: 254px;" type="button" value="Wróć">
-        </a>
     </div>
+
     <script type="text/javascript">
         let show = {fname: false, lname: false, pass: false, phone: false, email: false, adress: false, delete: false};
         $("#btn-fname").click(function () {

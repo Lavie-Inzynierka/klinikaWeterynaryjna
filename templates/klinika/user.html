@@ -10,6 +10,7 @@
         .select2
         {
             width: 320px !important;
+            margin: 20px 326px;
         }
     </style>
 {% endblock headAdditional %}
@@ -18,116 +19,131 @@
         {% if error %}
             <p class="error"> {{ error }}</p>
         {% else %}
+            <header class="name"  style="font-size: 30px; margin-left: 50px; margin-bottom: 10px; font-style: initial;">Podgląd użytkownika</header>
             <label> Nazwa użytkownika
-                <input style="margin-left: 152px;" type="text" value="{{ user.username }}" disabled>
+                <input style="margin-left: 138px;" class="input_width disabled" type="text" value="{{ user.username }}"
+                       disabled>
             </label>
             <label> Imię
-                <input style="margin-left: 182px;" type="text" value="{{ user.first_name }}" disabled>
+                <input style="margin-left: 265px;" class="input_width disabled" type="text"
+                       value="{{ user.first_name }}" disabled>
                 <button id="btn-fname" class="btn bstyle green"> Zmień</button>
                 <div id="ch-fname" style="display: none;">
                     <form method="post">
                         <input type="hidden" name="type" value="first_name">
                         {% csrf_token %}
-                        <input style="margin-left: 220px;" type="text" name="first_name" placeholder="Imię "
+                        <input style="margin-left: 304px;" class="input_width" type="text" name="first_name"
+                               placeholder="Imię "
                                onfocus="this.placeholder=' ' "
                                onblur="this.placeholder='Imię '">
-                        <input style="margin-left: 250px;" class="green" type="submit" value="Zmień">
+                        <input style="margin-left: 342px;" class="green" type="submit" value="Zmień">
                     </form>
                 </div>
             </label>
             <label> Nazwisko
-                <input style="margin-left: 138px;" type="text" value="{{ user.last_name }}" disabled>
+                <input style="margin-left: 223px;" class="input_width disabled" type="text" value="{{ user.last_name }}"
+                       disabled>
                 <button id="btn-lname" class="btn bstyle green"> Zmień</button>
                 <div id="ch-lname" style="display: none;">
                     <form method="post">
                         <input type="hidden" name="type" value="last_name">
                         {% csrf_token %}
-                        <input style="margin-left: 220px;" type="text" name="last_name" placeholder="Nazwisko "
+                        <input style="margin-left: 304px;" class="input_width" type="text" name="last_name"
+                               placeholder="Nazwisko "
                                onfocus="this.placeholder=' ' "
                                onblur="this.placeholder='Nazwisko '">
-                        <input style="margin-left: 250px;" class="green" type="submit" value="Zmień">
+                        <input style="margin-left: 342px;" class="green" type="submit" value="Zmień">
                     </form>
                 </div>
             </label>
             <label> Hasło
-                <input style="margin-left: 170px;" type="password" value="haslo" disabled>
+                <input style="margin-left: 255px;" class="input_width disabled" type="password" value="haslo" disabled>
                 <button id="btn-pass" class="btn bstyle green"> Zmień</button>
                 <div id="ch-pass" style="display: none;">
                     <form method="post">
                         <input type="hidden" name="type" value="password">
                         {% csrf_token %}
-                        <input style="margin-left: 220px;" type="password" name="pass1" placeholder="Nowe Hasło "
+                        <input style="margin-left: 304px;" class="input_width" type="password" name="pass1"
+                               placeholder="Nowe Hasło "
                                onfocus="this.placeholder=' ' "
                                onblur="this.placeholder='Nowe Hasło '">
-                        <input style="margin-left: 220px;" type="password" name="pass2" placeholder="Powtórz Hasło "
+                        <input style="margin-left: 304px;" class="input_width" type="password" name="pass2"
+                               placeholder="Powtórz Hasło "
                                onfocus="this.placeholder=' ' "
                                onblur="this.placeholder='Powtórz Hasło '">
-                        <input style="margin-left: 250px;" class="green" type="submit" value="Zmień">
+                        <input style="margin-left: 342px;" class="green" type="submit" value="Zmień">
                     </form>
                 </div>
             </label>
             <label> Numer telefonu
-                <input style="margin-left: 90px;" type="tel" value="{{ user.phone_number }}" disabled>
+                <input style="margin-left: 175px;" class="input_width disabled" type="tel"
+                       value="{{ user.phone_number }}" disabled>
                 <button id="btn-phone" class="btn bstyle green"> Zmień</button>
                 <div id="ch-phone" style="display: none;">
                     <form method="post">
                         <input type="hidden" name="type" value="phone_number">
                         {% csrf_token %}
-                        <input style="margin-left: 220px;" type="tel" name="phone_number" placeholder="Numer telefonu "
+                        <input style="margin-left: 306px;" type="tel" class="input_width" name="phone_number"
+                               placeholder="Numer telefonu "
                                onfocus="this.placeholder=' ' "
                                onblur="this.placeholder='Numer telefonu '">
-                        <input style="margin-left: 250px;" class="green" type="submit" value="Zmień">
+                        <input style="margin-left: 342px;" class="green" type="submit" value="Zmień">
                     </form>
                 </div>
             </label>
             <label> Adres email
-                <input style="margin-left: 165px; resize: none;" value="{{ user.email }}" disabled>
+                <input style="margin-left: 208px; resize: none;" class="input_width disabled" value="{{ user.email }}"
+                       disabled>
                 <button id="btn-email" class="btn bstyle green"> Zmień</button>
                 <div id="ch-email" style="display: none;">
                     <form method="post">
                         <input type="hidden" name="type" value="email">
                         {% csrf_token %}
-                        <input type="email" style="margin-left: 220px;" name="email" placeholder="Email adres"
+                        <input type="email" class="input_width" style="margin-left: 306px;" name="email"
+                               placeholder="Email adres"
                                onfocus="this.placeholder=' ' "
                                onblur="this.placeholder='Email adres'" required>
-                        <input style="margin-left: 250px;" class="green" type="submit" value="Zmień">
+                        <input style="margin-left: 342px;" class="green" type="submit" value="Zmień">
                     </form>
                 </div>
             </label>
-            <button id="btn-utype" class="btn bstyle green" style="float: right; margin: 20px 200px 20px 0;"> Zmień
+            <button id="btn-utype" class="btn bstyle green" style="float: right; margin: 20px 244px 20px 0;"> Zmień
             </button>
-            <div id="still-utype" style="float: left; margin: 20px 0 20px 0;"> Typ użytkownika
+            <div id="still-utype" style="float: left; margin: 20px 0 20px 0;"><label> Typ użytkownika</label>
                 {% for e in enum %}
-                    <p style="margin: 10px 10px; text-align: left">
-                        <input type="checkbox" style="margin: 0 0 0 110px;"
-                                {% if utypes|myany:e %} checked {% endif %}
-                               disabled>
-                        {{ e }}
-                    </p>
+                    <label class="checkbox checkbox2" style="float: left; margin-left: 300px;">
+                        <input type="checkbox" {% if utypes|myany:e %} checked {% endif %} disabled>
+                        <span></span>
+                    </label>
+                    <p style="float: left; margin-left: 20px;">{{ e }}</p>
+                    <div style="clear: both"></div>
                 {% endfor %}
             </div>
-            <div id="ch-utype" style="float: left; margin: 20px 0 20px 0; display: none"> Typ użytkownika
+            <div id="ch-utype" style="float: left; margin: 20px 0 20px 0; display: none"><label> Typ użytkownika</label>
                 <form method="post">
                     <input type="hidden" name="type" value="role">
                     {% for e in enum %}
-                        <p style="margin: 10px 10px; text-align: left">
-                            <input type="checkbox" name="role-{{ e }}" style="margin: 0 0 0 110px;"
-                                    {% if utypes|myany:e %} checked {% endif %}>
-                            {{ e }}
-                        </p>
+                        <label class="checkbox checkbox2" style="float: left; margin-left: 300px;">
+                            <input type="checkbox" {% if utypes|myany:e %} checked {% endif %}>
+                            <span></span>
+                        </label>
+                        <p style="float: left; margin-left: 20px;">{{ e }}</p>
+                        <div style="clear: both"></div>
                     {% endfor %}
-                    <input style="margin-left: 250px;" class="green" type="submit" value="Zmień">
+                    <input style="margin-left: 348px;" class="green" type="submit" value="Zmień">
                 </form>
             </div>
             <div style="clear: both"></div>
 
             <label style="float: left;">Adres zamieszkania</label>
-            <textarea style="margin-left: 105px; float: left; resize: none;" disabled>
+            <textarea style="margin-left: 143px; white-space: normal;text-align: center;-moz-text-align-last: center;
+            text-align-last: center; float: left; resize: none;"
+                      class="input_width disabled" disabled>
                 {{ uaddress.address }}</textarea>
-            <button id="btn-address" class="btn bstyle green" style="float: right; margin: 10px 78px 10px 0;"> Zmień
+            <button id="btn-address" class="btn bstyle green" style="float: right; margin: 10px 122px 10px 0;"> Zmień
                 obecny adres
             </button>
-            <button id="btn-address-all" class="btn bstyle green" style="float: right; margin: 10px 50px 10px 0;"> Pokaż
+            <button id="btn-address-all" class="btn bstyle green" style="float: right; margin: 10px 94px 10px 0;"> Pokaż
                 wszystkie adresy
             </button>
             <div id="ch-address" style="display: none;">
@@ -144,7 +160,7 @@
                         <option>Dodaj</option>
                     </select>
                     <div id="address-add" style="display: none">
-                        <textarea style="margin-left: 220px; resize: none;" rows="4" name="address"
+                        <textarea style="margin-left: 312px; resize: none;" class="input_width" rows="4" name="address"
                                   placeholder="Adress zamieszkania " onfocus="this.placeholder=' ' "
                                   onblur="this.placeholder='Adress zamieszkania '"></textarea>
                     </div>
@@ -160,7 +176,7 @@
                             )
                         })
                     </script>
-                    <input style="margin-left: 250px;" class="green" type="submit" value="Zmień na aktualny">
+                    <input style="margin-left: 348px;" class="green" type="submit" value="Zmień na aktualny">
                 </form>
             </div>
             <div style="clear: both;"></div>
@@ -177,15 +193,12 @@
                     {% for address in uaddresses %}
                         <tr>
                             <td>{{ address.address }}</td>
-                            <td>{% if address.current %}
-                                <label>
-                                    <input type="checkbox" value="Aktualny" checked disabled>
+                            <td>
+                                <label class="checkbox checkbox3">
+                                    <input type="checkbox" value="Aktualny" {% if address.current %} checked{% endif %}
+                                           disabled>
+                                    <span></span>
                                 </label>
-                            {% else %}
-                                <label>
-                                    <input type="checkbox" value="Nieaktualny" disabled>
-                                </label>
-                            {% endif %}
                             </td>
                             <td>
                                 <div class="black">
@@ -198,31 +211,36 @@
                 </table>
             </div>
             {% if user.is_active %}
-                <button style="margin-left: 250px; background-color: #ff9800; color: antiquewhite;" class="btn"
+                <button style="margin-left: 350px!important;" class="danger warn"
                         id="btn-delete"
                         type="button">Dezaktywuj
                 </button>
                 <div id="ch-delete" style="display: none;">
                     <p class="error">Czy napewno chcesz dezaktywować tego użytkownika?</p>
 
-                    <a href="/userdeactivation/{{ user.id }}"
-                       style="margin-left: 250px; background-color: #ff3c1c; color: antiquewhite;">Dezaktywuj</a>
+                    <a href="/userdeactivation/{{ user.id }}">
+                        <input class="danger danger_colour" style="margin-left: 350px!important;" type="button"
+                               value="Dezaktywuj">
+                    </a>
                 </div>
             {% else %}
-                <button style="margin-left: 250px; background-color: #249800; color: antiquewhite;" class="btn"
+                <button style="margin-left: 350px!important; background-color: #249800;" class="danger"
                         id="btn-delete"
                         type="button">Rezaktywuj
                 </button>
                 <div id="ch-delete" style="display: none;">
                     <p class="success">Czy napewno chcesz rezaktywować tego użytkownika?</p>
 
-                    <a href="/userreactivation/{{ user.id }}"
-                       style="margin-left: 250px; background-color: #249800; color: antiquewhite;">Rezaktywuj</a>
+                    <a href="/userreactivation/{{ user.id }}">
+                        <input class="danger " style="margin-left: 350px!important; background-color: #249800"
+                               type="button" value="Rezaktywuj">
+                    </a>
                 </div>
             {% endif %}
 
         {% endif %}
-        <input style="margin-left: 312px;" type="button" onclick="history.back()" value="Wróć">
+        <div style="clear: both;"></div>
+        <input style="margin-left: 350px;" type="button" onclick="history.back()" value="Wróć">
     </div>
     <script>
         let show = {
