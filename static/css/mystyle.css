@@ -260,7 +260,13 @@ main
   text-align: center;
   font-weight: 700;
 }
-
+.header{
+  font-size: 30px !important;
+  border-bottom: 1px solid #666666;
+  margin-left: 0;
+  margin-bottom: 30px;
+  font-style: initial;
+}
 #form3 input
 {
   border: #ddd solid 2px;

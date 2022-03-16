@@ -144,6 +144,12 @@
         {% endif %}
 
     <script type="text/javascript">
+            jQuery(document).ready(function () {
+            jQuery('#subnav ul li').click(function () {
+                jQuery('#subnav ul li').removeClass("active");
+                jQuery(this).addClass("active");
+            });
+        });
         $(document).ready(function () {
             $('#table').DataTable({
                 language: {url: "{% static 'json/polish.json'%}"},

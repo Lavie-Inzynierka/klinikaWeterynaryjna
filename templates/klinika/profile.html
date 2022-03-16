@@ -5,7 +5,7 @@
         {% if error %}
             <p class="error"> {{ error }}</p>
         {% endif %}
-        <header class="name"  style="font-size: 30px; margin-left: 50px; font-style: initial;">Profil użytkownika</header>
+        <header class="name header">Profil użytkownika</header>
         <label> Nazwa użytkownika
             <input style="margin-left: 54px;" class="disabled" type="text" value="{{ usr.username }}" disabled>
         </label>
@@ -93,7 +93,7 @@
 
         <label style="margin-top: 30px"> Adress zamieszkania
         </label>
-        <button id="btn-adress" class="btn bstyle green" style="margin-right: 20px; margin-top: -30px; float: right;">
+        <button id="btn-adress" class="btn bstyle green" style="margin-right: 122px; margin-top: -30px; float: right;">
             Dodaj
         </button>
         <textarea style="margin-left: 238px; margin-top: -30px; resize: none;" class="disabled" disabled> {{ adr }}</textarea>
@@ -109,17 +109,17 @@
         </div>
         <button class="danger warn"
                 id="btn-delete"
-                type="button">Dezaktywuj
+                type="button" style="margin-left: 220px !important;">Dezaktywuj
         </button>
         <div id="ch-delete" style="display: none;">
 
-            <p style="color: #ff3c1c; margin-left: 60px; margin-bottom: 0; font-size: 20px; font-weight: bold;">Czy
+            <p style="color: #ff3c1c; margin-left: 30px; margin-bottom: 0; font-size: 20px;">Czy
                 napewno chcesz
-                dezaktywować</p>
-            <p style="color: #ff3c1c; font-size: 22px; margin-left: 60px; margin-bottom: 0; font-weight: bolder">swój
-                profil?</p>
+                dezaktywować
+                <br/> <b> swój
+                profil?</b></p>
             <a href="/profiledeactivation/{{ usr.id }}">
-                <input class="danger danger_colour " type="button" value="Dezaktywuj"></a>
+                <input class="danger danger_colour " style="margin-left: 220px !important;" type="button" value="Dezaktywuj"></a>
         </div>
     </div>
 

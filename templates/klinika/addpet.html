@@ -7,7 +7,7 @@
                 <p class="error"> {{ error }}</p>
             {% endif %}
             {% csrf_token %}
-            <header class="name">Vet Pet</header>
+            <header class="name header">Dodaj zwierzę</header>
             <input type="text" name="name" placeholder="Nazwa zwierzęcia" onfocus="this.placeholder=' ' "
                    onblur="this.placeholder='Nazwa zwierzęcia'" required>
             <input type="date" name="date_of_birth" placeholder="Data urodzenia" onfocus="this.placeholder=' ' "
