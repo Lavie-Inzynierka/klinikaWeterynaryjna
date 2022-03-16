@@ -6,35 +6,35 @@
 {% endblock headAdditional %}
 {% block content %}
 
-    <div id="form">
+    <div id="form2">
         {% if error %}
             <p class="error"> {{ error }}</p>
         {% else %}
+            <header class="name header" >Historia leczenia - dodaj leczenie</header>
             <label> Zwierzę
-                <input style="margin-left: 90px;" type="text" value="{{ pet.name }}" disabled>
+                <input style="margin-left: 102px;" class="disabled input_width" type="text" value="{{ pet.name }}" disabled>
             </label>
-            <label> Właściciel
-                <input style="margin-left: 90px;" type="text"
+            <label style="margin-bottom: 30px;"> Właściciel
+                <input style="margin-left: 83px;" class="disabled input_width" type="text"
                        value="{{ pet.owner.first_name }} {{ pet.owner.last_name }}" disabled>
             </label>
             <form method="post">
-                {% csrf_token %}
-                <label> Data i czas leczenia
-                    <input type="datetime-local" name="date_time_treatment" placeholder="Data i czas leczenia"
+                <label style="float: left; margin-top: 10px" > Data i czas leczenia</label>
+                    <input style="float: left; margin-top: 0; margin-left: 10px"  type="datetime-local" class="input_width" name="date_time_treatment" placeholder="Data i czas leczenia"
                            onfocus="this.placeholder=' ' "
                            onblur="this.placeholder='Data i czas leczenia'">
-                </label>
-                <label> Opis
-                    <textarea style="margin-left: 220px; resize: none;" rows="10" name="description"
+                <div style="clear: both"></div>
+                <label  style="float: left; margin-top: 30px;"> Opis</label>
+                    <textarea style="float: left; margin-top: 20px; margin-left: 126px; resize: none;" class="input_width" rows="5" name="description"
                               placeholder="Opis" onfocus="this.placeholder=' ' "
                               onblur="this.placeholder='Opis'" required></textarea>
-                </label>
-                <input type="submit" class="green" value="zapisz dane">
+
+                <input type="submit" style="margin-left: 215px;" class="green" value="zapisz dane">
             </form>
 
 
         {% endif %}
-        <input style="margin-left: 255px;" type="button" onclick="history.back()" value="Wróć">
+        <input style="margin-left: 215px;" type="button" onclick="history.back()" value="Wróć">
     </div>
 
     <script>
