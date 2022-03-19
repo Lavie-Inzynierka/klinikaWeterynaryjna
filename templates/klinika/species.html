@@ -5,16 +5,17 @@
         {% if error %}
             <p class="error"> {{ error }}</p>
         {% else %}
+            <header class="name header">Podgląd gatunku</header>
             {% if error1 %}
                 <p class="error">{{ error1 }}</p>
             {% endif %}
             <label> Nazwa gatunku
-                <input style="margin-left: 90px;" type="text" value="{{ species.species_name }}" disabled>
+                <input style="margin-left: 90px;" class="input_width disabled" type="text" value="{{ species.species_name }}" disabled>
                 <a id="btn-species-name" class="btn bstyle green"> Zmień</a>
                 <div id="ch-species-name" style="display: none;">
                     <form method="post">
                         <input type="hidden" name="type" value="species_name">
-                        <input style="margin-left: 220px;" type="text" name="species_name"
+                        <input style="margin-left: 220px;" class="input_width" type="text" name="species_name"
                                placeholder="Nazwa gatunku"
                                onfocus="this.placeholder=' ' "
                                onblur="this.placeholder='Nazwa gatunku'" required>
@@ -26,14 +27,14 @@
             <a id="btn-species-adi" class="btn bstyle green"
                style="margin-top: 30px; margin-right: 26px; float: right;">
                 Zmień</a>
-            <textarea style="margin-left: 234px; resize: none; margin-top: -30px;" rows="5"
+            <textarea style="margin-left: 234px; resize: none; margin-top: -30px;" class="input_width disabled" rows="5"
                       disabled>{{ species.additional_information }}</textarea>
             <div style="clear: both;"></div>
             <div id="ch-species-adi" style="display: none;">
                 <form method="post">
                     <input type="hidden" name="type" value="additional_information">
                     {% csrf_token %}
-                    <textarea style="margin-left: 234px; resize: none;" rows="5" name="additional_information"
+                    <textarea style="margin-left: 234px; resize: none;" class="input_width" rows="5" name="additional_information"
                               placeholder="Dodatkowe informacje" onfocus="this.placeholder=' ' "
                               onblur="this.placeholder='Dodatkowe informacje'" required></textarea>
                     <input class="green" style="margin-left: 264px;" type="submit" value="Zmień">
