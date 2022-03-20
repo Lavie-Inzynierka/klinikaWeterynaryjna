@@ -2321,7 +2321,7 @@ def prescmanagement(request, prescid):
             prescription = Prescription.objects.get(id=prescid)
             cures = PrescriptionCure.objects.filter(prescription__id=prescid).all()
 
-            if prescription.expiration_date < datetime.today() and prescription.status == 'Wystawiona':
+            if prescription.expiration_date < datetime.date(datetime.now()) and prescription.status == 'Wystawiona':
                 prescription.status = 'Wygasla'
                 prescription.save()
 
