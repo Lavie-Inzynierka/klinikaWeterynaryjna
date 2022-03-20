@@ -10,48 +10,51 @@
         {% if error %}
             <p class="error"> {{ error }}</p>
         {% else %}
+             <header class="name header">Podgląd recepty </header>
 
             <label> Kod recepty
-                <input style="margin-left: 90px;" type="text" value="{{ presc.code}}"
+                <input style="margin-left: 202px;" class="disabled input_width" type="text" value="{{ presc.code }}"
                        disabled>
             </label>
             <label> Termin ważności
-                <input style="margin-left: 90px;" type="text" value="{{ presc.expiration_date|date:'d-m-Y' }}"
+                <input style="margin-left: 168px;" class="disabled input_width" type="text" value="{{ presc.expiration_date|date:'d-m-Y' }}"
                        disabled>
             </label>
             <label> Status
-                <input style="margin-left: 90px;" type="text" value="{{ presc.status }}"
+                <input style="margin-left: 252px;" class="disabled input_width" type="text" value="{{ presc.status }}"
                        disabled>
-            {% if admin %}
-                <a id="btn-presc-status" class="btn bstyle green" style="margin-top: 10px;"> Zmień</a>
-                        <div id="ch-presc-status" style="display: none;">
-                            <form method="post">
-                                <input type="hidden" name="type" value="status">
-                                <select name="status">
-                                    <option disabled selected>Wybierz status recepty</option>
-                                    <option>Wystawiona</option>
-                                    <option>Zrealizowana</option>
-                                    <option>Wygasla</option>
-                                    <option>Anulowana</option>
-                                </select>
-                                <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
-                            </form>
-                        </div>
+                {% if admin %}
+                    <a id="btn-presc-status" class="btn bstyle green" style="margin-top: 10px;"> Zmień</a>
+                    <div id="ch-presc-status" style="display: none;">
+                        <form method="post">
+                            <input type="hidden" name="type" value="status">
+                            <select name="status" style="width: 340px; text-align: center; font-weight: bold; height: 45px; margin-top: 20px; margin-left: 308px">
+                                <option disabled selected>Wybierz status recepty</option>
+                                <option>Wystawiona</option>
+                                <option>Zrealizowana</option>
+                                <option>Wygasla</option>
+                                <option>Anulowana</option>
+                            </select>
+                            <input class="green" style="margin-left: 338px;" type="submit" value="Zmień">
+                        </form>
+                    </div>
                 {% endif %}
             </label>
 
             <label> Zwierzę
-                <input style="margin-left: 90px;" type="text" value="{{ presc.pet.name}}"
+                <input style="margin-left: 238px;" class="disabled input_width" type="text" value="{{ presc.pet.name }}"
                        disabled>
             </label>
 
             <label> Właściciel
-                <input style="margin-left: 90px;" type="text" value="{{ presc.owner.first_name }} {{ presc.owner.last_name }}"
+                <input style="margin-left: 220px;" class="disabled input_width" type="text"
+                       value="{{ presc.owner.first_name }} {{ presc.owner.last_name }}"
                        disabled>
             </label>
 
             <label> Weterynarz
-                <input style="margin-left: 90px;" type="text" value="{{ presc.vet.first_name}} {{ presc.vet.last_name}}"
+                <input style="margin-left: 208px;" class="disabled input_width" type="text"
+                       value="{{ presc.vet.first_name }} {{ presc.vet.last_name }}"
                        disabled>
             </label>
             <table id="cure-table">
@@ -74,13 +77,14 @@
                 </tbody>
             </table>
         {% endif %}
+        <input style="margin-left: 350px;" type="button" onclick="history.back()" value="Wróć">
     </div>
-        <input style="margin-left: 255px;" type="button" onclick="history.back()" value="Wróć">
+
     <script>
         const table = $('#cure-table').DataTable({
             language: {url: "{% static 'json/polish.json'%}"}
         });
-        let show = { status: false}
+        let show = {status: false}
         $("#btn-presc-status").click(function () {
             if (show.status === false) {
                 $("#ch-presc-status").show(500)
