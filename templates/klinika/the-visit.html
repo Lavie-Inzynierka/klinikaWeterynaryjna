@@ -13,82 +13,92 @@
             {% include "klinika/sub-navbar.html" %}
             <div id="ch-pet" style="display: none;">
                 <label> Imię
-                    <input style="margin-left: 90px;" type="text" value="{{ visit.pet.name }}" disabled>
+                    <input style="margin-left: 270px;" class="disabled input_width" type="text"
+                           value="{{ visit.pet.name }}" disabled>
                 </label>
                 <label> Data urodzenia
-                    <input style="margin-left: 95px;" value="{{ visit.pet.date_of_birth|date:'d-m-Y' }}" disabled>
+                    <input style="margin-left: 182px;" class="disabled input_width"
+                           value="{{ visit.pet.date_of_birth|date:'d-m-Y' }}" disabled>
                 </label>
                 <label> Płeć
-                    <input style="margin-left: 180px;" type="text" name="sex" value="{{ visit.pet.sex }}" disabled>
+                    <input style="margin-left: 270px;" class="disabled input_width" type="text" name="sex"
+                           value="{{ visit.pet.sex }}" disabled>
                 </label>
                 <label> Gatunek
-                    <input style="margin-left: 145px;" type="text" name="species"
+                    <input style="margin-left: 238px;" class="disabled input_width" type="text" name="species"
                            value="{{ visit.pet.species.species_name }}"
                            disabled>
                 </label>
-                <label> Dodatkowe informacje
-                    <textarea style="margin-left: 30px; resize: none; margin-top: 20px;"
-                              disabled>{{ visit.pet.additional_information }}</textarea>
-                </label>
+                <label style="margin-top: 40px"> Dodatkowe informacje</label>
+                <textarea style="margin-left: 314px; resize: none; margin-top: -40px;  white-space: normal;
+                text-align: center;-moz-text-align-last: center; text-align-last: center;" class="disabled input_width"
+                          disabled>{{ visit.pet.additional_information }}</textarea>
+
             </div>
             <div id="ch-own" style="display: none;">
                 <label> Imię
-                    <input style="margin-left: 90px;" type="text" value="{{ visit.pet.owner.first_name }}" disabled>
+                    <input style="margin-left: 268px;" class="disabled input_width" type="text"
+                           value="{{ visit.pet.owner.first_name }}" disabled>
                 </label>
                 <label> Nazwisko
-                    <input style="margin-left: 90px;" type="text" value="{{ visit.pet.owner.last_name }}" disabled>
+                    <input style="margin-left: 224px;" class="disabled input_width" type="text"
+                           value="{{ visit.pet.owner.last_name }}" disabled>
                 </label>
                 <label> Adres email
-                    <input style="margin-left: 90px;" type="text" value="{{ visit.pet.owner.email }}" disabled>
+                    <input style="margin-left: 208px;" class="disabled input_width" type="text"
+                           value="{{ visit.pet.owner.email }}" disabled>
                 </label>
                 <label> Numer telefonu
-                    <input style="margin-left: 90px;" type="text" value="{{ visit.pet.owner.phone_number }}" disabled>
+                    <input style="margin-left: 176px;" class="disabled input_width" type="text"
+                           value="{{ visit.pet.owner.phone_number }}" disabled>
                 </label>
             </div>
             <div id="ch-visit" style="display: none;">
                 <label> Data wizyty
-                    <input style="margin-left: 90px;" type="text" value="{{ visit.visit_date|date:'d-m-Y' }}"
+                    <input style="margin-left: 206px;" class="disabled input_width" type="text"
+                           value="{{ visit.visit_date|date:'d-m-Y' }}"
                            disabled>
                     <a id="btn-visit-date" class="btn bstyle green" style="margin-top: 10px;"> Zmień</a>
-                            <div id="ch-visit-date" style="display: none;">
-                                <form method="post">
-                                    <input type="hidden" name="type" value="visit_date">
-                                    {% csrf_token %}
-                                    <input style="margin-left: 108px;" type="date" name="visit_date"
-                                           placeholder="Data wizyty"
-                                           onfocus="this.placeholder=' ' "
-                                           onblur="this.placeholder='Data wizyty'">
+                    <div id="ch-visit-date" style="display: none;">
+                        <form method="post">
+                            <input type="hidden" name="type" value="visit_date">
+                            {% csrf_token %}
+                            <input style="margin-left: 108px;" class=" input_width" type="date" name="visit_date"
+                                   placeholder="Data wizyty"
+                                   onfocus="this.placeholder=' ' "
+                                   onblur="this.placeholder='Data wizyty'">
 
-                                    <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
-                                </form>
-                            </div>
+                            <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                        </form>
+                    </div>
                 </label>
                 <label> Data time
-                    <input style="margin-left: 90px;" type="text" value="{{ visit.visit_time|date:'H:i' }}"
+                    <input style="margin-left: 224px;" class="disabled input_width" type="text"
+                           value="{{ visit.visit_time|date:'H:i' }}"
                            disabled>
                     <a id="btn-visit-time" class="btn bstyle green" style="margin-top: 10px;"> Zmień</a>
-                            <div id="ch-visit-time" style="display: none;">
-                                <form method="post">
-                                    <input type="hidden" name="type" value="visit_time">
-                                    {% csrf_token %}
+                    <div id="ch-visit-time" style="display: none;">
+                        <form method="post">
+                            <input type="hidden" name="type" value="visit_time">
+                            {% csrf_token %}
 
-                                    <input style="margin-left: 108px;" type="time" name="visit_time"
-                                           placeholder="Czas wizyty"
-                                           onfocus="this.placeholder=' ' "
-                                           onblur="this.placeholder='Czas wizyty'">
-                                    <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
-                                </form>
-                            </div>
+                            <input style="margin-left: 108px;" class=" input_width" type="time" name="visit_time"
+                                   placeholder="Czas wizyty"
+                                   onfocus="this.placeholder=' ' "
+                                   onblur="this.placeholder='Czas wizyty'">
+                            <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                        </form>
+                    </div>
                 </label>
                 <label> Status
-                    <input style="margin-left: 90px;" type="text"
+                    <input style="margin-left: 252px;" class="disabled input_width" type="text"
                            value="{{ visit.status }} " disabled>
                     {% if admin %}
-                <a id="btn-visit-status" class="btn bstyle green" style="margin-top: 10px;"> Zmień</a>
+                        <a id="btn-visit-status" class="btn bstyle green" style="margin-top: 10px;"> Zmień</a>
                         <div id="ch-visit-status" style="display: none;">
                             <form method="post">
                                 <input type="hidden" name="type" value="status">
-                                <select name="status">
+                                <select name="status" class=" input_width">
                                     <option disabled selected>Wybierz status wizyty</option>
                                     <option>Zaplanowana</option>
                                     <option>Odbyta</option>
@@ -97,23 +107,24 @@
                                 <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
                             </form>
                         </div>
-                {% endif %}
+                    {% endif %}
                 </label>
                 <label> Weterynarz
-                    <input style="margin-left: 90px;" type="text"
+                    <input style="margin-left: 206px;" class="disabled input_width" type="text"
                            value="{{ visit.vet.first_name }} {{ visit.vet.last_name }}" disabled>
                 </label>
             </div>
             <div id="ch-med" style="display: none;">
                 {% if not nothing2 %}
                     <label> Data i czas leczenia
-                        <input style="margin-left: 30px;" type="text"
+                        <input style="margin-left: 148px;" class="disabled input_width" type="text"
                                value="{{ treat.date_time_treatment|date:'d-m-Y H:i' }}"
                                disabled>
                     </label>
-                    <label style="float: left; margin-top: 20px;"> Opis
+                    <label style="float: left; margin-top: 30px;"> Opis
                     </label>
-                    <textarea style="margin-left: 90px; resize: none;" rows="5" disabled>
+                    <textarea style="margin-left: 264px; resize: none;  white-space: normal;text-align: center;
+                    -moz-text-align-last: center; text-align-last: center;" class="disabled input_width" rows="5" disabled>
                        {{ treat.description }}</textarea>
                     <div style="clear: both;"></div>
                 {% else %}
@@ -124,31 +135,35 @@
             <div id="ch-prescription" style="display: none;">
                 {% if not nothing %}
                     <label> Kod recepty
-                        <input style="margin-left: 90px;" type="text" value="{{ presc.code }}"
+                        <input style="margin-left: 204px;" class="disabled input_width" type="text"
+                               value="{{ presc.code }}"
                                disabled>
                     </label>
                     <label> Termin ważności
-                        <input style="margin-left: 90px;" type="text" value="{{ presc.expiration_date|date:'d-m-Y' }}"
+                        <input style="margin-left: 170px;" class="disabled input_width" type="text"
+                               value="{{ presc.expiration_date|date:'d-m-Y' }}"
                                disabled>
                     </label>
                     <label> Status
-                        <input style="margin-left: 90px;" type="text" value="{{ presc.status }}"
+                        <input style="margin-left: 252px;" class="disabled input_width" type="text"
+                               value="{{ presc.status }}"
                                disabled>
                     </label>
 
                     <label> Zwierzę
-                        <input style="margin-left: 90px;" type="text" value="{{ presc.pet.name }}"
+                        <input style="margin-left: 238px;" class="disabled input_width" type="text"
+                               value="{{ presc.pet.name }}"
                                disabled>
                     </label>
 
                     <label> Właściciel
-                        <input style="margin-left: 90px;" type="text"
+                        <input style="margin-left: 218px;" class="disabled input_width" type="text"
                                value="{{ presc.owner.first_name }} {{ presc.owner.last_name }}"
                                disabled>
                     </label>
 
                     <label> Weterynarz
-                        <input style="margin-left: 90px;" type="text"
+                        <input style="margin-left: 206px;" class="disabled input_width" type="text"
                                value="{{ presc.vet.first_name }} {{ presc.vet.last_name }}"
                                disabled>
                     </label>
@@ -177,7 +192,7 @@
             </div>
 
         {% endif %}
-        <input style="margin-left: 255px;" type="button" onclick="history.back()" value="Wróć">
+        <input style="margin-left: 350px;" type="button" onclick="history.back()" value="Wróć">
     </div>
     <script>
         let show = {
@@ -287,8 +302,8 @@
             }
         });
         jQuery(document).ready(function () {
-            jQuery('form ul li').click(function () {
-                jQuery('form ul li').removeClass("active");
+            jQuery('#subnav ul li').click(function () {
+                jQuery('#subnav ul li').removeClass("active");
                 jQuery(this).addClass("active");
             });
         });

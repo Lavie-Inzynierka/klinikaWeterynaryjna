@@ -598,6 +598,11 @@ main
   left: 13.75rem !important;
   top: 1.25rem !important;
 }
+.checkbox5 > input:checked + span::before
+{
+  left: 21.5rem !important;
+    top: 1.25rem !important;
+}
 
 .checkbox > input:active
 {
@@ -766,7 +771,8 @@ p
 }
 
 /*region datatable*/
-#table_wrapper
+#table_wrapper,
+#cure-table_wrapper
 {
   margin-top: 30px;
 }
@@ -787,7 +793,8 @@ p
 }
 
 #table1_wrapper #table1_length,
-#table2_wrapper #table2_length
+#table2_wrapper #table2_length,
+#cure-table_wrapper #cure-table_length
 {
   margin-top: 30px;
   float: left;
@@ -798,7 +805,8 @@ p
 
 #table_wrapper #table_length select,
 #table1_wrapper #table1_length select,
-#table2_wrapper #table2_length select
+#table2_wrapper #table2_length select,
+#cure-table_wrapper #cure-table_length select
 {
   margin: 0 10px;
   font-size: 20px;
@@ -806,7 +814,8 @@ p
 
 #table_wrapper #table_filter,
 #table1_wrapper #table1_filter,
-#table2_wrapper #table2_filter
+#table2_wrapper #table2_filter,
+#cure-table_wrapper #cure-table_filter
 {
   margin-bottom: 10px;
   float: right;
@@ -814,14 +823,16 @@ p
 
 #table_wrapper #table_filter input[type=search],
 #table1_wrapper #table1_filter input[type=search],
-#table2_wrapper #table2_filter input[type=search]
+#table2_wrapper #table2_filter input[type=search],
+#cure-table_wrapper #cure-table_filter input[type=search]
 {
   font-size: 20px;
 }
 
 #table_wrapper #table,
 #table1_wrapper #table1,
-#table2_wrapper #table2
+#table2_wrapper #table2,
+#cure-table_wrapper #cure-table
 {
   border: #1e408e solid 4px;
   clear: both;
@@ -833,7 +844,8 @@ p
 
 #table_wrapper #table thead tr th,
 #table1_wrapper #table1 thead tr th,
-#table2_wrapper #table2 thead tr th
+#table2_wrapper #table2 thead tr th,
+#cure-table_wrapper #cure-table thead tr th
 {
   margin-right: 200px;
   border: #1e408e solid 4px;
@@ -841,14 +853,16 @@ p
 
 #table_wrapper #table thead tr th:last-child,
 #table1_wrapper #table1 thead tr th:last-child,
-#table2_wrapper #table2 thead tr th:last-child
+#table2_wrapper #table2 thead tr th:last-child,
+#cure-table_wrapper #cure-table thead tr th:last-child
 {
   margin-right: 0;
 }
 
 #table_wrapper #table tbody tr td,
 #table1_wrapper #table1 tbody tr td,
-#table2_wrapper #table2 tbody tr td
+#table2_wrapper #table2 tbody tr td,
+#cure-table_wrapper #cure-table tbody tr td
 {
   margin-right: 200px;
   border: #1e408e solid 2px;
@@ -857,14 +871,16 @@ p
 
 #table_wrapper #table tbody tr td:last-child,
 #table1_wrapper #table1 tbody tr td:last-child,
-#table2_wrapper #table2 tbody tr td:last-child
+#table2_wrapper #table2 tbody tr td:last-child,
+#cure-table_wrapper #cure-table tbody tr td:last-child
 {
   margin-right: 0;
 }
 
 #table_wrapper #table tbody tr td:last-child a,
 #table1_wrapper #table1 tbody tr td:last-child a,
-#table2_wrapper #table2 tbody tr td:last-child a
+#table2_wrapper #table2 tbody tr td:last-child a,
+#cure-table_wrapper #cure-table tbody tr td:last-child a
 {
   padding: 5px 10px;
   margin-right: 10px;
@@ -876,7 +892,8 @@ p
 
 #table_wrapper #table tbody tr td:last-child a:hover,
 #table1_wrapper #table1 tbody tr td:last-child a:hover,
-#table2_wrapper #table2 tbody tr td:last-child a:hover
+#table2_wrapper #table2 tbody tr td:last-child a:hover,
+#cure-table_wrapper #cure-table tbody tr td:last-child a:hover
 {
   color: #FAE1D2;
   border: solid 1px #0A2E4F;
@@ -886,7 +903,8 @@ p
 
 #table_wrapper #table_info,
 #table1_wrapper #table1_info,
-#table2_wrapper #table2_info
+#table2_wrapper #table2_info,
+#cure-table_wrapper #cure-table_info
 {
   margin-top: 10px;
   float: left;
@@ -897,7 +915,8 @@ p
 
 #table_wrapper #table_paginate,
 #table1_wrapper #table1_paginate,
-#table2_wrapper #table2_paginate
+#table2_wrapper #table2_paginate,
+#cure-table_wrapper #cure-table_paginate
 {
   margin-top: 10px;
   float: right;
@@ -906,7 +925,8 @@ p
 
 #table_wrapper #table_paginate span,
 #table1_wrapper #table1_paginate span,
-#table2_wrapper #table2_paginate span
+#table2_wrapper #table2_paginate span,
+#cure-table_wrapper #cure-table_paginate span
 {
   margin: 0 10px;
   font-size: 18px;
@@ -916,7 +936,8 @@ p
 
 #table_wrapper #table_paginate a,
 #table1_wrapper #table1_paginate a,
-#table2_wrapper #table2_paginate a
+#table2_wrapper #table2_paginate a,
+#cure-table_wrapper #cure-table_paginate a
 {
   color: black;
   padding: 5px 10px;
@@ -930,7 +951,8 @@ p
 
 #table_wrapper #table_paginate a:hover,
 #table1_wrapper #table1_paginate a:hover,
-#table2_wrapper #table2_paginate a:hover
+#table2_wrapper #table2_paginate a:hover,
+#cure-table_wrapper #cure-table_paginate a:hover
 {
   color: #FAE1D2;
   border: solid 1px #0A2E4F;
