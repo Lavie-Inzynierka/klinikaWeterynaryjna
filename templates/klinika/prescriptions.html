@@ -133,13 +133,17 @@
         {% endif %}
 
     <script type="text/javascript">
-        $(document).ready(function () {
-            $('#table').DataTable({
-                language: {url: "{% static 'json/polish.json'%}"},
-                columnDefs: [
-                    {searchable: false, targets: 4}
-                ]
+        jQuery(document).ready(function () {
+            jQuery('#subnav ul li').click(function () {
+                jQuery('#subnav ul li').removeClass("active");
+                jQuery(this).addClass("active");
             });
+        });
+        $('#table').DataTable({
+            language: {url: "{% static 'json/polish.json'%}"},
+            columnDefs: [
+                {searchable: false, targets: 4}
+            ]
         });
         $('#table1').DataTable({
             language: {url: "{% static 'json/polish.json'%}"},
