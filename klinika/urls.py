@@ -39,6 +39,7 @@ urlpatterns = [
     path('userdeactivation/<uid>/', views.userdeactivation, name="userdeactivation"),
     path('userreactivation/<uid>/', views.userreactivation, name="userreactivation"),
     path('usermanagementadd', views.usermanagementadd, name="usermanagementadd"),
+    path('useraddress/<uaddress>/', views.useraddress, name="useraddress"),
     path('petsmanagement/', views.petsmanagement, name="petsmanagement"),
     path('petmanagement/<petid>/', views.petmanagement, name="petmanagement"),
     path('speciesmanagement/<speciesid>/', views.speciesmanagement, name="speciesmanagement"),
