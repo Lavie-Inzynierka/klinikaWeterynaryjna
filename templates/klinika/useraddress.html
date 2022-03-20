@@ -1,0 +1,78 @@
+{% extends 'klinika/main.html' %}
+{% load static %}
+{% block content %}
+    <div id="form2">
+        {% if error %}
+            <p class="error"> {{ error }}</p>
+        {% else %}
+            <header class="name header">Podgląd adresu użytkownika - {{ address.user.username }}</header>
+            {% if error1 %}
+                <p class="error">{{ error1 }}</p>
+            {% endif %}
+            <label style="float: left; margin-top: 30px">Adres zamieszkania</label>
+            <a id="btn-address-address" class="btn bstyle green"
+               style="margin-top: 30px; margin-right: 26px; float: right;">
+                Zmień</a>
+            <textarea style="margin-left: 234px; resize: none; margin-top: -30px;" class="input_width disabled" rows="5"
+                      disabled>{{ address.address }}</textarea>
+            <div style="clear: both;"></div>
+            <div id="ch-address-address" style="display: none;">
+                <form method="post">
+                    <input type="hidden" name="type" value="address">
+                    {% csrf_token %}
+                    <textarea style="margin-left: 234px; resize: none;" class="input_width" rows="5" name="address"
+                              placeholder="Adres zamieszkania" onfocus="this.placeholder=' ' "
+                              onblur="this.placeholder='Adres zamieszkania'" required></textarea>
+                    <input class="green" style="margin-left: 264px;" type="submit" value="Zmień">
+                </form>
+            </div>
+             <a id="btn-address-current" class="btn bstyle green" style="float: right; margin: 30px 26px 0  0"> Zmień</a>
+
+            <div id="still-address-current">
+            <label class="checkbox checkbox5"> Aktualny adres
+                <input type="checkbox" {% if address.current %} checked{% endif %}
+                       disabled>
+                <span></span>
+            </label>
+            </div>
+            <div id="ch-address-current" style="display: none;">
+                <form method="post">
+                    <input type="hidden" name="type" value="current">
+                    <label class="checkbox checkbox5">  Aktualny adres
+                    <input type="checkbox" name="current" {% if address.current %} checked{% endif %}>
+                        <span></span>
+                    </label>
+                    <input class="green" style="margin-left: 264px;" type="submit" value="Zmień">
+                </form>
+            </div>
+
+        {% endif %}
+        <input style="margin-left: 264px;" type="button" onclick="history.back()" value="Wróć">
+    </div>
+    <script>
+        let show = {
+            address: false,
+            current: false,
+        };
+        $("#btn-address-address").click(function () {
+            if (show.address === false) {
+                $("#ch-address-address").show(500)
+                show.address = true
+            } else {
+                $("#ch-address-address").hide(500)
+                show.address = false
+            }
+        });
+        $("#btn-address-current").click(function () {
+            if (show.current === false) {
+                $("#ch-address-current").show(500)
+                $("#still-address-current").hide(500)
+                show.current = true
+            } else {
+                $("#ch-address-current").hide(500)
+                $("#still-address-current").show(500)
+                show.current = false
+            }
+        });
+    </script>
+{% endblock content %}

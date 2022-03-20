@@ -1616,6 +1616,62 @@ def usermanagement(request, uid):
         return redirect('signin')
 
 
+def useraddress(request, uaddress):
+    if request.session.get('my_user', False):
+        try:
+            user = MyUser.objects.get(username=request.session.get('my_user', False))
+            utypes = UserType.objects.filter(user=user).all()
+            if any(x.user_type == 'ADMIN' for x in utypes):
+                address = UserAddresses.objects.get(id=uaddress)
+
+                if request.method == "POST":
+
+                    if request.POST['type'] == 'address':
+                        newaddress = bleach.clean(request.POST['address'])
+                        if not UserAddresses.objects.filter(address=newaddress, user=address.user).exists():
+                            address.address = newaddress
+                            address.save()
+                        else:
+                            return render(request, 'klinika/species.html', {'username': request.session.get('my_user'),
+                                                                            'address': address,
+                                                                            'error1': 'Podany adres już '
+                                                                                      'istnieje dla tego użytkownika!',
+                                                                            'adm': request.session.get('is_adm'),
+                                                                            'vet': request.session.get('is_vet'),
+                                                                            'rec': request.session.get('is_rec'),
+                                                                            'own': request.session.get('is_own'),
+                                                                            })
+
+                    if request.POST['type'] == 'current':
+                        if request.POST.get("current", None):
+                            address.current = True
+                        else:
+                            address.current = False
+
+                        address.save()
+
+                    address = UserAddresses.objects.get(id=uaddress)
+
+                return render(request, 'klinika/useraddress.html', {'username': request.session.get('my_user'),
+                                                                    'address': address,
+                                                                    'adm': request.session.get('is_adm'),
+                                                                    'vet': request.session.get('is_vet'),
+                                                                    'rec': request.session.get('is_rec'),
+                                                                    'own': request.session.get('is_own'),
+                                                                    })
+        except():
+            return render(request, 'klinika/useraddress.html',
+                          {'username': request.session.get('my_user'),
+                           'error': 'Nie znaleziono adresu',
+                           'adm': request.session.get('is_adm'),
+                           'vet': request.session.get('is_vet'),
+                           'rec': request.session.get('is_rec'),
+                           'own': request.session.get('is_own'),
+                           })
+    else:
+        return redirect('signin')
+
+
 def userdeactivation(request, uid):
     if request.session.get('my_user', False):
         if MyUser.objects.filter(id=uid).exists():
