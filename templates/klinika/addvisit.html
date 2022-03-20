@@ -11,21 +11,24 @@
                 <p class="error"> {{ error }}</p>
             {% endif %}
             {% csrf_token %}
-            <header class="name">Vet Pet</header>
+            <header class="name header" style="padding-left: 56px">Dodawanie wizyty </header>
             <label> Data wizyty
-                <input style="margin-left: 108px;" type="date" name="visit_date" placeholder="Data wizyty"
+                <input style="margin-left: 108px;" type="date" class="input_width" name="visit_date"
+                       placeholder="Data wizyty"
                        onfocus="this.placeholder=' ' "
                        onblur="this.placeholder='Data wizyty'">
             </label>
             <label> Czas wizyty
-                <input style="margin-left: 108px;" type="time" name="visit_time" placeholder="Czas wizyty"
+                <input style="margin-left: 108px;" type="time" class="input_width" name="visit_time"
+                       placeholder="Czas wizyty"
                        onfocus="this.placeholder=' ' "
                        onblur="this.placeholder='Czas wizyty'">
             </label>
             <label style="margin-top: 25px; ">Zwierzę
                 <a id="btn-pet-choice" class="btn bstyle green"> Wybierz zwierzę</a>
                 <div id="ch-pet-choice" style="display: none;">
-                    <select name="pet" id="pet-choice">
+                    <select name="pet" id="pet-choice" class="input_width">
+                    <option disabled selected>Wybierz zwierzę</option>
                         {% for pet in pets %}
                             <option value="{{ pet.id }}">
                                 {{ pet.name }} {{ pet.date_of_birth|date:'d-m-Y' }}
@@ -36,18 +39,21 @@
                     </select>
                 </div>
                 <div id="pet-add" style="display: none;">
-                    <input type="text" name="name" placeholder="Nazwa zwierzęcia" onfocus="this.placeholder=' ' "
+                    <input type="text" name="name" class="input_width" placeholder="Nazwa zwierzęcia"
+                           onfocus="this.placeholder=' ' "
                            onblur="this.placeholder='Nazwa zwierzęcia'">
-                    <input type="date" name="date_of_birth" placeholder="Data urodzenia" onfocus="this.placeholder=' ' "
+                    <input type="date" name="date_of_birth" class="input_width" placeholder="Data urodzenia"
+                           onfocus="this.placeholder=' ' "
                            onblur="this.placeholder='Data urodzenia'">
-                    <select name="sex">
+                    <select name="sex" class="input_width">
                         <option disabled selected>Wybierz płeć zwierzęcia</option>
                         <option>Samiec</option>
                         <option>Samica</option>
                     </select>
-                    <input type="text" name="species" placeholder="Gatunek" onfocus="this.placeholder=' ' "
+                    <input type="text" name="species" class="input_width" placeholder="Gatunek"
+                           onfocus="this.placeholder=' ' "
                            onblur="this.placeholder='Gatunek'">
-                    <input type="text" style="margin-bottom: 20px;" name="additional_information"
+                    <input type="text" style="margin-bottom: 20px;" class="input_width" name="additional_information"
                            placeholder="Dodatkowe informacje"
                            onfocus="this.placeholder=' ' "
                            onblur="this.placeholder='Dodatkowe informacje' ">
@@ -57,7 +63,8 @@
                             Właściciela
                         </a>
                         <div id="ch-own-choice" style="display: none;">
-                            <select name="own" id="own-choice">
+                            <select name="own" id="own-choice" class="input_width">
+                            <option disabled selected>Wybierz właściciela</option>
                                 {% for own in owners %}
                                     <option value="{{ own.user.email }}">
                                         {{ own.user.first_name }} {{ own.user.last_name }} {{ own.user.email }}
@@ -66,16 +73,16 @@
                                 <option>Dodaj</option>
                             </select>
                             <div id="own-add" style="display: none">
-                                <input type="text" name="first_name" placeholder="Imię"
+                                <input type="text" class="input_width" name="first_name" placeholder="Imię"
                                        onfocus="this.placeholder=' ' "
                                        onblur="this.placeholder='Imię'">
-                                <input type="text" name="last_name" placeholder="Nazwisko"
+                                <input type="text" class="input_width" name="last_name" placeholder="Nazwisko"
                                        onfocus="this.placeholder=' ' "
                                        onblur="this.placeholder='Nazwisko'">
-                                <input type="email" name="email" placeholder="Email"
+                                <input type="email" class="input_width" name="email" placeholder="Email"
                                        onfocus="this.placeholder=' ' "
                                        onblur="this.placeholder='Email'">
-                                <input type="tel" name="phone_number" placeholder="Numer telefonu"
+                                <input type="tel" class="input_width" name="phone_number" placeholder="Numer telefonu"
                                        onfocus="this.placeholder=' ' "
                                        onblur="this.placeholder='Numer telefonu'">
                             </div>
@@ -110,7 +117,8 @@
             <label style="margin-top: 25px;"> Weterynarz
                 <a id="btn-vet-choice" class="btn bstyle green"> Wybierz weterynarza</a>
                 <div id="ch-vet-choice" style="display: none;">
-                    <select name="vet" id="vet-choice">
+                    <select name="vet" id="vet-choice" class="input_width">
+                    <option disabled selected>Wybierz weterynarza</option>
                         {% for vet in vets %}
                             <option value="{{ vet.user.email }}">
                                 {{ vet.user.first_name }} {{ vet.user.last_name }}
@@ -119,17 +127,16 @@
                     </select>
                 </div>
             </label>
-            <label> Dodatkowe informacje
-                <input type="text" name="note" placeholder="note"
-                       onfocus="this.placeholder=' ' "
-                       onblur="this.placeholder='Dodatkowe info o wizycie'">
-            </label>
+            <label style="margin-top: 30px"> Dodatkowe informacje</label>
+            <textarea class="input_width" name="note" style="margin-top: -30px; margin-left: 222px;white-space: normal;text-align: center;-moz-text-align-last: center;
+            text-align-last: center; resize: none;" placeholder="Dodatkowe info o wizycie"
+                      onfocus="this.placeholder=' ' "
+                      onblur="this.placeholder='Dodatkowe info o wizycie'"></textarea>
 
-            <input type="submit" class="green" value="zapisz dane">
 
-            <a href="{% url 'allvisits' %}">
-                <input type="button" value="Wróć">
-            </a>
+            <input type="submit" class="green" style="margin-left: 256px" value="zapisz dane">
+
+              <input style="margin-left: 256px;" type="button" onclick="history.back()" value="Wróć">
         </form>
     </div>
     <script>
