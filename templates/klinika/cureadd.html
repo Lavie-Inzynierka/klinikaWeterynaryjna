@@ -5,23 +5,24 @@
         {% if error %}
             <p class="error"> {{ error }}</p>
         {% else %}
+            <header class="name header">Dodawanie leku</header>
             <form method="post">
                 {% if error1 %}
                     <p class="error">{{ error1 }}</p>
                 {% endif %}
                 <label> Nazwa leku
-                    <input style="margin-left: 220px;" type="text" name="name"
+                    <input style="margin-left: 78px;" class="input_width" type="text" name="name"
                            placeholder="Nazwa leku"
                            onfocus="this.placeholder=' ' "
                            onblur="this.placeholder='Nazwa leku'" required>
                 </label>
                 <label> Dawka - ilość
-                    <input type="number" name="dose" placeholder="Dawka"
+                    <input type="number" style="margin-left: 64px;" class="input_width" name="dose" placeholder="Dawka"
                            onfocus="this.placeholder=' ' "
                            onblur="this.placeholder='Dawka'" required>
                 </label>
-                <label> Dawka - rodzaj
-                    <select name="dose_type">
+                <label style="margin-top: 30px"> Dawka - rodzaj
+                    <select name="dose_type" class="input_width" style="margin-left: 174px; margin-top: -30px;">
                         <option disabled selected>Wybierz rodzaj dawki</option>
                         <option value="mg">miligram</option>
                         <option value="mg/g">miligram/gram</option>
@@ -29,9 +30,9 @@
                         <option value="ml">mililitr</option>
                     </select>
                 </label>
-                <input type="submit" class="green" value="zapisz dane">
+                <input type="submit" style="margin-left: 221px;" class="green" value="zapisz dane">
             </form>
         {% endif %}
-        <input style="margin-left: 264px;" type="button" onclick="history.back()" value="Wróć">
+        <input style="margin-left: 221px;" type="button" onclick="history.back()" value="Wróć">
     </div>
 {% endblock content %}
