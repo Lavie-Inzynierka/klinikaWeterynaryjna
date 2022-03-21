@@ -50,11 +50,11 @@
                             <form method="post">
                                 <input type="hidden" name="type" value="date_of_birth">
                                 {% csrf_token %}
-                                <input style="margin-left: 220px;" class="input_width"
+                                <input style="margin-left: 296px;" class="input_width"
                                        name="date_of_birth" type="date"
                                        placeholder="Data urodzenia" onfocus="this.placeholder=' ' "
                                        onblur="this.placeholder='Data urodzenia'" required>
-                                <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                                <input class="green" style="margin-left: 324px;" type="submit" value="Zmień">
                             </form>
                         </div>
                     {% endif %}
@@ -68,12 +68,13 @@
                             <form method="post">
                                 <input type="hidden" name="type" value="sex">
                                 {% csrf_token %}
-                                <select name="sex">
+                                <select name="sex"
+                                        style="width: 340px; text-align: center; font-weight: bold; height: 45px; margin-top: 20px; margin-left: 296px">
                                     <option disabled selected>Wybierz płeć zwierzęcia</option>
                                     <option>Samiec</option>
                                     <option>Samica</option>
                                 </select>
-                                <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                                <input class="green" style="margin-left: 324px;" type="submit" value="Zmień">
                             </form>
                         </div>
                     {% endif %}
@@ -88,11 +89,11 @@
                             <form method="post">
                                 <input type="hidden" name="type" value="species">
                                 {% csrf_token %}
-                                <input style="margin-left: 220px;" class="input_width"
+                                <input style="margin-left: 296px;" class="input_width"
                                        name="species" type="text"
                                        placeholder="Gatunek" onfocus="this.placeholder=' ' "
                                        onblur="this.placeholder='Gatunek'" required>
-                                <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                                <input class="green" style="margin-left: 324px;" type="submit" value="Zmień">
                             </form>
                         </div>
                     {% endif %}
@@ -149,16 +150,20 @@
                                     <option>Dodaj</option>
                                 </select>
                                 <div id="own-add" style="display: none">
-                                    <input type="text" style="margin-left: 308px;" class="input_width" name="first_name" placeholder="Imię"
+                                    <input type="text" style="margin-left: 308px;" class="input_width" name="first_name"
+                                           placeholder="Imię"
                                            onfocus="this.placeholder=' ' "
                                            onblur="this.placeholder='Imię'">
-                                    <input type="text" style="margin-left: 308px;" class="input_width" name="last_name" placeholder="Nazwisko"
+                                    <input type="text" style="margin-left: 308px;" class="input_width" name="last_name"
+                                           placeholder="Nazwisko"
                                            onfocus="this.placeholder=' ' "
                                            onblur="this.placeholder='Nazwisko'">
-                                    <input type="email" style="margin-left: 308px;" class="input_width" name="email" placeholder="Email"
+                                    <input type="email" style="margin-left: 308px;" class="input_width" name="email"
+                                           placeholder="Email"
                                            onfocus="this.placeholder=' ' "
                                            onblur="this.placeholder='Email'">
-                                    <input type="tel" style="margin-left: 308px;" class="input_width" name="phone_number" placeholder="Numer telefonu"
+                                    <input type="tel" style="margin-left: 308px;" class="input_width"
+                                           name="phone_number" placeholder="Numer telefonu"
                                            onfocus="this.placeholder=' ' "
                                            onblur="this.placeholder='Numer telefonu'">
                                 </div>
@@ -193,13 +198,12 @@
                             <div id="ch-visit-date" style="display: none;">
                                 <form method="post">
                                     <input type="hidden" name="type" value="visit_date">
-                                    {% csrf_token %}
-                                    <input style="margin-left: 108px;" type="date" name="visit_date"
+                                    <input style="margin-left: 288px;" class="input_width" type="date" name="visit_date"
                                            placeholder="Data wizyty"
                                            onfocus="this.placeholder=' ' "
                                            onblur="this.placeholder='Data wizyty'">
 
-                                    <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                                    <input class="green" style="margin-left: 324px;" type="submit" value="Zmień">
                                 </form>
                             </div>
                         {% endif %}
@@ -213,13 +217,11 @@
                             <div id="ch-visit-time" style="display: none;">
                                 <form method="post">
                                     <input type="hidden" name="type" value="visit_time">
-                                    {% csrf_token %}
-
-                                    <input style="margin-left: 108px;" type="time" name="visit_time"
+                                    <input style="margin-left: 288px;" class="input_width" type="time" name="visit_time"
                                            placeholder="Czas wizyty"
                                            onfocus="this.placeholder=' ' "
                                            onblur="this.placeholder='Czas wizyty'">
-                                    <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                                    <input class="green" style="margin-left: 324px;" type="submit" value="Zmień">
                                 </form>
                             </div>
                         {% endif %}
@@ -227,24 +229,21 @@
                     <label style="margin-left: 20px;"> Weterynarz
                         <input style="margin-left: 190px;" class="input_width disabled" type="text"
                                value="{{ visit.vet.first_name }} {{ visit.vet.last_name }}" disabled>
-
                         {% if admin %}
                             <a id="btn-vet-choice" class="btn bstyle green" style="margin-top: 10px;">
                                 Zmień Weterynarza</a>
-                            <div id="ch-vet-choice" style="display: none;">
+                            <div id="ch-vet-choice" style="display: none; margin-left: 68px">
                                 <form method="post">
                                     <input type="hidden" name="type" value="vet">
-                                    <label> Weterynarz
-                                        <select name="vet" id="vet-choice">
-                                            <option selected disabled>Wybierz weterynarza</option>
-                                            {% for vet in vets %}
-                                                <option value="{{ vet.user.email }}">
-                                                    {{ vet.user.first_name }} {{ vet.user.last_name }}
-                                                </option>
-                                            {% endfor %}
-                                        </select>
-                                        <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
-                                    </label>
+                                    <select name="vet" id="vet-choice">
+                                        <option selected disabled>Wybierz weterynarza</option>
+                                        {% for vet in vets %}
+                                            <option value="{{ vet.user.email }}">
+                                                {{ vet.user.first_name }} {{ vet.user.last_name }}
+                                            </option>
+                                        {% endfor %}
+                                    </select>
+                                    <input class="green" style="margin-left: 258px;" type="submit" value="Zmień">
                                 </form>
                             </div>
 
