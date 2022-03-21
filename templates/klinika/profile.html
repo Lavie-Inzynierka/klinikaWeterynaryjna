@@ -7,119 +7,119 @@
         {% endif %}
         <header class="name header">Profil użytkownika</header>
         <label> Nazwa użytkownika
-            <input style="margin-left: 54px;" class="disabled" type="text" value="{{ usr.username }}" disabled>
+            <input style="margin-left: 54px;" class="disabled input_width" type="text" value="{{ usr.username }}" disabled>
         </label>
 
         <label> Imię
-            <input style="margin-left: 182px;" class="disabled" type="text" value="{{ usr.first_name }}" disabled>
+            <input style="margin-left: 182px;" class="disabled input_width" type="text" value="{{ usr.first_name }}" disabled>
             <button id="btn-fname" class="btn bstyle green"> Zmień</button>
             <div id="ch-fname" style="display: none;">
                 <form method="post">
                     <input type="hidden" name="type" value="first_name">
                     {% csrf_token %}
-                    <input style="margin-left: 220px;" type="text" name="first_name" placeholder="Imię "
+                    <input style="margin-left: 220px;" class="input_width" type="text" name="first_name" placeholder="Imię "
                            onfocus="this.placeholder=' ' "
                            onblur="this.placeholder='Imię '">
-                    <input style="margin-left: 250px;" class="green" type="submit" value="Zmień">
+                    <input style="margin-left: 272px;" class="green" type="submit" value="Zmień">
                 </form>
             </div>
         </label>
 
         <label> Nazwisko
-            <input style="margin-left: 138px;" class="disabled" type="text" value="{{ usr.last_name }}" disabled>
+            <input style="margin-left: 138px;" class="disabled input_width" type="text" value="{{ usr.last_name }}" disabled>
             <button id="btn-lname" class="btn bstyle green"> Zmień</button>
             <div id="ch-lname" style="display: none;">
                 <form method="post">
                     <input type="hidden" name="type" value="last_name">
                     {% csrf_token %}
-                    <input style="margin-left: 220px;" type="text" name="last_name" placeholder="Nazwisko "
+                    <input style="margin-left: 220px;" class="input_width" type="text" name="last_name" placeholder="Nazwisko "
                            onfocus="this.placeholder=' ' "
                            onblur="this.placeholder='Nazwisko '">
-                    <input style="margin-left: 250px;" class="green" type="submit" value="Zmień">
+                    <input style="margin-left: 272px;" class="green" type="submit" value="Zmień">
                 </form>
             </div>
         </label>
 
         <label> Hasło
-            <input style="margin-left: 170px;" class="disabled" type="password" value="haslo" disabled>
+            <input style="margin-left: 170px;" class="disabled input_width" type="password" value="haslo" disabled>
             <button id="btn-pass" class="btn bstyle green"> Zmień</button>
             <div id="ch-pass" style="display: none;">
                 <form method="post">
                     <input type="hidden" name="type" value="password">
                     {% csrf_token %}
-                    <input style="margin-left: 220px;" type="password" name="pass" placeholder="Stare Hasło "
+                    <input style="margin-left: 220px;" class="input_width" type="password" name="pass" placeholder="Stare Hasło "
                            onfocus="this.placeholder=' ' "
                            onblur="this.placeholder='Stare Hasło  '">
-                    <input style="margin-left: 220px;" type="password" name="pass1" placeholder="Nowe Hasło "
+                    <input style="margin-left: 220px;" class="input_width" type="password" name="pass1" placeholder="Nowe Hasło "
                            onfocus="this.placeholder=' ' "
                            onblur="this.placeholder='Nowe Hasło '">
-                    <input style="margin-left: 220px;" type="password" name="pass2" placeholder="Powtórz Hasło "
+                    <input style="margin-left: 220px;" class="input_width" type="password" name="pass2" placeholder="Powtórz Hasło "
                            onfocus="this.placeholder=' ' "
                            onblur="this.placeholder='Powtórz Hasło '">
-                    <input style="margin-left: 250px;" class="green" type="submit" value="Zmień">
+                    <input style="margin-left: 272px;" class="green" type="submit" value="Zmień">
                 </form>
             </div>
         </label>
 
         <label> Numer telefonu
-            <input style="margin-left: 90px;" class="disabled" type="tel" value="{{ usr.phone_number }}" disabled>
+            <input style="margin-left: 90px;" class="disabled input_width" type="tel" value="{{ usr.phone_number }}" disabled>
             <button id="btn-phone" class="btn bstyle green"> Zmień</button>
             <div id="ch-phone" style="display: none;">
                 <form method="post">
                     <input type="hidden" name="type" value="phone_number">
                     {% csrf_token %}
-                    <input style="margin-left: 220px;" type="tel" name="phone_number" placeholder="Numer telefonu "
+                    <input style="margin-left: 220px;" class="input_width" type="tel" name="phone_number" placeholder="Numer telefonu "
                            onfocus="this.placeholder=' ' "
                            onblur="this.placeholder='Numer telefonu '">
-                    <input style="margin-left: 250px;" class="green" type="submit" value="Zmień">
+                    <input style="margin-left: 272px;" class="green" type="submit" value="Zmień">
                 </form>
             </div>
         </label>
 
         <label> Adres email
-            <input style="margin-left: 124px; resize: none;" class="disabled" value="{{ usr.email }}" disabled>
+            <input style="margin-left: 124px; resize: none;" class="disabled input_width" value="{{ usr.email }}" disabled>
             <button id="btn-email" class="btn bstyle green"> Zmień</button>
             <div id="ch-email" style="display: none;">
                 <form method="post">
                     <input type="hidden" name="type" value="email">
                     {% csrf_token %}
-                    <input type="email" style="margin-left: 220px;" name="email" placeholder="Email adres"
+                    <input type="email" style="margin-left: 220px;" class="input_width" name="email" placeholder="Email adres"
                            onfocus="this.placeholder=' ' "
                            onblur="this.placeholder='Email adres'" required>
-                    <input style="margin-left: 250px;" class="green" type="submit" value="Zmień">
+                    <input style="margin-left: 272px;" class="green" type="submit" value="Zmień">
                 </form>
             </div>
         </label>
 
         <label style="margin-top: 30px"> Adress zamieszkania
         </label>
-        <button id="btn-adress" class="btn bstyle green" style="margin-right: 122px; margin-top: -30px; float: right;">
+        <button id="btn-adress" class="btn bstyle green" style="margin-right: 22px; margin-top: -30px; float: right;">
             Dodaj
         </button>
-        <textarea style="margin-left: 238px; margin-top: -30px; resize: none;" class="disabled" disabled> {{ adr }}</textarea>
+        <textarea style="margin-left: 238px; margin-top: -30px; resize: none;" class="disabled input_width" disabled> {{ adr }}</textarea>
         <div id="ch-adress" style="display: none;">
             <form method="post">
                 <input type="hidden" name="type" value="address">
                 {% csrf_token %}
-                <textarea style="margin-left: 238px; resize: none;" rows="4" name="address"
+                <textarea style="margin-left: 238px; resize: none;" class="input_width" rows="4" name="address"
                           placeholder="Adress zamieszkania " onfocus="this.placeholder=' ' "
                           onblur="this.placeholder='Adress zamieszkania '" required></textarea>
-                <input style="margin-left: 250px;" class="green" type="submit" value="Zmień na aktualny">
+                <input style="margin-left: 272px;" class="green" type="submit" value="Zmień na aktualny">
             </form>
         </div>
         <button class="danger warn"
                 id="btn-delete"
-                type="button" style="margin-left: 220px !important;">Dezaktywuj
+                type="button" style="margin-left: 274px !important;">Dezaktywuj
         </button>
         <div id="ch-delete" style="display: none;">
 
-            <p style="color: #ff3c1c; margin-left: 30px; margin-bottom: 0; font-size: 20px;">Czy
+            <p style="color: #ff3c1c; margin-left: 120px; margin-bottom: 0; font-size: 20px;">Czy
                 napewno chcesz
                 dezaktywować
                 <br/> <b> swój
                 profil?</b></p>
             <a href="/profiledeactivation/{{ usr.id }}">
-                <input class="danger danger_colour " style="margin-left: 220px !important;" type="button" value="Dezaktywuj"></a>
+                <input class="danger danger_colour " style="margin-left: 272px !important;" type="button" value="Dezaktywuj"></a>
         </div>
     </div>
 
