@@ -30,7 +30,7 @@
                 <tbody>
                 {% for visit in visit_list %}
                     <tr>
-                        <td>{{ visit.visit_date|date:'d-m-Y' }}</td>
+                        <td>{{ visit.visit_date|date:'Y-m-d' }}</td>
                         <td>{{ visit.visit_time|date:'H:i' }}</td>
                         <td>{{ visit.pet.name }}</td>
                         <td>{{ visit.pet.owner.first_name }} {{ visit.pet.owner.last_name }}</td>
