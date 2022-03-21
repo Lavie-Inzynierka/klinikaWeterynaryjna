@@ -133,6 +133,7 @@
                         </select>
                         <input id="cure-quantity" type="number" style="width: 50px" placeholder="0">
                         <select id="cure-unit" style="width: 200px">
+                            <option disabled selected value="">Wybierz jednostę</option>
                             <option value="sz.">sztuki</option>
                             <option value="ml">mililitry</option>
                             <option value="op">opakowania</option>
@@ -212,7 +213,10 @@
                 placeholder: "Wybierz lek/i",
                 allowClear: true,
             })
-            $('#cure-unit').select2()
+            $('#cure-unit').select2({
+                placeholder: "Wybierz jednostkę",
+                allowClear: true,
+            })
 
             $('#cure-choice-add').click(() => {
                 table.row.add([
