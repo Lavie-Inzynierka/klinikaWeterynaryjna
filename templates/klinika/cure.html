@@ -5,58 +5,59 @@
         {% if error %}
             <p class="error"> {{ error }}</p>
         {% else %}
+            <header class="name header">Podgląd leku</header>
             {% if error1 %}
                 <p class="error">{{ error1 }}</p>
             {% endif %}
             <label> Nazwa leku
-                <input style="margin-left: 90px;" type="text" value="{{ cure.name }}" disabled>
+                <input style="margin-left: 76px;" class="input_width disabled" type="text" value="{{ cure.name }}" disabled>
                 <a id="btn-cure-name" class="btn bstyle green"> Zmień</a>
                 <div id="ch-cure-name" style="display: none;">
                     <form method="post">
                         <input type="hidden" name="type" value="name">
-                        <input style="margin-left: 220px;" type="text" name="name"
+                        <input style="margin-left: 172px;" class="input_width" type="text" name="name"
                                placeholder="Nazwa leku"
                                onfocus="this.placeholder=' ' "
                                onblur="this.placeholder='Nazwa leku'" required>
-                        <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                        <input class="green" style="margin-left: 206px;" type="submit" value="Zmień">
                     </form>
                 </div>
             </label>
             <label> Dawka - ilość
-                <input style="margin-left: 90px;" type="number" value="{{ cure.dose }}" disabled>
+                <input style="margin-left: 62px;" class="input_width disabled" type="number" value="{{ cure.dose }}" disabled>
                 <a id="btn-cure-dose" class="btn bstyle green"> Zmień</a>
                 <div id="ch-cure-dose" style="display: none;">
                     <form method="post">
                         <input type="hidden" name="type" value="dose">
-                        <input style="margin-left: 220px;" type="number" name="dose"
+                        <input style="margin-left: 172px;" class="input_width" type="number" name="dose"
                                placeholder="Dawka"
                                onfocus="this.placeholder=' ' "
                                onblur="this.placeholder='Dawka'">
-                        <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                        <input class="green" style="margin-left: 206px;" type="submit" value="Zmień">
                     </form>
                 </div>
             </label>
             <label> Dawka - rodzaj
-                <input style="margin-left: 90px;" type="text" value="{{ cure.dose_type }}" disabled>
+                <input style="margin-left: 48px;" class="input_width disabled" type="text" value="{{ cure.dose_type }}" disabled>
                 <a id="btn-cure-type" class="btn bstyle green"> Zmień</a>
                 <div id="ch-cure-type" style="display: none;">
                     <form method="post">
                         <input type="hidden" name="type" value="dose_type">
-                        <select name="dose_type">
+                        <select name="dose_type" style="margin-left: 172px;" class="input_width">
                             <option disabled selected>Wybierz rodzaj dawki</option>
                             <option value="mg">miligram</option>
                             <option value="mg/g">miligram/gram</option>
                             <option value="mg/ml">miligram/mililitr</option>
                             <option value="ml">mililitr</option>
                         </select>
-                        <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                        <input class="green" style="margin-left: 206px;" type="submit" value="Zmień">
                     </form>
                 </div>
             </label>
 
 
         {% endif %}
-        <input style="margin-left: 264px;" type="button" onclick="history.back()" value="Wróć">
+        <input style="margin-left: 221px;" type="button" onclick="history.back()" value="Wróć">
     </div>
     <script>
         let show = {
