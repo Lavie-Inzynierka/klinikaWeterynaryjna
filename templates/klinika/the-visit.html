@@ -63,17 +63,17 @@
                         <form method="post">
                             <input type="hidden" name="type" value="visit_date">
                             {% csrf_token %}
-                            <input style="margin-left: 108px;" class=" input_width" type="date" name="visit_date"
+                            <input style="margin-left: 306px;" class=" input_width" type="date" name="visit_date"
                                    placeholder="Data wizyty"
                                    onfocus="this.placeholder=' ' "
                                    onblur="this.placeholder='Data wizyty'">
 
-                            <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                            <input class="green" style="margin-left: 346px;" type="submit" value="Zmień">
                         </form>
                     </div>
                 </label>
-                <label> Data time
-                    <input style="margin-left: 224px;" class="disabled input_width" type="text"
+                <label> Czas wizyty
+                    <input style="margin-left: 208px;" class="disabled input_width" type="text"
                            value="{{ visit.visit_time|date:'H:i' }}"
                            disabled>
                     <a id="btn-visit-time" class="btn bstyle green" style="margin-top: 10px;"> Zmień</a>
@@ -82,11 +82,11 @@
                             <input type="hidden" name="type" value="visit_time">
                             {% csrf_token %}
 
-                            <input style="margin-left: 108px;" class=" input_width" type="time" name="visit_time"
+                            <input style="margin-left: 306px;" class=" input_width" type="time" name="visit_time"
                                    placeholder="Czas wizyty"
                                    onfocus="this.placeholder=' ' "
                                    onblur="this.placeholder='Czas wizyty'">
-                            <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                            <input class="green" style="margin-left: 346px;" type="submit" value="Zmień">
                         </form>
                     </div>
                 </label>
@@ -98,13 +98,13 @@
                         <div id="ch-visit-status" style="display: none;">
                             <form method="post">
                                 <input type="hidden" name="type" value="status">
-                                <select name="status" class=" input_width">
+                                <select name="status" style="width: 340px; text-align: center; font-weight: bold; height: 45px; margin-top: 20px; margin-left: 308px">
                                     <option disabled selected>Wybierz status wizyty</option>
                                     <option>Zaplanowana</option>
                                     <option>Odbyta</option>
                                     <option>Anulowana</option>
                                 </select>
-                                <input class="green" style="margin-left: 250px;" type="submit" value="Zmień">
+                                <input class="green" style="margin-left: 346px;" type="submit" value="Zmień">
                             </form>
                         </div>
                     {% endif %}
@@ -181,7 +181,6 @@
                                 <td>{{ pcure.cure.name }}</td>
                                 <td>{{ pcure.quantity }}</td>
                                 <td>{{ pcure.quantity_type }}</td>
-
                             </tr>
                         {% endfor %}
                         </tbody>
@@ -190,7 +189,6 @@
                     <p class="error"> {{ presc }}</p>
                 {% endif %}
             </div>
-
         {% endif %}
         <input style="margin-left: 350px;" type="button" onclick="history.back()" value="Wróć">
     </div>
