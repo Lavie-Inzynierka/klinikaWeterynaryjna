@@ -1486,20 +1486,21 @@ def usermanagement(request, uid):
             utypes = UserType.objects.filter(user=myuser).all()
             if any(x.user_type == 'ADMIN' for x in utypes):
                 if UserType.objects.filter(user=user).exists():
-
-                    utypes = UserType.objects.filter(user=user).all()
+                    utypes2 = UserType.objects.filter(user=user).all()
+                    utypes2_msg = ''
                     nothing = False
                 else:
                     nothing = True
-                    utypes = 'Użytkownik nie ma żadnych uprawnień!\nNadaj mu odpowiedni typ w celu nadania uprawnień'
-                if UserAddresses.objects.filter(user=user).exists():
-                    uaddresses = UserAddresses.objects.filter(user=user).all()
-                    uaddress = UserAddresses.objects.get(user=user, current=True)
-                    nothing2 = False
-                else:
-                    nothing2 = True
-                    uaddresses = 'Brak adresów do wyświetlenia!'
-                    uaddress = 'Brak miejsca zamieszkania!'
+                    utypes2 = UserType.objects.filter(user=user).all()
+                    utypes2_msg = 'Użytkownik nie ma żadnych uprawnień!\nNadaj mu odpowiedni typ w celu nadania uprawnień'
+                # if UserAddresses.objects.filter(user=user).exists():
+                #     uaddresses = UserAddresses.objects.filter(user=user).all()
+                #     uaddress = UserAddresses.objects.get(user=user, current=True)
+                #     nothing2 = False
+                # else:
+                #     nothing2 = True
+                #     uaddresses_msg = 'Brak adresów do wyświetlenia!'
+                #     uaddress_msg = 'Brak miejsca zamieszkania!'
 
                 if request.method == "POST":
 
@@ -1551,53 +1552,57 @@ def usermanagement(request, uid):
                             else:
                                 arole = request.POST.get(current_role, None)
                                 if arole == 'on':
-                                    if any(x.user_type == e for x in utypes):
+                                    if any(x.user_type == e for x in utypes2):
                                         pass
                                     else:
-                                        utype = UserType.objects.create(
+                                        utype2 = UserType.objects.create(
                                             user=user,
                                             user_type=e
                                         )
-                                        utype.save()
+                                        utype2.save()
                                 else:
                                     if any(x.user_type == e for x in utypes):
-                                        UserType.objects.get(user=user, user_type=e).delete()
-                                utypes = UserType.objects.filter(user=user).all()
+                                        if UserType.objects.filter(user=user, user_type=e).exists():
+                                            UserType.objects.get(user=user, user_type=e).delete()
+                            utypes2 = UserType.objects.filter(user=user).all()
 
-                    if request.POST['type'] == 'chaddress':
-                        if request.POST['addresses'] == 'Dodaj':
-                            address = bleach.clean(request.POST['address'])
-                            uaddress.current = False
-                            uaddress.save()
-                            newaddress = UserAddresses.objects.create(
-                                user=user,
-                                address=address,
-                                current=True
-                            )
-                            newaddress.save()
-                        else:
-                            address = UserAddresses.objects.get(id=request.POST['addresses'])
-                            uaddress.current = False
-                            uaddress.save()
-                            address.current = True
-                            address.save()
+                    # if request.POST['type'] == 'chaddress':
+                    #     if request.POST['addresses'] == 'Dodaj':
+                    #         address = bleach.clean(request.POST['address'])
+                    #         uaddress.current = False
+                    #         uaddress.save()
+                    #         newaddress = UserAddresses.objects.create(
+                    #             user=user,
+                    #             address=address,
+                    #             current=True
+                    #         )
+                    #         newaddress.save()
+                    #     else:
+                    #         address = UserAddresses.objects.get(id=request.POST['addresses'])
+                    #         uaddress.current = False
+                    #         uaddress.save()
+                    #         address.current = True
+                    #         address.save()
 
-                    uaddress = UserAddresses.objects.get(user=user, current=True)
+                    user = MyUser.objects.get(id=uid)
+                    # uaddress = UserAddresses.objects.get(user=user, current=True)
 
                 return render(request, 'klinika/user.html', {'username': request.session.get('my_user'),
                                                              'user': user,
                                                              'enum': enum,
-                                                             'utypes': utypes,
-                                                             'uaddresses': uaddresses,
-                                                             'uaddress': uaddress,
+                                                             'utypes': utypes2,
+                                                             'utypes_msg': utypes2_msg,
+                                                             # 'uaddresses': uaddresses,
+                                                             # 'uaddress': uaddress,
                                                              'nothing': nothing,
-                                                             'nothing2': nothing2,
+                                                             # 'nothing2': nothing2,
                                                              'adm': request.session.get('is_adm'),
                                                              'vet': request.session.get('is_vet'),
                                                              'rec': request.session.get('is_rec'),
                                                              'own': request.session.get('is_own'),
                                                              })
-        except:
+        except BaseException as e:
+            print(e)
             return render(request, 'klinika/user.html',
                           {'username': request.session.get('my_user'),
                            'error': 'Nie znaleziono użytkownika',
