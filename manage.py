@@ -3,8 +3,10 @@
 from dotenv import load_dotenv
 import os
 import sys
+from os.path import isfile, join, realpath, dirname
 
-load_dotenv()
+if isfile(join(dirname(realpath(__file__)), '.env')):
+    load_dotenv()
 
 
 def main():

@@ -1,0 +1,20 @@
+version: "3.7"
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - '8000:8000'
+    depends_on:
+      - pg
+    environment:
+      SENDGRID_API_KEY: your sendgrid api key
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
+  pg:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - "/etc/localtime:/etc/localtime:ro"
