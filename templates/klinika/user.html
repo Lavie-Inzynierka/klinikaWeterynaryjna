@@ -139,90 +139,93 @@
             </div>
             <div style="clear: both"></div>
 
-{#            <label style="float: left;">Adres zamieszkania</label>#}
-{#            {% if nothing2 %}#}
-{#                {{ uaddress_msg }}#}
-{#            {% else %}#}
-{#                <textarea style="margin-left: 143px; white-space: normal;text-align: center;-moz-text-align-last: center;#}
-{#            text-align-last: center; float: left; resize: none;"#}
-{#                          class="input_width disabled" disabled>#}
-{#                {{ uaddress.address }}</textarea>#}
-{#            {% endif %}#}
-{#            <button id="btn-address" class="btn bstyle green" style="float: right; margin: 10px 122px 10px 0;"> Zmień#}
-{#                obecny adres#}
-{#            </button>#}
-{#            <button id="btn-address-all" class="btn bstyle green" style="float: right; margin: 10px 94px 10px 0;"> Pokaż#}
-{#                wszystkie adresy#}
-{#            </button>#}
-{#            <div id="ch-address" style="display: none;">#}
-{#                <form method="post">#}
-{#                    <input type="hidden" name="type" value="chaddress">#}
-{#                    {% csrf_token %}#}
-{#                    <select name="addresses" id="address-choice">#}
-{#                        <option disabled selected>Wybierz adres zamieszkania</option>#}
-{#                        {% for address in uaddresses %}#}
-{#                            <option value="{{ address.id }}">#}
-{#                                {{ address.address }}#}
-{#                            </option>#}
-{#                        {% endfor %}#}
-{#                        <option>Dodaj</option>#}
-{#                    </select>#}
-{#                    <div id="address-add" style="display: none">#}
-{#                        <textarea style="margin-left: 312px; resize: none;" class="input_width" rows="4" name="address"#}
-{#                                  placeholder="Adress zamieszkania " onfocus="this.placeholder=' ' "#}
-{#                                  onblur="this.placeholder='Adress zamieszkania '"></textarea>#}
-{#                    </div>#}
-{#                    <script>#}
-{#                        $(document).ready(() => {#}
-{#                            $('#address-choice').change(#}
-{#                                () => {#}
-{#                                    if ($('#address-choice').val() === 'Dodaj')#}
-{#                                        $('#address-add').show(500)#}
-{#                                    else#}
-{#                                        $('#address-add').hide(500)#}
-{#                                }#}
-{#                            )#}
-{#                        })#}
-{#                    </script>#}
-{#                    <input style="margin-left: 348px;" class="green" type="submit" value="Zmień na aktualny">#}
-{#                </form>#}
-{#            </div>#}
-{#            <div style="clear: both;"></div>#}
-{#            {% if nothing2 %}#}
-{#                {{ uaddresses_msg }}#}
-{#            {% else %}#}
-{#                <div id="tbl-address" style="display: none">#}
-{#                    <table id="table">#}
-{#                        <thead>#}
-{#                        <tr>#}
-{#                            <th style="width: 300px;">Adres</th>#}
-{#                            <th>Obecny</th>#}
-{#                            <th>Szczegóły</th>#}
-{#                        </tr>#}
-{#                        </thead>#}
-{#                        <tbody>#}
-{#                        {% for address in uaddresses %}#}
-{#                            <tr>#}
-{#                                <td>{{ address.address }}</td>#}
-{#                                <td>#}
-{#                                    <label class="checkbox checkbox3">#}
-{#                                        <input type="checkbox" value="Aktualny" {% if address.current %}#}
-{#                                               checked{% endif %}#}
-{#                                               disabled>#}
-{#                                        <span></span>#}
-{#                                    </label>#}
-{#                                </td>#}
-{#                                <td>#}
-{#                                    <div class="black">#}
-{#                                        <a href="/useraddress/{{ address.id }}" class="btn bstyle">Podgląd </a>#}
-{#                                    </div>#}
-{#                                </td>#}
-{#                            </tr>#}
-{#                        {% endfor %}#}
-{#                        </tbody>#}
-{#                    </table>#}
-{#                </div>#}
-{#            {% endif %}#}
+            <label style="float: left;">Adres zamieszkania</label>
+            {% if nothing2 %}
+                <textarea style="margin-left: 143px; white-space: normal;text-align: center;-moz-text-align-last: center;
+            text-align-last: center; float: left; resize: none;"
+                          class="input_width disabled" disabled> {{ uaddress_msg }}</textarea>
+            {% else %}
+                <textarea style="margin-left: 143px; white-space: normal;text-align: center;-moz-text-align-last: center;
+            text-align-last: center; float: left; resize: none;"
+                          class="input_width disabled" disabled>
+                {{ uaddress.address }}</textarea>
+            {% endif %}
+            <button id="btn-address" class="btn bstyle green" style="float: right; margin: 10px 122px 10px 0;"> Zmień
+                obecny adres
+            </button>
+            <button id="btn-address-all" class="btn bstyle green" style="float: right; margin: 10px 94px 10px 0;"> Pokaż
+                wszystkie adresy
+            </button>
+            <div id="ch-address" style="display: none;">
+                <form method="post">
+                    <input type="hidden" name="type" value="chaddress">
+                    {% csrf_token %}
+                    <select name="addresses" id="address-choice">
+                        <option disabled selected>Wybierz adres zamieszkania</option>
+                        {% for address in uaddresses %}
+                            <option value="{{ address.id }}">
+                                {{ address.address }}
+                            </option>
+                        {% endfor %}
+                        <option>Dodaj</option>
+                    </select>
+                    <div id="address-add" style="display: none">
+                        <textarea style="margin-left: 312px; resize: none;" class="input_width" rows="4" name="address"
+                                  placeholder="Adress zamieszkania " onfocus="this.placeholder=' ' "
+                                  onblur="this.placeholder='Adress zamieszkania '"></textarea>
+                    </div>
+                    <script>
+                        $(document).ready(() => {
+                            $('#address-choice').change(
+                                () => {
+                                    if ($('#address-choice').val() === 'Dodaj')
+                                        $('#address-add').show(500)
+                                    else
+                                        $('#address-add').hide(500)
+                                }
+                            )
+                        })
+                    </script>
+                    <input style="margin-left: 348px;" class="green" type="submit" value="Zmień na aktualny">
+                </form>
+            </div>
+            <div style="clear: both;"></div>
+
+            <div id="tbl-address" style="display: none">
+                {% if nothing2 %}
+                    <p class="error"> {{ uaddresses_msg }}</p>
+                {% else %}
+                    <table id="table">
+                        <thead>
+                        <tr>
+                            <th style="width: 300px;">Adres</th>
+                            <th>Obecny</th>
+                            <th>Szczegóły</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for address in uaddresses %}
+                            <tr>
+                                <td>{{ address.address }}</td>
+                                <td>
+                                    <label class="checkbox checkbox3">
+                                        <input type="checkbox" value="Aktualny" {% if address.current %}
+                                               checked{% endif %}
+                                               disabled>
+                                        <span></span>
+                                    </label>
+                                </td>
+                                <td>
+                                    <div class="black">
+                                        <a href="/useraddress/{{ address.id }}" class="btn bstyle">Podgląd </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
             {% if user.is_active %}
                 <button style="margin-left: 350px!important;" class="danger warn"
                         id="btn-delete"
@@ -250,9 +253,7 @@
                     </a>
                 </div>
             {% endif %}
-
         {% endif %}
-        <div style="clear: both;"></div>
         <input style="margin-left: 350px;" type="button" onclick="history.back()" value="Wróć">
     </div>
     <script>

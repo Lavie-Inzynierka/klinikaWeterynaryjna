@@ -1493,14 +1493,18 @@ def usermanagement(request, uid):
                     nothing = True
                     utypes2 = UserType.objects.filter(user=user).all()
                     utypes2_msg = 'Użytkownik nie ma żadnych uprawnień!\nNadaj mu odpowiedni typ w celu nadania uprawnień'
-                # if UserAddresses.objects.filter(user=user).exists():
-                #     uaddresses = UserAddresses.objects.filter(user=user).all()
-                #     uaddress = UserAddresses.objects.get(user=user, current=True)
-                #     nothing2 = False
-                # else:
-                #     nothing2 = True
-                #     uaddresses_msg = 'Brak adresów do wyświetlenia!'
-                #     uaddress_msg = 'Brak miejsca zamieszkania!'
+                if UserAddresses.objects.filter(user=user).exists():
+                    uaddresses = UserAddresses.objects.filter(user=user).all()
+                    uaddress = UserAddresses.objects.get(user=user, current=True)
+                    uaddresses_msg = ''
+                    uaddress_msg = ''
+                    nothing2 = False
+                else:
+                    uaddresses = UserAddresses.objects.filter(user=user).all()
+                    uaddress = UserAddresses.objects.filter(user=user, current=True).all()
+                    nothing2 = True
+                    uaddresses_msg = 'Brak adresów do wyświetlenia!'
+                    uaddress_msg = 'Brak miejsca zamieszkania!'
 
                 if request.method == "POST":
 
@@ -1566,36 +1570,38 @@ def usermanagement(request, uid):
                                             UserType.objects.get(user=user, user_type=e).delete()
                             utypes2 = UserType.objects.filter(user=user).all()
 
-                    # if request.POST['type'] == 'chaddress':
-                    #     if request.POST['addresses'] == 'Dodaj':
-                    #         address = bleach.clean(request.POST['address'])
-                    #         uaddress.current = False
-                    #         uaddress.save()
-                    #         newaddress = UserAddresses.objects.create(
-                    #             user=user,
-                    #             address=address,
-                    #             current=True
-                    #         )
-                    #         newaddress.save()
-                    #     else:
-                    #         address = UserAddresses.objects.get(id=request.POST['addresses'])
-                    #         uaddress.current = False
-                    #         uaddress.save()
-                    #         address.current = True
-                    #         address.save()
+                    if request.POST['type'] == 'chaddress':
+                        if request.POST['addresses'] == 'Dodaj':
+                            address = bleach.clean(request.POST['address'])
+                            uaddress.current = False
+                            uaddress.save()
+                            newaddress = UserAddresses.objects.create(
+                                user=user,
+                                address=address,
+                                current=True
+                            )
+                            newaddress.save()
+                        else:
+                            address = UserAddresses.objects.get(id=request.POST['addresses'])
+                            uaddress.current = False
+                            uaddress.save()
+                            address.current = True
+                            address.save()
 
                     user = MyUser.objects.get(id=uid)
-                    # uaddress = UserAddresses.objects.get(user=user, current=True)
+                    uaddress = UserAddresses.objects.get(user=user, current=True)
 
                 return render(request, 'klinika/user.html', {'username': request.session.get('my_user'),
                                                              'user': user,
                                                              'enum': enum,
                                                              'utypes': utypes2,
                                                              'utypes_msg': utypes2_msg,
-                                                             # 'uaddresses': uaddresses,
-                                                             # 'uaddress': uaddress,
+                                                             'uaddresses': uaddresses,
+                                                             'uaddress': uaddress,
+                                                             'uaddresses_msg': uaddresses_msg,
+                                                             'uaddress_msg': uaddress_msg,
                                                              'nothing': nothing,
-                                                             # 'nothing2': nothing2,
+                                                             'nothing2': nothing2,
                                                              'adm': request.session.get('is_adm'),
                                                              'vet': request.session.get('is_vet'),
                                                              'rec': request.session.get('is_rec'),
