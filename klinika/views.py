@@ -37,6 +37,7 @@ def main(request):
 def about(request):
     if request.session.get('my_user', False):
         return render(request, 'klinika/about.html', {'username': request.session.get('my_user'),
+                                                      'title': 'O aplikacji',
                                                       'adm': request.session.get('is_adm'),
                                                       'vet': request.session.get('is_vet'),
                                                       'rec': request.session.get('is_rec'),
@@ -78,7 +79,7 @@ def signin(request):
     else:
         if request.session.get('my_user', False):
             return redirect('VetPet')
-    return render(request, 'klinika/signin.html')
+    return render(request, 'klinika/signin.html', {'title': 'Logowanie'})
 
 
 # endregion
@@ -96,25 +97,31 @@ def signup(request):
             pass2 = bleach.clean(request.POST['pass2'])
 
             if MyUser.objects.filter(username=username).exists():
-                return render(request, 'klinika/signup.html', {'error1': "Nazwa użytkownika jest już zajęta!"})
+                return render(request, 'klinika/signup.html', {'error1': "Nazwa użytkownika jest już zajęta!",
+                                                               'title': 'Rejestracja'})
             if MyUser.objects.filter(email=email).exists():
-                return render(request, 'klinika/signup.html', {'error2': "Podany adres email jest już zajęty!"})
+                return render(request, 'klinika/signup.html', {'error2': "Podany adres email jest już zajęty!",
+                                                               'title': 'Rejestracja'})
 
             if len(username) > 30:
-                return render(request, 'klinika/signup.html', {'error3': "Podana nazwa uzytkownika jest za dluga!"})
+                return render(request, 'klinika/signup.html', {'error3': "Podana nazwa uzytkownika jest za dluga!",
+                                                               'title': 'Rejestracja'})
 
             if pass1 != pass2:
                 messages.error(request, "Hasła muszą się zgadzać!")
-                return render(request, 'klinika/signup.html', {'error4': "Hasła muszą się zgadzać!"})
+                return render(request, 'klinika/signup.html', {'error4': "Hasła muszą się zgadzać!",
+                                                               'title': 'Rejestracja'})
 
             if not username.isalnum():
                 return render(request, 'klinika/signup.html',
-                              {'error4': "Nazwa użytkownika musi się składać z liter oraz cyfr!"})
+                              {'error4': "Nazwa użytkownika musi się składać z liter oraz cyfr!",
+                               'title': 'Rejestracja'})
 
             regex = r"^[a-z_\.0-9]*@[a-z0-9\-]*\.[a-z]*$"
 
             if not re.search(regex, email):
-                return render(request, 'klinika/signup.html', {'error6': "Nieprawidłowy adress email!"})
+                return render(request, 'klinika/signup.html', {'error6': "Nieprawidłowy adress email!",
+                                                               'title': 'Rejestracja'})
 
             passwd = bcrypt.hashpw(pass1.encode(encoding='UTF-8'), bcrypt.gensalt())
             myuser = MyUser.objects.create(username=username,
@@ -167,12 +174,14 @@ def signup(request):
             except Exception as e:
                 print(str(e))
 
-            return render(request, 'klinika/signup.html', {'success': "Konto utworzone pomyślnie!"})
+            return render(request, 'klinika/signup.html', {'success': "Konto utworzone pomyślnie!",
+                                                           'title': 'Rejestracja'})
 
-        return render(request, 'klinika/signup.html')
+        return render(request, 'klinika/signup.html',{'title': 'Rejestracja'})
 
-    return render(request, 'klinika/signup.html', {'system_error': "Skonfiguruj aplikacje!"})
-
+    return render(request, 'klinika/signup.html', {'system_error': "Skonfiguruj aplikacje!",
+                                                   'title': 'Rejestracja'
+                                                   })
 
 # endregion
 
@@ -246,6 +255,7 @@ def profile(request):
                                                                         'usr': user,
                                                                         'adr': 'Brak adresu zamieszkania',
                                                                         'error': 'Nieprawidłowe hasło/a!',
+                                                                        'title': 'Mój profil',
                                                                         'adm': request.session.get('is_adm'),
                                                                         'vet': request.session.get('is_vet'),
                                                                         'rec': request.session.get('is_rec'),
@@ -256,6 +266,7 @@ def profile(request):
                                                                     'usr': user,
                                                                     'adr': user_adress.address,
                                                                     'error': 'Nieprawidłowe hasło/a!',
+                                                                    'title': 'Mój profil',
                                                                     'adm': request.session.get('is_adm'),
                                                                     'vet': request.session.get('is_vet'),
                                                                     'rec': request.session.get('is_rec'),
@@ -288,6 +299,7 @@ def profile(request):
                                                                         'usr': user,
                                                                         'adr': 'Brak adresu zamieszkania',
                                                                         'error': 'Nieprawidłowy adres email!',
+                                                                        'title': 'Mój profil',
                                                                         'adm': request.session.get('is_adm'),
                                                                         'vet': request.session.get('is_vet'),
                                                                         'rec': request.session.get('is_rec'),
@@ -298,6 +310,7 @@ def profile(request):
                                                                     'usr': user,
                                                                     'adr': user_adress.address,
                                                                     'error': 'Nieprawidłowy adres email!',
+                                                                    'title': 'Mój profil',
                                                                     'adm': request.session.get('is_adm'),
                                                                     'vet': request.session.get('is_vet'),
                                                                     'rec': request.session.get('is_rec'),
@@ -332,6 +345,7 @@ def profile(request):
             return render(request, 'klinika/profile.html', {'username': request.session.get('my_user'),
                                                             'usr': user,
                                                             'adr': 'Brak adresu zamieszkania',
+                                                            'title': 'Mój profil',
                                                             'adm': request.session.get('is_adm'),
                                                             'vet': request.session.get('is_vet'),
                                                             'rec': request.session.get('is_rec'),
@@ -340,6 +354,7 @@ def profile(request):
 
         return render(request, 'klinika/profile.html', {'username': request.session.get('my_user'),
                                                         'usr': user,
+                                                        'title': 'Mój profil',
                                                         'adr': user_adress.address,
                                                         'adm': request.session.get('is_adm'),
                                                         'vet': request.session.get('is_vet'),
@@ -372,6 +387,7 @@ def pets(request):
                           {'username': request.session.get('my_user'),
                            'empty': True,
                            'pet_list': 'Brak zwierząt do wyświetlenia',
+                           'title': 'Zwierzęta',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
                            'rec': request.session.get('is_rec'),
@@ -381,6 +397,7 @@ def pets(request):
         return render(request, 'klinika/pets.html',
                       {'username': request.session.get('my_user'),
                        'pet_list': allpets,
+                       'title': 'Zwierzęta',
                        'adm': request.session.get('is_adm'),
                        'vet': request.session.get('is_vet'),
                        'rec': request.session.get('is_rec'),
@@ -428,6 +445,7 @@ def pet(request, petid):
             return render(request, 'klinika/pet.html',
                           {'username': request.session.get('my_user'),
                            'error': 'Nie znaleziono zwierzęcia',
+                           'title': 'Podgląd zwierzęcia',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
                            'rec': request.session.get('is_rec'),
@@ -441,6 +459,7 @@ def pet(request, petid):
                                                     'cures': cures,
                                                     'nothing': nothing,
                                                     'nothing2': nothing2,
+                                                    'title': 'Podgląd zwierzęcia',
                                                     'adm': request.session.get('is_adm'),
                                                     'vet': request.session.get('is_vet'),
                                                     'rec': request.session.get('is_rec'),
@@ -456,6 +475,7 @@ def addpets(request):
         if request.method == 'GET':
             return render(request, 'klinika/addpets.html', {'username': request.session.get('my_user'),
                                                             'owners': owners,
+                                                            'title': 'Dodawanie zwierzęcia',
                                                             'adm': request.session.get('is_adm'),
                                                             'vet': request.session.get('is_vet'),
                                                             'rec': request.session.get('is_rec'),
@@ -472,6 +492,7 @@ def addpets(request):
                 return render(request, 'klinika/addpets.html',
                               {'username': request.session.get('my_user'),
                                'error': 'Imię zwierzęcia jest zbyt długie',
+                               'title': 'Dodawanie zwierzęcia',
                                'adm': request.session.get('is_adm'),
                                'vet': request.session.get('is_vet'),
                                'rec': request.session.get('is_rec'),
@@ -482,6 +503,7 @@ def addpets(request):
                 return render(request, 'klinika/addpets.html',
                               {'username': request.session.get('my_user'),
                                'error': 'Nieprawidłowa płeć!',
+                               'title': 'Dodawanie zwierzęcia',
                                'adm': request.session.get('is_adm'),
                                'vet': request.session.get('is_vet'),
                                'rec': request.session.get('is_rec'),
@@ -496,6 +518,7 @@ def addpets(request):
                 return render(request, 'klinika/addpets.html',
                               {'username': request.session.get('my_user'),
                                'error': 'Nieprawidłowa data urodzenia!',
+                               'title': 'Dodawanie zwierzęcia',
                                'adm': request.session.get('is_adm'),
                                'vet': request.session.get('is_vet'),
                                'rec': request.session.get('is_rec'),
@@ -555,6 +578,7 @@ def mypets(request):
                            'pet_list': 'Brak zwierząt do wyświetlenia',
                            'empty': True,
                            'userpets': True,
+                           'title': 'Moje zwierzęta',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
                            'rec': request.session.get('is_rec'),
@@ -565,6 +589,7 @@ def mypets(request):
                       {'username': request.session.get('my_user'),
                        'userpets': True,
                        'pet_list': pets,
+                       'title': 'Moje zwierzęta',
                        'adm': request.session.get('is_adm'),
                        'vet': request.session.get('is_vet'),
                        'rec': request.session.get('is_rec'),
@@ -615,6 +640,7 @@ def mypet(request, petid):
                                       {'username': request.session.get('my_user'),
                                        'error': 'Imię zwierzęcia jest zbyt długie',
                                        'pet': pet,
+                                       'title': 'Moje zwierzę',
                                        'visit': visit,
                                        'userpets': True,
                                        'nothing': nothing,
@@ -637,6 +663,7 @@ def mypet(request, petid):
             return render(request, 'klinika/pet.html',
                           {'username': request.session.get('my_user'),
                            'error': 'Nie znaleziono zwierzęcia',
+                           'title': 'Moje zwierzę',
                            'userpets': True,
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
@@ -646,6 +673,7 @@ def mypet(request, petid):
 
         return render(request, 'klinika/pet.html', {'username': request.session.get('my_user'),
                                                     'pet': pet,
+                                                    'title': 'Moje zwierzę',
                                                     'visit': visit,
                                                     'userpets': True,
                                                     'nothing': nothing,
@@ -665,6 +693,7 @@ def addpet(request):
     if request.session.get('my_user', False):
         if request.method == 'GET':
             return render(request, 'klinika/addpet.html', {'username': request.session.get('my_user'),
+                                                           'title': 'Dodawanie zwierzęcia',
                                                            'adm': request.session.get('is_adm'),
                                                            'vet': request.session.get('is_vet'),
                                                            'rec': request.session.get('is_rec'),
@@ -681,6 +710,7 @@ def addpet(request):
                 return render(request, 'klinika/addpet.html',
                               {'username': request.session.get('my_user'),
                                'error': 'Imię zwierzęcia jest zbyt długie',
+                               'title': 'Dodawanie zwierzęcia',
                                'adm': request.session.get('is_adm'),
                                'vet': request.session.get('is_vet'),
                                'rec': request.session.get('is_rec'),
@@ -691,6 +721,7 @@ def addpet(request):
                 return render(request, 'klinika/addpet.html',
                               {'username': request.session.get('my_user'),
                                'error': 'Nieprawidłowa płeć!',
+                               'title': 'Dodawanie zwierzęcia',
                                'adm': request.session.get('is_adm'),
                                'vet': request.session.get('is_vet'),
                                'rec': request.session.get('is_rec'),
@@ -705,6 +736,7 @@ def addpet(request):
                 return render(request, 'klinika/addpet.html',
                               {'username': request.session.get('my_user'),
                                'error': 'Nieprawidłowa data urodzenia!',
+                               'title': 'Dodawanie zwierzęcia',
                                'adm': request.session.get('is_adm'),
                                'vet': request.session.get('is_vet'),
                                'rec': request.session.get('is_rec'),
@@ -717,6 +749,7 @@ def addpet(request):
                 return render(request, 'klinika/addpet.html',
                               {'username': request.session.get('my_user'),
                                'error': 'Uzupełnij dane kontaktowe w swoim profilu przed dodatniem zwierzęcia!',
+                               'title': 'Dodawanie zwierzęcia',
                                'adm': request.session.get('is_adm'),
                                'vet': request.session.get('is_vet'),
                                'rec': request.session.get('is_rec'),
@@ -759,6 +792,7 @@ def allvisits(request):
             return render(request, 'klinika/visit.html',
                           {'username': request.session.get('my_user'),
                            'empty': True,
+                           'title': 'Wizyty',
                            'visit_list': 'Brak wizyt do wyświetlenia',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
@@ -769,6 +803,7 @@ def allvisits(request):
         return render(request, 'klinika/visit.html',
                       {'username': request.session.get('my_user'),
                        'visit_list': allvisit,
+                       'title': 'Wizyty',
                        'adm': request.session.get('is_adm'),
                        'vet': request.session.get('is_vet'),
                        'rec': request.session.get('is_rec'),
@@ -789,6 +824,7 @@ def myvisits(request):
                           {'username': request.session.get('my_user'),
                            'empty': True,
                            'hide': True,
+                           'title': 'Moje wizyty',
                            'visit_list': 'Brak wizyt do wyświetlenia',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
@@ -801,6 +837,7 @@ def myvisits(request):
                           {'username': request.session.get('my_user'),
                            'empty': True,
                            'hide': True,
+                           'title': 'Moje wizyty',
                            'visit_list': 'Brak wizyt do wyświetlenia',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
@@ -811,6 +848,7 @@ def myvisits(request):
         return render(request, 'klinika/visit.html',
                       {'username': request.session.get('my_user'),
                        'hide': True,
+                       'title': 'Moje wizyty',
                        'visit_list': allvisit,
                        'adm': request.session.get('is_adm'),
                        'vet': request.session.get('is_vet'),
@@ -828,6 +866,7 @@ def upcomvisits(request):
             return render(request, 'klinika/visit.html',
                           {'username': request.session.get('my_user'),
                            'empty': True,
+                           'title': 'Zaplanowane wizyty',
                            'visit_list': 'Brak wizyt do wyświetlenia',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
@@ -838,6 +877,7 @@ def upcomvisits(request):
         return render(request, 'klinika/visit.html',
                       {'username': request.session.get('my_user'),
                        'visit_list': allvisit,
+                       'title': 'Zaplanowane wizyty',
                        'adm': request.session.get('is_adm'),
                        'vet': request.session.get('is_vet'),
                        'rec': request.session.get('is_rec'),
@@ -856,6 +896,7 @@ def visits(request):
                           {'username': request.session.get('my_user'),
                            'empty': True,
                            'hide': True,
+                           'title': 'Odbyte wizyty',
                            'visit_list': 'Brak wizyt do wyświetlenia',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
@@ -867,6 +908,7 @@ def visits(request):
                       {'username': request.session.get('my_user'),
                        'hide': True,
                        'visit_list': allvisit,
+                       'title': 'Odbyte wizyty',
                        'adm': request.session.get('is_adm'),
                        'vet': request.session.get('is_vet'),
                        'rec': request.session.get('is_rec'),
@@ -884,6 +926,7 @@ def canceledvisits(request):
                           {'username': request.session.get('my_user'),
                            'hide': True,
                            'empty': True,
+                           'title': 'Anulowane wizyty',
                            'visit_list': 'Brak wizyt do wyświetlenia',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
@@ -895,6 +938,7 @@ def canceledvisits(request):
                       {'username': request.session.get('my_user'),
                        'hide': True,
                        'visit_list': allvisit,
+                       'title': 'Anulowane wizyty',
                        'adm': request.session.get('is_adm'),
                        'vet': request.session.get('is_vet'),
                        'rec': request.session.get('is_rec'),
@@ -913,6 +957,7 @@ def addvisit(request):
             return render(request, 'klinika/addvisit.html',
                           {'username': request.session.get('my_user'),
                            'pets': pets,
+                           'title': 'Dodawanie wizyty',
                            'vets': vets,
                            'owners': owners,
                            'adm': request.session.get('is_adm'),
@@ -932,6 +977,7 @@ def addvisit(request):
                               {'username': request.session.get('my_user'),
                                'error': 'Nieprawidłowy czas wizyty!',
                                'pets': pets,
+                               'title': 'Dodawanie wizyty',
                                'vets': vets,
                                'owners': owners,
                                'adm': request.session.get('is_adm'),
@@ -1060,6 +1106,7 @@ def visit(request, visitid):
             return render(request, 'klinika/the-visit.html',
                           {'username': request.session.get('my_user'),
                            'visit': visit,
+                           'title': 'Podgląd wizyty',
                            'pastvisit': status,
                            'nothing': nothing,
                            'nothing2': nothing2,
@@ -1075,6 +1122,7 @@ def visit(request, visitid):
             return render(request, 'klinika/the-visit.html',
                           {'username': request.session.get('my_user'),
                            'error': 'Brak danych wizyty!',
+                           'title': 'Podgląd wizyty',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
                            'rec': request.session.get('is_rec'),
@@ -1094,6 +1142,7 @@ def all_prescriptions(request):
             return render(request, 'klinika/prescriptions.html',
                           {'username': request.session.get('my_user'),
                            'empty': True,
+                           'title': 'Recepty',
                            'rec_list': 'Brak recept do wyświetlenia',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
@@ -1104,6 +1153,7 @@ def all_prescriptions(request):
         return render(request, 'klinika/prescriptions.html',
                       {'username': request.session.get('my_user'),
                        'rec_list': allprescriptions,
+                       'title': 'Recepty',
                        'adm': request.session.get('is_adm'),
                        'vet': request.session.get('is_vet'),
                        'rec': request.session.get('is_rec'),
@@ -1125,6 +1175,7 @@ def myprescriptions(request):
             return render(request, 'klinika/prescriptions.html',
                           {'username': request.session.get('my_user'),
                            'empty': True,
+                           'title': 'Moje recepty',
                            'hide': True,
                            'rec_list': 'Brak recept do wyświetlenia',
                            'adm': request.session.get('is_adm'),
@@ -1137,6 +1188,7 @@ def myprescriptions(request):
                       {'username': request.session.get('my_user'),
                        'rec_list': allprescriptions,
                        'hide': True,
+                       'title': 'Moje recepty',
                        'adm': request.session.get('is_adm'),
                        'vet': request.session.get('is_vet'),
                        'rec': request.session.get('is_rec'),
@@ -1153,6 +1205,7 @@ def prescriptions(request):
             return render(request, 'klinika/prescriptions.html',
                           {'username': request.session.get('my_user'),
                            'empty': True,
+                           'title': 'Wystawione recepty',
                            'rec_list': 'Brak recept do wyświetlenia',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
@@ -1163,6 +1216,7 @@ def prescriptions(request):
         return render(request, 'klinika/prescriptions.html',
                       {'username': request.session.get('my_user'),
                        'rec_list': allprescriptions,
+                       'title': 'Wystawione recepty',
                        'adm': request.session.get('is_adm'),
                        'vet': request.session.get('is_vet'),
                        'rec': request.session.get('is_rec'),
@@ -1180,6 +1234,7 @@ def completedprescriptions(request):
                           {'username': request.session.get('my_user'),
                            'empty': True,
                            'hide': True,
+                           'title': 'Zrealizowane recepty',
                            'rec_list': 'Brak recept do wyświetlenia',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
@@ -1191,6 +1246,7 @@ def completedprescriptions(request):
                       {'username': request.session.get('my_user'),
                        'rec_list': allprescriptions,
                        'hide': True,
+                       'title': 'Zrealizowane recepty',
                        'adm': request.session.get('is_adm'),
                        'vet': request.session.get('is_vet'),
                        'rec': request.session.get('is_rec'),
@@ -1208,6 +1264,7 @@ def expiredprescriptions(request):
                           {'username': request.session.get('my_user'),
                            'empty': True,
                            'hide': True,
+                           'title': 'Wygasłe recepty',
                            'rec_list': 'Brak recept do wyświetlenia',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
@@ -1219,6 +1276,7 @@ def expiredprescriptions(request):
                       {'username': request.session.get('my_user'),
                        'rec_list': allprescriptions,
                        'hide': True,
+                       'title': 'Wygasłe recepty',
                        'adm': request.session.get('is_adm'),
                        'vet': request.session.get('is_vet'),
                        'rec': request.session.get('is_rec'),
@@ -1240,6 +1298,7 @@ def addprescription(request):
         if request.method == 'GET':
             return render(request, 'klinika/addprescription.html',
                           {'username': request.session.get('my_user'),
+                           'title': 'Dodawanie recepty',
                            'pets': pets,
                            'owners': owners,
                            'cures': cures,
@@ -1329,6 +1388,7 @@ def prescription(request, prescid):
 
             return render(request, 'klinika/prescription.html',
                           {'username': request.session.get('my_user'),
+                           'title': 'Podgląd recepty',
                            'presc': prescription,
                            'cures': cures,
                            'adm': request.session.get('is_adm'),
@@ -1340,6 +1400,7 @@ def prescription(request, prescid):
             return render(request, 'klinika/prescription.html',
                           {'username': request.session.get('my_user'),
                            'error': 'Brak danych recepty!',
+                           'title': 'Podgląd recepty',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
                            'rec': request.session.get('is_rec'),
@@ -1362,6 +1423,7 @@ def treatments(request, petid):
                            'med': med,
                            'pet': pet,
                            'error': False,
+                           'title': 'Historia leczenia',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
                            'rec': request.session.get('is_rec'),
@@ -1371,6 +1433,7 @@ def treatments(request, petid):
             return render(request, 'klinika/treatments.html',
                           {'username': request.session.get('my_user'),
                            'error': 'Brak danych medycznych zwierzęcia!',
+                           'title': 'Historia leczenia',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
                            'rec': request.session.get('is_rec'),
@@ -1387,6 +1450,7 @@ def addtreatment(request, petid):
         if request.method == 'GET':
             return render(request, 'klinika/addtreatment.html',
                           {'username': request.session.get('my_user'),
+                           'title': 'Dodawanie leczenia',
                            'pet': pet,
                            'error': False,
                            'adm': request.session.get('is_adm'),
@@ -1426,6 +1490,7 @@ def treatment(request, petid, treatid):
             return render(request, 'klinika/treatment.html',
                           {'username': request.session.get('my_user'),
                            'error': 'Nie znaleziono historii medycznej!',
+                           'title': 'Podgląd leczenia',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
                            'rec': request.session.get('is_rec'),
@@ -1436,6 +1501,7 @@ def treatment(request, petid, treatid):
                       {'username': request.session.get('my_user'),
                        'treat': treat,
                        'error': False,
+                       'title': 'Podgląd leczenia',
                        'adm': request.session.get('is_adm'),
                        'vet': request.session.get('is_vet'),
                        'rec': request.session.get('is_rec'),
@@ -1459,6 +1525,7 @@ def usersmanagement(request):
             return render(request, 'klinika/users.html',
                           {'username': request.session.get('my_user'),
                            'users': users,
+                           'title': 'Zarządzanie użytkownikami',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
                            'rec': request.session.get('is_rec'),
@@ -1467,6 +1534,7 @@ def usersmanagement(request):
         else:
             return render(request, 'klinika/users.html',
                           {'username': request.session.get('my_user'),
+                           'title': 'Zarządzanie użytkownikami',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
                            'rec': request.session.get('is_rec'),
@@ -1593,6 +1661,7 @@ def usermanagement(request, uid):
 
                 return render(request, 'klinika/user.html', {'username': request.session.get('my_user'),
                                                              'user': user,
+                                                             'title': 'Zarządzanie użytkownikiem',
                                                              'enum': enum,
                                                              'utypes': utypes2,
                                                              'utypes_msg': utypes2_msg,
@@ -1607,10 +1676,10 @@ def usermanagement(request, uid):
                                                              'rec': request.session.get('is_rec'),
                                                              'own': request.session.get('is_own'),
                                                              })
-        except BaseException as e:
-            print(e)
+        except():
             return render(request, 'klinika/user.html',
                           {'username': request.session.get('my_user'),
+                           'title': 'Zarządzanie użytkownikiem',
                            'error': 'Nie znaleziono użytkownika',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
@@ -1620,6 +1689,7 @@ def usermanagement(request, uid):
 
         return render(request, 'klinika/user.html',
                       {'username': request.session.get('my_user'),
+                       'title': 'Zarządzanie użytkownikiem',
                        'adm': request.session.get('is_adm'),
                        'vet': request.session.get('is_vet'),
                        'rec': request.session.get('is_rec'),
@@ -1647,6 +1717,7 @@ def useraddress(request, uaddress):
                         else:
                             return render(request, 'klinika/species.html', {'username': request.session.get('my_user'),
                                                                             'address': address,
+                                                                            'title': 'Zarządzanie adresem użytkownika',
                                                                             'error1': 'Podany adres już '
                                                                                       'istnieje dla tego użytkownika!',
                                                                             'adm': request.session.get('is_adm'),
@@ -1667,6 +1738,7 @@ def useraddress(request, uaddress):
 
                 return render(request, 'klinika/useraddress.html', {'username': request.session.get('my_user'),
                                                                     'address': address,
+                                                                    'title': 'Zarządzanie adresem użytkownika',
                                                                     'adm': request.session.get('is_adm'),
                                                                     'vet': request.session.get('is_vet'),
                                                                     'rec': request.session.get('is_rec'),
@@ -1676,6 +1748,7 @@ def useraddress(request, uaddress):
             return render(request, 'klinika/useraddress.html',
                           {'username': request.session.get('my_user'),
                            'error': 'Nie znaleziono adresu',
+                           'title': 'Zarządzanie adresem użytkownika',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
                            'rec': request.session.get('is_rec'),
@@ -1739,6 +1812,7 @@ def usermanagementadd(request):
                     return render(request, 'klinika/useradd.html',
                                   {'username': request.session.get('my_user'),
                                    'error': 'Nieprawidłowe hasło!',
+                                   'title': 'Zarządzanie - dodawanie użytkownika',
                                    'adm': request.session.get('is_adm'),
                                    'vet': request.session.get('is_vet'),
                                    'rec': request.session.get('is_rec'),
@@ -1777,6 +1851,7 @@ def usermanagementadd(request):
 
             return render(request, 'klinika/useradd.html',
                           {'username': request.session.get('my_user'),
+                           'title': 'Zarządzanie - dodawanie użytkownika',
                            'enum': enum,
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
@@ -1786,6 +1861,7 @@ def usermanagementadd(request):
         else:
             return render(request, 'klinika/useradd.html',
                           {'username': request.session.get('my_user'),
+                           'title': 'Zarządzanie - dodawanie użytkownika',
                            'error': 'Brak uprawnień',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
@@ -1808,6 +1884,7 @@ def petsmanagement(request):
                 return render(request, 'klinika/pets.html',
                               {'username': request.session.get('my_user'),
                                'empty': True,
+                               'title': 'Zarządzanie zwierzętami',
                                'admin': True,
                                'pet_list': 'Brak zwierząt do wyświetlenia',
                                'species': 'Brak gatunków do wyświetlenia',
@@ -1820,6 +1897,7 @@ def petsmanagement(request):
                 return render(request, 'klinika/pets.html',
                               {'username': request.session.get('my_user'),
                                'empty': True,
+                               'title': 'Zarządzanie zwierzętami',
                                'admin': True,
                                'species': species,
                                'pet_list': 'Brak zwierząt do wyświetlenia',
@@ -1831,6 +1909,7 @@ def petsmanagement(request):
             return render(request, 'klinika/pets.html',
                           {'username': request.session.get('my_user'),
                            'admin': True,
+                           'title': 'Zarządzanie zwierzętami',
                            'pet_list': pets,
                            'species': species,
                            'adm': request.session.get('is_adm'),
@@ -1960,6 +2039,7 @@ def petmanagement(request, petid):
 
                 return render(request, 'klinika/pet.html', {'username': request.session.get('my_user'),
                                                             'pet': pet,
+                                                            'title': 'Zarządzanie zwierzęciem',
                                                             'vets': vets,
                                                             'owners': owners,
                                                             'admin': True,
@@ -1978,6 +2058,7 @@ def petmanagement(request, petid):
             return render(request, 'klinika/pet.html',
                           {'username': request.session.get('my_user'),
                            'error': 'Nie znaleziono zwierzęcia',
+                           'title': 'Zarządzanie zwierzęciem',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
                            'rec': request.session.get('is_rec'),
@@ -1986,6 +2067,7 @@ def petmanagement(request, petid):
 
         return render(request, 'klinika/pet.html', {'username': request.session.get('my_user'),
                                                     'adm': request.session.get('is_adm'),
+                                                    'title': 'Zarządzanie zwierzęciem',
                                                     'vet': request.session.get('is_vet'),
                                                     'rec': request.session.get('is_rec'),
                                                     'own': request.session.get('is_own'),
@@ -2012,6 +2094,7 @@ def speciesmanagement(request, speciesid):
                         else:
                             return render(request, 'klinika/species.html', {'username': request.session.get('my_user'),
                                                                             'species': species,
+                                                                            'title': 'Zarządzanie gatunkiem zwierząt',
                                                                             'error1': 'Podana nazwa gatunku jest już '
                                                                                       'zajęta!',
                                                                             'adm': request.session.get('is_adm'),
@@ -2029,6 +2112,7 @@ def speciesmanagement(request, speciesid):
 
                 return render(request, 'klinika/species.html', {'username': request.session.get('my_user'),
                                                                 'species': species,
+                                                                'title': 'Zarządzanie gatunkiem zwierząt',
                                                                 'adm': request.session.get('is_adm'),
                                                                 'vet': request.session.get('is_vet'),
                                                                 'rec': request.session.get('is_rec'),
@@ -2038,6 +2122,7 @@ def speciesmanagement(request, speciesid):
             return render(request, 'klinika/species.html',
                           {'username': request.session.get('my_user'),
                            'error': 'Nie znaleziono gatunku',
+                           'title': 'Zarządzanie gatunkiem zwierząt',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
                            'rec': request.session.get('is_rec'),
@@ -2062,6 +2147,7 @@ def speciesmanagementadd(request):
                     return render(request, 'klinika/speciesadd.html', {'username': request.session.get('my_user'),
                                                                        'error1': 'Podana nazwa gatunku jest już '
                                                                                  'zajęta!',
+                                                                       'title': 'Zarządzanie - Dodawanie gatunku zwierząt',
                                                                        'adm': request.session.get('is_adm'),
                                                                        'vet': request.session.get('is_vet'),
                                                                        'rec': request.session.get('is_rec'),
@@ -2076,6 +2162,7 @@ def speciesmanagementadd(request):
 
             return render(request, 'klinika/speciesadd.html',
                           {'username': request.session.get('my_user'),
+                           'title': 'Zarządzanie - Dodawanie gatunku zwierząt',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
                            'rec': request.session.get('is_rec'),
@@ -2085,6 +2172,7 @@ def speciesmanagementadd(request):
             return render(request, 'klinika/speciesadd.html',
                           {'username': request.session.get('my_user'),
                            'error': 'Brak uprawnień',
+                           'title': 'Zarządzanie - Dodawanie gatunku zwierząt',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
                            'rec': request.session.get('is_rec'),
@@ -2102,6 +2190,7 @@ def treatmentsmanagement(request, petid):
             pet = Pet.objects.get(id=petid)
             return render(request, 'klinika/treatments.html',
                           {'username': request.session.get('my_user'),
+                           'title': 'Zarządzanie historią leczenia',
                            'med': med,
                            'pet': pet,
                            'error': False,
@@ -2114,6 +2203,7 @@ def treatmentsmanagement(request, petid):
         except():
             return render(request, 'klinika/treatments.html',
                           {'username': request.session.get('my_user'),
+                           'title': 'Zarządzanie historią leczenia',
                            'error': 'Brak danych medycznych zwierzęcia!',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
@@ -2149,6 +2239,7 @@ def treatmentmanagement(request, petid, treatid):
             return render(request, 'klinika/treatment.html',
                           {'username': request.session.get('my_user'),
                            'error': 'Nie znaleziono historii medycznej!',
+                           'title': 'Zarządzanie leczeniem',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
                            'rec': request.session.get('is_rec'),
@@ -2158,6 +2249,7 @@ def treatmentmanagement(request, petid, treatid):
         return render(request, 'klinika/treatment.html/',
                       {'username': request.session.get('my_user'),
                        'treat': treat,
+                       'title': 'Zarządzanie leczeniem',
                        'admin': True,
                        'error': False,
                        'adm': request.session.get('is_adm'),
@@ -2179,6 +2271,7 @@ def visitsmanagement(request):
                 return render(request, 'klinika/visit.html',
                               {'username': request.session.get('my_user'),
                                'empty': True,
+                               'title': 'Zarządzanie wizytami',
                                'visit_list': 'Brak wizyt do wyświetlenia',
                                'adm': request.session.get('is_adm'),
                                'vet': request.session.get('is_vet'),
@@ -2189,6 +2282,7 @@ def visitsmanagement(request):
             return render(request, 'klinika/visit.html',
                           {'username': request.session.get('my_user'),
                            'visit_list': visits,
+                           'title': 'Zarządzanie wizytami',
                            'admin': True,
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
@@ -2258,6 +2352,7 @@ def visitmanagement(request, visitid):
             return render(request, 'klinika/the-visit.html',
                           {'username': request.session.get('my_user'),
                            'visit': visit,
+                           'title': 'Zarządzanie wizytą',
                            'pastvisit': status,
                            'nothing': nothing,
                            'nothing2': nothing2,
@@ -2274,6 +2369,7 @@ def visitmanagement(request, visitid):
             return render(request, 'klinika/the-visit.html',
                           {'username': request.session.get('my_user'),
                            'error': 'Brak danych wizyty!',
+                           'title': 'Zarządzanie wizytą',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
                            'rec': request.session.get('is_rec'),
@@ -2295,6 +2391,7 @@ def prescsmanagement(request):
                               {'username': request.session.get('my_user'),
                                'admin': True,
                                'empty': True,
+                               'title': 'Zarządzanie receptami',
                                'rec_list': 'Brak recept do wyświetlenia',
                                'adm': request.session.get('is_adm'),
                                'vet': request.session.get('is_vet'),
@@ -2307,6 +2404,7 @@ def prescsmanagement(request):
                               {'username': request.session.get('my_user'),
                                'admin': True,
                                'empty': True,
+                               'title': 'Zarządzanie receptami',
                                'cures': 'Brak leków do wyświetlenia',
                                'adm': request.session.get('is_adm'),
                                'vet': request.session.get('is_vet'),
@@ -2317,6 +2415,7 @@ def prescsmanagement(request):
             return render(request, 'klinika/prescriptions.html',
                           {'username': request.session.get('my_user'),
                            'admin': True,
+                           'title': 'Zarządzanie receptami',
                            'rec_list': prescs,
                            'cures': cures,
                            'adm': request.session.get('is_adm'),
@@ -2350,6 +2449,7 @@ def prescmanagement(request, prescid):
             return render(request, 'klinika/prescription.html',
                           {'username': request.session.get('my_user'),
                            'presc': prescription,
+                           'title': 'Zarządzanie receptą',
                            'cures': cures,
                            'admin': True,
                            'adm': request.session.get('is_adm'),
@@ -2361,6 +2461,7 @@ def prescmanagement(request, prescid):
             return render(request, 'klinika/prescription.html',
                           {'username': request.session.get('my_user'),
                            'error': 'Brak danych recepty!',
+                           'title': 'Zarządzanie receptą',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
                            'rec': request.session.get('is_rec'),
@@ -2388,6 +2489,7 @@ def curemanagement(request, cureid):
                         else:
                             return render(request, 'klinika/cure.html', {'username': request.session.get('my_user'),
                                                                          'cure': cure,
+                                                                         'title': 'Zarządzanie lekiem',
                                                                          'error1': 'Podany lek już istnieje!',
                                                                          'adm': request.session.get('is_adm'),
                                                                          'vet': request.session.get('is_vet'),
@@ -2402,6 +2504,7 @@ def curemanagement(request, cureid):
                         else:
                             return render(request, 'klinika/cure.html', {'username': request.session.get('my_user'),
                                                                          'cure': cure,
+                                                                         'title': 'Zarządzanie lekiem',
                                                                          'error1': 'Podany lek już istnieje!',
                                                                          'adm': request.session.get('is_adm'),
                                                                          'vet': request.session.get('is_vet'),
@@ -2416,6 +2519,7 @@ def curemanagement(request, cureid):
                         else:
                             return render(request, 'klinika/cure.html', {'username': request.session.get('my_user'),
                                                                          'cure': cure,
+                                                                         'title': 'Zarządzanie lekiem',
                                                                          'error1': 'Podany lek już istnieje!',
                                                                          'adm': request.session.get('is_adm'),
                                                                          'vet': request.session.get('is_vet'),
@@ -2427,6 +2531,7 @@ def curemanagement(request, cureid):
 
                 return render(request, 'klinika/cure.html', {'username': request.session.get('my_user'),
                                                              'cure': cure,
+                                                             'title': 'Zarządzanie lekiem',
                                                              'adm': request.session.get('is_adm'),
                                                              'vet': request.session.get('is_vet'),
                                                              'rec': request.session.get('is_rec'),
@@ -2436,6 +2541,7 @@ def curemanagement(request, cureid):
             return render(request, 'klinika/cure.html',
                           {'username': request.session.get('my_user'),
                            'error': 'Nie znaleziono leku',
+                           'title': 'Zarządzanie lekiem',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
                            'rec': request.session.get('is_rec'),
@@ -2459,6 +2565,7 @@ def curemanagementadd(request):
 
                 if Cure.objects.filter(name=name, dose_type=dose_type, dose=dose).exists():
                     return render(request, 'klinika/cureadd.html', {'username': request.session.get('my_user'),
+                                                                    'title': 'Zarządzanie - Dodawanie leku',
                                                                     'error1': 'Podany lek już istnieje!',
                                                                     'adm': request.session.get('is_adm'),
                                                                     'vet': request.session.get('is_vet'),
@@ -2475,6 +2582,7 @@ def curemanagementadd(request):
 
             return render(request, 'klinika/cureadd.html',
                           {'username': request.session.get('my_user'),
+                           'title': 'Zarządzanie - Dodawanie leku',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
                            'rec': request.session.get('is_rec'),
@@ -2483,6 +2591,7 @@ def curemanagementadd(request):
         else:
             return render(request, 'klinika/cureadd.html',
                           {'username': request.session.get('my_user'),
+                           'title': 'Zarządzanie - Dodawanie leku',
                            'error': 'Brak uprawnień',
                            'adm': request.session.get('is_adm'),
                            'vet': request.session.get('is_vet'),
@@ -2510,20 +2619,28 @@ def setup(request):
             pass2 = request.POST['pass2']
 
             if len(uname) > 30:
-                return render(request, 'klinika/signup.html', {'error1': "Podana nazwa uzytkownika jest za dluga!"})
+                return render(request, 'klinika/signup.html', {'error1': "Podana nazwa uzytkownika jest za dluga!",
+                                                               'title': 'Konfiguracja aplikacji'
+                                                               })
 
             if not uname.isalnum():
                 return render(request, 'klinika/signup.html',
-                              {'error2': "Nazwa użytkownika musi się składać z liter oraz cyfr!"})
+                              {'error2': "Nazwa użytkownika musi się składać z liter oraz cyfr!",
+                               'title': 'Konfiguracja aplikacji'
+                               })
 
             regex = r"^[a-z_\.0-9]*@[a-z0-9\-]*\.[a-z]*$"
 
             if not re.search(regex, email):
-                return render(request, 'klinika/signup.html', {'error3': "Nieprawidłowy adress email!"})
+                return render(request, 'klinika/signup.html', {'error3': "Nieprawidłowy adress email!",
+                                                               'title': 'Konfiguracja aplikacji'
+                                                               })
 
             if pass1 != pass2:
                 messages.error(request, "Hasła muszą się zgadzać!")
-                return render(request, 'klinika/signup.html', {'error4': "Hasła muszą się zgadzać!"})
+                return render(request, 'klinika/signup.html', {'error4': "Hasła muszą się zgadzać!",
+                                                               'title': 'Konfiguracja aplikacji'
+                                                               })
 
             passwd = bcrypt.hashpw(pass1.encode(encoding='UTF-8'), bcrypt.gensalt())
 
@@ -2537,7 +2654,9 @@ def setup(request):
             for utype in UserTypeEnum.__members__.keys():
                 mytype = UserType.objects.create(user=admin, user_type=utype)
             mytype.save()
-        return render(request, 'klinika/setup.html', {'confirmation': 'Administrator utworzony pomyślnie!'})
+        return render(request, 'klinika/setup.html', {'confirmation': 'Administrator utworzony pomyślnie!',
+                                                      'title': 'Konfiguracja aplikacji'
+                                                      })
     return redirect('VetPet')
 
 # endregion

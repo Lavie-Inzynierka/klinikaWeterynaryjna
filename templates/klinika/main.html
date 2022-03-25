@@ -2,7 +2,7 @@
 <!doctype html>
 <html lang="pl">
 <head>
-    <title>Vet Pet</title>
+    <title>Vet Pet {% if title %}- {{ title }}{% endif %}</title>
     <script type="text/javascript" src="{% static 'js/jquery-3.6.0.min.js' %}"></script>
     {% block headAdditional %}
     {% endblock headAdditional %}
