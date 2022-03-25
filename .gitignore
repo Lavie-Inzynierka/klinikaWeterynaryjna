@@ -204,3 +204,6 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# blokada wysyłania klucza sendgrid
+docker-compose.yml
