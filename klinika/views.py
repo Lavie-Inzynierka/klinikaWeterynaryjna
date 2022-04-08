@@ -2605,6 +2605,7 @@ def curemanagementadd(request):
 
 # endregion
 # region setup
+
 def setup(request):
     global mytype
     if MyUser.objects.count() == 0:
@@ -2622,7 +2623,6 @@ def setup(request):
                 return render(request, 'klinika/signup.html', {'error1': "Podana nazwa uzytkownika jest za dluga!",
                                                                'title': 'Konfiguracja aplikacji'
                                                                })
-
             if not uname.isalnum():
                 return render(request, 'klinika/signup.html',
                               {'error2': "Nazwa użytkownika musi się składać z liter oraz cyfr!",
@@ -2635,7 +2635,6 @@ def setup(request):
                 return render(request, 'klinika/signup.html', {'error3': "Nieprawidłowy adress email!",
                                                                'title': 'Konfiguracja aplikacji'
                                                                })
-
             if pass1 != pass2:
                 messages.error(request, "Hasła muszą się zgadzać!")
                 return render(request, 'klinika/signup.html', {'error4': "Hasła muszą się zgadzać!",
