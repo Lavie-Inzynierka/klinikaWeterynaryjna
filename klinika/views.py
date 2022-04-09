@@ -998,10 +998,8 @@ def addvisit(request):
                         last_name=last_name,
                         phone_number=phone_number,
                         email=email)
-
                     owner.save()
                 else:
-
                     user = MyUser.objects.get(email=request.POST['own'])
                     if not Owner.objects.filter(user=user).exists():
                         owner = Owner.objects.create(
@@ -1019,11 +1017,9 @@ def addvisit(request):
                 sex = bleach.clean(request.POST['sex'])
                 species = bleach.clean(request.POST['species'])
                 additional_information = bleach.clean(request.POST['additional_information'])
-
                 if not Species.objects.filter(species_name=species).exists():
                     species = Species.objects.create(species_name=species, additional_information='')
                     species.save()
-
                 newspecies = Species.objects.get(species_name=species)
 
                 pet = Pet.objects.create(name=name,
@@ -1032,9 +1028,7 @@ def addvisit(request):
                                          species=newspecies,
                                          additional_information=additional_information,
                                          owner=owner)
-
                 pet.save()
-
             else:
                 pet = Pet.objects.get(id=request.POST['pet'])
             vet = MyUser.objects.get(email=request.POST['vet'])
@@ -1045,7 +1039,6 @@ def addvisit(request):
                                          pet=pet,
                                          vet=vet,
                                          note=note)
-
             visit.save()
             return redirect('allvisits')
     else:
