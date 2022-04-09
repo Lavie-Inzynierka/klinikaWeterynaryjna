@@ -177,11 +177,12 @@ def signup(request):
             return render(request, 'klinika/signup.html', {'success': "Konto utworzone pomyślnie!",
                                                            'title': 'Rejestracja'})
 
-        return render(request, 'klinika/signup.html',{'title': 'Rejestracja'})
+        return render(request, 'klinika/signup.html', {'title': 'Rejestracja'})
 
     return render(request, 'klinika/signup.html', {'system_error': "Skonfiguruj aplikacje!",
                                                    'title': 'Rejestracja'
                                                    })
+
 
 # endregion
 
