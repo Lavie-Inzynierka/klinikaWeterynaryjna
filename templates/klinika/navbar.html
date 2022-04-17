@@ -39,14 +39,14 @@
         {% if  vet or adm or rec or own %}
             <li><a href="#"> Wizyty </a>
             <ul>
-            {% if  vet and own or adm or rec and own or own %}
+            {% if  adm and own or vet and own or rec and own or own %}
                 <li>
                     <a href="{% url 'myvisits' %}"> Moje wizyty</a>
                 </li>
 
             {% endif %}
         {% endif %}
-        {% if rec or vet %}
+        {% if rec or vet or adm %}
             <li><a href="{% url 'allvisits' %}">Wszystkie wizyty</a></li>
             <li><a href="{% url 'upcomvisits' %}">Nadchodzące wizyty</a></li>
             <li><a href="{% url 'visits' %}">Odbyte wizyty</a></li>
@@ -58,7 +58,7 @@
             <li><a href="{% url 'pets' %}"> Zwierzęta </a>
             </li>
         {% endif %}
-        {% if own or adm or vet %}
+        {% if own or adm and vet or vet %}
             <li><a href="#"> Recepty </a>
             <ul>
         {% endif %}

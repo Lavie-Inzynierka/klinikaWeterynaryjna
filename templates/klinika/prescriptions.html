@@ -60,9 +60,11 @@
                     </ul>
                 </div>
                 <div id="ch-presc" style="display: none;">
-                    <div class="black" style="margin-top: 30px;">
-                        <a href="{% url 'addprescriptions' %}" class="btn bstyle "> Dodaj recepte</a>
-                    </div>
+                    {% if adm and vet %}
+                        <div class="black" style="margin-top: 30px;">
+                            <a href="{% url 'addprescriptions' %}" class="btn bstyle "> Dodaj recepte</a>
+                        </div>
+                    {% endif %}
                     <div>
                         {% if not empty %}
                             <table id="table1">
@@ -100,7 +102,7 @@
                         <a href="{% url 'curemanagementadd' %}" class="btn bstyle "> Dodaj lek</a>
                     </div>
                     <div>
-                        {% if not empty %}
+                        {% if not empty2 %}
                             <table id="table2">
                                 <thead>
                                 <tr>
@@ -125,7 +127,7 @@
                             </table>
                             <div style="clear: both"></div>
                         {% else %}
-                            <p> Brak Gatunków do wyświetlenia! </p>
+                            <p> Brak leków do wyświetlenia! </p>
                         {% endif %}
                     </div>
                 </div>

@@ -31,8 +31,8 @@
             <div id="ch-own-choice" style="display: none;">
                 <select name="own" id="own-choice">
                     {% for own in owners %}
-                        <option value="{{ own.user.email }}">
-                            {{ own.user.first_name }} {{ own.user.last_name }} {{ own.user.email }}
+                        <option value="{{ own.email }}">
+                            {{ own.first_name }} {{ own.last_name }} {{ own.email }}
                         </option>
                     {% endfor %}
                     <option>Dodaj</option>

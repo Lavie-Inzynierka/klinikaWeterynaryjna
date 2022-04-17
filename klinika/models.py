@@ -33,6 +33,7 @@ Dose_choices = (
     ('mg/g', 'mg/g'),
     ('mg/ml', 'mg/ml'),
     ('ml', 'ml'),
+    ('g', 'g')
 )
 
 Quantity_choices = (

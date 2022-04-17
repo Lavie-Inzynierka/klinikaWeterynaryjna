@@ -17,7 +17,7 @@
                            onblur="this.placeholder='Nazwa leku'" required>
                 </label>
                 <label> Dawka - ilość
-                    <input type="number" style="margin-left: 64px;" class="input_width" name="dose" placeholder="Dawka"
+                    <input type="number" step="0.01" style="margin-left: 64px;" class="input_width" name="dose" placeholder="Dawka"
                            onfocus="this.placeholder=' ' "
                            onblur="this.placeholder='Dawka'" required>
                 </label>
@@ -25,6 +25,7 @@
                     <select name="dose_type" class="input_width" style="margin-left: 174px; margin-top: -30px;">
                         <option disabled selected>Wybierz rodzaj dawki</option>
                         <option value="mg">miligram</option>
+                        <option value="g">gram</option>
                         <option value="mg/g">miligram/gram</option>
                         <option value="mg/ml">miligram/mililitr</option>
                         <option value="ml">mililitr</option>

@@ -472,7 +472,7 @@ def pet(request, petid):
 
 def addpets(request):
     if request.session.get('my_user', False):
-        owners = UserType.objects.filter(user_type='PET_OWNER').all()
+        owners = Owner.objects.filter().all()
         if request.method == 'GET':
             return render(request, 'klinika/addpets.html', {'username': request.session.get('my_user'),
                                                             'owners': owners,
@@ -486,7 +486,7 @@ def addpets(request):
             name = bleach.clean(request.POST['name'])
             date_of_birth = bleach.clean(request.POST['date_of_birth'])
             sex = bleach.clean(request.POST['sex'])
-            species = bleach.clean(request.POST['species'])
+            species_name = bleach.clean(request.POST['species'])
             additional_information = bleach.clean(request.POST['additional_information'])
 
             if len(name) > 32:
@@ -511,11 +511,11 @@ def addpets(request):
                                'own': request.session.get('is_own'),
                                })
 
-            if not Species.objects.filter(species_name=species):
-                species = Species.objects.create(species_name=species, additional_information='')
+            if not Species.objects.filter(species_name=species_name):
+                species = Species.objects.create(species_name=species_name, additional_information='')
                 species.save()
 
-            if datetime.datetime.strptime(date_of_birth, '%Y-%m-%d') > datetime.datetime.now():
+            if datetime.strptime(date_of_birth, '%Y-%m-%d') > datetime.now():
                 return render(request, 'klinika/addpets.html',
                               {'username': request.session.get('my_user'),
                                'error': 'Nieprawidłowa data urodzenia!',
@@ -525,7 +525,7 @@ def addpets(request):
                                'rec': request.session.get('is_rec'),
                                'own': request.session.get('is_own'),
                                })
-            newspecies = Species.objects.get(species_name=species)
+            newspecies = Species.objects.get(species_name=species_name)
 
             if request.POST['own'] == 'Dodaj':
                 first_name = bleach.clean(request.POST['first_name'])
@@ -541,16 +541,19 @@ def addpets(request):
 
                 owner.save()
             else:
+                if not Owner.objects.filter(email=request.POST['own']).exists():
+                    user = MyUser.objects.get(email=request.POST['own'])
+                    owner = Owner.objects.create(
+                        first_name=user.first_name,
+                        last_name=user.last_name,
+                        phone_number=user.phone_number,
+                        email=user.email,
+                        user=user
+                    )
+                    owner.save()
+                else:
+                    owner = Owner.objects.get(email=request.POST['own'])
 
-                user = MyUser.objects.get(email=request.POST['own'])
-                owner = Owner.objects.create(
-                    first_name=user.first_name,
-                    last_name=user.last_name,
-                    phone_number=user.phone_number,
-                    email=user.email,
-                    user=user
-                )
-                owner.save()
 
             pet = Pet.objects.create(name=name,
                                      date_of_birth=date_of_birth,
@@ -1833,12 +1836,13 @@ def usermanagementadd(request):
                 newaddress.save()
 
                 if request.POST['type'] == "role":
+                    newuser = MyUser.objects.get(email=email)
                     for e in enum:
                         current_role = 'role-{}'.format(e)
                         arole = request.POST.get(current_role, None)
                         if arole == 'on':
                             utype = UserType.objects.create(
-                                user=user,
+                                user=newuser,
                                 user_type=e
                             )
                             utype.save()
@@ -2385,8 +2389,10 @@ def prescsmanagement(request):
                               {'username': request.session.get('my_user'),
                                'admin': True,
                                'empty': True,
+                               'empty2': False,
                                'title': 'Zarządzanie receptami',
                                'rec_list': 'Brak recept do wyświetlenia',
+                               'cures': cures,
                                'adm': request.session.get('is_adm'),
                                'vet': request.session.get('is_vet'),
                                'rec': request.session.get('is_rec'),
@@ -2398,6 +2404,7 @@ def prescsmanagement(request):
                               {'username': request.session.get('my_user'),
                                'admin': True,
                                'empty': True,
+                               'empty2': True,
                                'title': 'Zarządzanie receptami',
                                'cures': 'Brak leków do wyświetlenia',
                                'adm': request.session.get('is_adm'),
